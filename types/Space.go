@@ -14,7 +14,7 @@ func GetInstance_space() *Spaces {
 		log.Println("space 싱글톤 패턴 생성")
 		spaces = &Spaces{}
 	} else {
-		log.Println("space 싱글톤 패턴 이미 생성되어 반환만 함.")
+		log.Println("space 싱글톤 패턴 이미 생성됨.")
 	}
 	return spaces
 }

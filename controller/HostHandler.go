@@ -1,10 +1,12 @@
 package controller
 
-import "net/http"
+import (
+	"net/http"
+	"ub/service"
+)
 
 func HostHandler(w http.ResponseWriter, r *http.Request) {
-	//incomingURL := r.URL.Path
+	space_id := service.Regist_space()
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	a := []byte("HostTest")
-	w.Write(a)
+	w.Write()
 }

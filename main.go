@@ -6,15 +6,11 @@ import (
 	"strconv"
 	"ub/controller"
 	"ub/service"
-	"ub/types"
 )
 
 func main() {
 	//로그 기록 시작
 	service.Logger()
-
-	var spaces types.Spaces
-	var te int
 
 	const PORT int = 80
 	mux := http.NewServeMux()

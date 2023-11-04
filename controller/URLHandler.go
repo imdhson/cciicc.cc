@@ -22,5 +22,12 @@ func URLHandler(w http.ResponseWriter, r *http.Request) {
 		ErrorPageHandler(w, r)
 	case "assets":
 		AssetsHanlder(w, r, r.URL.Path)
+	case "space":
+		switch now_url_sliced[1] {
+		case "create":
+			PostHandler_create_space(w, r)
+		}
+	default:
+		ErrorPageHandler(w, r)
 	}
 }

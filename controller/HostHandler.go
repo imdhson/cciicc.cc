@@ -13,7 +13,7 @@ func HostHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	//space_id := service.Regist_space()
 	// 템플릿 파일 로드
-	tmpl, err := template.ParseFiles("wwwfiles/register.html")
+	tmpl, err := template.ParseFiles("wwwfiles/host.html")
 	if err != nil {
 		log.Fatal(err)
 	}

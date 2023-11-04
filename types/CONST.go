@@ -9,3 +9,7 @@ const (
 	ORANGE
 	PINK
 )
+
+const (
+	SESSION_EXPIRE_DURATION_HOURS = 24
+)

@@ -2,7 +2,6 @@ package controller
 
 import (
 	"fmt"
-	"log"
 	"ub/service"
 	"ub/types"
 )
@@ -14,7 +13,6 @@ func CLI() {
 		fmt.Scanln(&t)
 		switch t {
 		case "stop", "exit", "quit":
-			log.Println("서버를 중지하는 중...")
 			service.StopService()
 		case "test":
 			spaces := types.GetInstance_space()

@@ -7,7 +7,7 @@ import (
 )
 
 func Random_space_id_generator() string {
-	spaces := types.GetInstance_space()
+	spaces := types.GetInstance_spaces()
 	rand_int := rand.Intn(999)
 	rand_char := string(rune(rand.Intn(26) + 97))
 	space_id := rand_char + strconv.Itoa(rand_int)

@@ -15,10 +15,12 @@ func CLI() {
 		case "stop", "exit", "quit":
 			service.StopService()
 		case "test":
-			spaces := types.GetInstance_space()
+			spaces := types.GetInstance_spaces()
+			fmt.Println("------spaces-------")
 			for _, v := range *spaces { //스페이스공간 디버그용
 				fmt.Println(v.Sp_id + "|" + v.Sp_name)
 			}
+			fmt.Println("------users-------")
 			users := types.GetInstance_users()
 			for _, v := range *users { //스페이스공간 디버그용
 				fmt.Println(v.User_name + "|" + v.User_sessionkey)

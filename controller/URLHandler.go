@@ -27,8 +27,10 @@ func URLHandler(w http.ResponseWriter, r *http.Request) {
 		switch now_url_sliced[1] {
 		case "create":
 			PostHandler_create_space(w, r)
-		default:
+		case "":
 			SpaceHandler(w, r)
+		default:
+			SpaceContentHandler(w, r)
 		}
 	default:
 		ErrorPageHandler(w, r)

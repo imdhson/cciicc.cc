@@ -45,7 +45,7 @@ func PostHandler_create_space(w http.ResponseWriter, r *http.Request) {
 	}
 	regist_success := service.UserRegist(user)
 	if regist_success {
-		http.Redirect(w, r, "/error", http.StatusFound) //링크 수정 필요
+		http.Redirect(w, r, "/space", http.StatusFound) //링크 수정 필요
 	} else {
 		http.Redirect(w, r, "/error", http.StatusFound)
 	}

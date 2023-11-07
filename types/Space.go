@@ -9,7 +9,7 @@ type Spaces []Space
 
 var spaces *Spaces
 
-func GetInstance_space() *Spaces {
+func GetInstance_spaces() *Spaces {
 	if spaces == nil {
 		log.Println("space 싱글톤 패턴 생성")
 		spaces = &Spaces{}

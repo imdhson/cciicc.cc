@@ -8,6 +8,9 @@ import (
 
 func StopService() {
 	log.Println("서버를 중지하는 중...")
+	// spaces := types.GetInstance_spaces()
+	// users := types.GetInstance_users()
+
 	//종료 전 파일 저장등 전처리 필요
 	os.Exit(0)
 }

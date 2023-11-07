@@ -27,6 +27,9 @@ func CLI() {
 			}
 		case "clear":
 			fmt.Println("\033[2J")
+		case "cleardata":
+			service.ClearDatas()
 		}
+
 	}
 }

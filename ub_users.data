@@ -1,0 +1,14 @@
+[
+ 	{
+ 		"User_name": "111",
+ 		"User_sessionkey": "e216f9940c8a3d006f485e03b0d2ae47",
+ 		"User_isHost": true,
+ 		"User_related_spaceid": "p611"
+ 	},
+ 	{
+ 		"User_name": "222",
+ 		"User_sessionkey": "1f97fc5d2b067518f3b6c4bcd67780d7",
+ 		"User_isHost": true,
+ 		"User_related_spaceid": "z809"
+ 	}
+ ]

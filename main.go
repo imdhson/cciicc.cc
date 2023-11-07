@@ -26,5 +26,5 @@ func main() {
 	log.Println(""+strconv.Itoa(PORT), "포트에서 요청을 기다리는 중...")
 	//err := http.ListenAndServeTLS(":"+strconv.Itoa(SSLPORT), "ssl/combined.crt", "ssl/private.key", server)
 	err := http.ListenAndServe(":"+strconv.Itoa(PORT), mux) //암호화없음
-	service.CriticalErr(err)
+	service.CriticalErr(err, "http.ListenAndServe")
 }

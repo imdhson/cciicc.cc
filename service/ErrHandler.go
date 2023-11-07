@@ -4,9 +4,13 @@ import (
 	"log"
 )
 
-func ErrHandler(e error) {
-	log.Println("e: %v\n", e)
+func ErrHandler(e error, loc string) {
+	if e != nil {
+		log.Printf("%v=%v\n", loc, e)
+	}
 }
-func CriticalErr(e error) {
-	log.Panic("e: %v\n", e)
+func CriticalErr(e error, loc string) {
+	if e != nil {
+		log.Panicf("%v=%v\n", loc, e)
+	}
 }

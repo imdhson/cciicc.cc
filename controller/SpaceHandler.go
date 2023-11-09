@@ -7,6 +7,9 @@ import (
 )
 
 func SpaceHandler(w http.ResponseWriter, r *http.Request, space_id string) {
+	// /space로 요청이 들어오면 user에 저장된 space_id로 리다이렉트
+	// 이후 SpaceContentHandler가 처리
+
 	var user types.User
 	var user_success bool
 	session, getcookie_err := r.Cookie("ub_session")

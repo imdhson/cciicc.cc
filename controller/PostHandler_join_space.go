@@ -7,45 +7,9 @@ import (
 	"ub/types"
 )
 
-func PostHandler_comments(w http.ResponseWriter, r *http.Request) {
-
-}
-func PostHandler_create_space(w http.ResponseWriter, r *http.Request) {
-	form_space_name := r.FormValue("spaceName")
-	form_user_name := r.FormValue("userName")
-	space_id := service.Create_space(form_space_name)
-	if space_id == "" {
-		http.Redirect(w, r, "/error", http.StatusFound)
-	}
-	//랜덤 세션키 생성(space_id 기반)
-	sessionkeyStr := service.Random_sessionkey_generator(space_id)
-
-	session := http.Cookie{
-		Name:     "ub_session",
-		Value:    sessionkeyStr,
-		Expires:  time.Now().Add(time.Hour * types.SESSION_EXPIRE_DURATION_HOURS),
-		SameSite: http.SameSiteStrictMode,
-		Path:     "/",
-		HttpOnly: true,
-	}
-	http.SetCookie(w, &session)
-
-	user := types.User{
-		User_name:            form_user_name,
-		User_sessionkey:      sessionkeyStr,
-		User_isHost:          true,
-		User_related_spaceid: space_id,
-	}
-	regist_success := service.UserRegist(user)
-	if regist_success {
-		http.Redirect(w, r, "/space", http.StatusFound)
-	} else {
-		http.Redirect(w, r, "/error", http.StatusFound)
-	}
-
-}
-
 func PostHandler_join_space(w http.ResponseWriter, r *http.Request) {
+	//guest로 부터 post 요청을 받아서 user을 생성 한 이후, /space로 리다이렉트
+
 	form_space_id := r.FormValue("spaceId")
 	form_user_name := r.FormValue("userName")
 

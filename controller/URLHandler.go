@@ -25,13 +25,18 @@ func URLHandler(w http.ResponseWriter, r *http.Request) {
 		AssetsHanlder(w, r, r.URL.Path)
 	case "space":
 		switch now_url_sliced[1] {
+		case "":
+			SpaceHandler(w, r, now_url_sliced[1])
 		case "create":
 			PostHandler_create_space(w, r)
-		case "content": //space/content
-			SpaceContentHandler(w, r, now_url_sliced[1])
+		case "join":
+			PostHandler_join_space(w, r)
+		case "json": //space/json
+		//	SpaceJSONHandler(w, r, now_url_sliced[1])
+
 		default:
 			// space/[space_id] , space_id는 변조 위험이 있음으로 실제 핸들링시 확인 필요. UI로서의 space_id임.
-			SpaceHandler(w, r, now_url_sliced[1]) //수정 필요
+			SpaceContentHandler(w, r, now_url_sliced[1]) //수정 필요
 		}
 	default:
 		ErrorPageHandler(w, r)

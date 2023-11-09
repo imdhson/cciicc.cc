@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-type Data struct {
+type DataHost struct {
 }
 
 func HostHandler(w http.ResponseWriter, r *http.Request) {
@@ -19,7 +19,7 @@ func HostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// 템플릿에 변수 설정
-	data := Data{}
+	data := DataHost{}
 	tmpl.Execute(w, data)
 
 }

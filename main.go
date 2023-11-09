@@ -12,8 +12,6 @@ const PORT = 80
 const SSLPORT = 443
 
 func main() {
-	//로그 기록 시작
-	service.Logger()
 
 	//이전 데이터 불러오기
 	service.StartService()

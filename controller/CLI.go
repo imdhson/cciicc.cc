@@ -14,7 +14,7 @@ func CLI() {
 		switch t {
 		case "stop", "exit", "quit":
 			service.StopService()
-		case "test":
+		case "data", "test":
 			spaces := types.GetInstance_spaces()
 			fmt.Println("------spaces-------")
 			for _, v := range *spaces { //스페이스공간 디버그용
@@ -29,6 +29,18 @@ func CLI() {
 			fmt.Println("\033[2J")
 		case "cleardata":
 			service.ClearDatas()
+		case "spaces":
+			spaces := types.GetInstance_spaces()
+			for _, v := range *spaces { //스페이스공간 디버그용
+				fmt.Println(v.Sp_id + "|" + v.Sp_name)
+			}
+		case "users":
+			users := types.GetInstance_users()
+			for _, v := range *users { //스페이스공간 디버그용
+				fmt.Println(v.User_name + "|" + v.User_sessionkey)
+			}
+		default:
+			fmt.Println("invalid 명령어")
 		}
 
 	}

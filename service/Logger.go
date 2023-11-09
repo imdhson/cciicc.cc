@@ -15,9 +15,8 @@ func Logging(i string) {
 func Logger() {
 	// 로그 기록
 	// 로그 파일 생성
-	log_f, log_err := storage.LogOpenFile("last.log")
+	log_f, log_err := storage.LogOpenFile("server.log")
 	ErrHandler(log_err, "log_err")
-	defer log_f.Close()
 
 	// 로그 출력 설정
 	log.SetOutput(io.MultiWriter(os.Stdout, log_f))

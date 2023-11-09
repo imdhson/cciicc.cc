@@ -1,39 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>Ajax Table Example</title>
+  <meta charset="UTF-8">
+  <title>JSON 데이터 표시</title>
 </head>
 <body>
-    <table id="tblData">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Age</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-<!-- 라이브 서버로 실행하여 테스트 -->
-    <script>
-        window.onload = function() {
-            // 데이터를 가져옵니다.
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "/wwwfiles/assets/ajax.json", true);
-            xhr.onload = function() {
-                // 데이터를 테이블에 추가합니다.
-                var data = JSON.parse(xhr.responseText);
-                for (var i = 0; i < data.length; i++) {
-                    var row = document.createElement("tr");
-                    row.innerHTML = "<td>" + data[i].name + "</td><td>" + data[i].age + "</td>";
-                    document.querySelector("#tblData tbody").appendChild(row);
-                }
-
-                // 테이블의 높이를 자동으로 조정합니다.
-                document.querySelector("#tblData").style.height = document.querySelector("#tblData tbody").scrollHeight + "px";
-            };
-            xhr.send();
-        };
-    </script>
+  <h1>JSON 데이터 표시</h1>
+  <pre id="data-json"></pre>
+  <script>
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "/space/u780/");
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        const data = JSON.parse(xhr.responseText);
+        document.querySelector("#data-json").innerHTML = data;
+      }
+    };
+    xhr.send();
+  </script>
 </body>
 </html>

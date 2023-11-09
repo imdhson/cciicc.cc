@@ -29,9 +29,11 @@ func URLHandler(w http.ResponseWriter, r *http.Request) {
 			PostHandler_create_space(w, r)
 		case "":
 			SpaceHandler(w, r)
+		case "content": //space/content
+			SpaceContentHandler(w, r, now_url_sliced[1])
 		default:
 			// space/[space_id] , space_id는 변조 위험이 있음으로 실제 핸들링시 확인 필요. UI로서의 space_id임.
-			SpaceContentHandler(w, r, now_url_sliced[1])
+			SpaceContentHandler(w, r, now_url_sliced[1]) //수정 필요
 		}
 	default:
 		ErrorPageHandler(w, r)

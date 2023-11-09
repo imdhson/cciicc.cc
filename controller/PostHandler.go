@@ -1,8 +1,6 @@
 package controller
 
 import (
-	"crypto/md5"
-	"fmt"
 	"net/http"
 	"time"
 	"ub/service"
@@ -20,12 +18,7 @@ func PostHandler_create_space(w http.ResponseWriter, r *http.Request) {
 		ErrorPageHandler(w, r)
 	}
 	//랜덤 세션키 생성(space_id 기반)
-	rand_key := service.Random_sessionkey_generator(space_id)
-	//해쉬함수
-	hash := md5.New()
-	hash.Write([]byte(rand_key))
-	hashSum := hash.Sum(nil)
-	sessionkeyStr := fmt.Sprintf("%x", hashSum)
+	sessionkeyStr := service.Random_sessionkey_generator(space_id)
 
 	session := http.Cookie{
 		Name:     "ub_session",

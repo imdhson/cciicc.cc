@@ -1,7 +1,6 @@
 package types
 
 import (
-	"log"
 	"time"
 )
 
@@ -11,10 +10,8 @@ var spaces *Spaces
 
 func GetInstance_spaces() *Spaces {
 	if spaces == nil {
-		log.Println("space 싱글톤 패턴 생성")
 		spaces = &Spaces{}
 	} else {
-		log.Println("space 싱글톤 패턴 이미 생성됨.")
 	}
 	return spaces
 }

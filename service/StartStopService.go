@@ -36,6 +36,9 @@ func StopService() {
 }
 
 func StartService() {
+	// 로그 기록 시작
+	Logger()
+
 	log.Println("이전에 저장된 데이터를 불러오는 중...")
 	//users 불러오기
 	file_users, f_users_err := storage.OpenFile("ub_users.data")

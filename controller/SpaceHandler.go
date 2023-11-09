@@ -19,7 +19,7 @@ func SpaceHandler(w http.ResponseWriter, r *http.Request) {
 		redirect_url := "/space/" + user.User_related_spaceid
 		http.Redirect(w, r, redirect_url, http.StatusFound)
 	} else {
-		http.Redirect(w, r, "/error", http.StatusFound)
+		http.Redirect(w, r, "/guest", http.StatusFound)
 	}
 
 }

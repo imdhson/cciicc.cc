@@ -6,12 +6,13 @@ import (
 	"ub/types"
 )
 
-func SpaceHandler(w http.ResponseWriter, r *http.Request) {
+func SpaceHandler(w http.ResponseWriter, r *http.Request, space_id string) {
 	var user types.User
 	var user_success bool
 	session, getcookie_err := r.Cookie("ub_session")
 	if getcookie_err != nil {
-		service.ErrHandler(getcookie_err, "getcookie_err")
+		redirect_url := "/guest/" + space_id
+		http.Redirect(w, r, redirect_url, http.StatusFound)
 	} else {
 		user, user_success = service.GetUserFromSession(session.Value)
 	}
@@ -19,7 +20,8 @@ func SpaceHandler(w http.ResponseWriter, r *http.Request) {
 		redirect_url := "/space/" + user.User_related_spaceid
 		http.Redirect(w, r, redirect_url, http.StatusFound)
 	} else {
-		http.Redirect(w, r, "/guest", http.StatusFound)
+		redirect_url := "/guest/" + space_id
+		http.Redirect(w, r, redirect_url, http.StatusFound)
 	}
 
 }

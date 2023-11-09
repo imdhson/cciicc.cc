@@ -7,6 +7,7 @@ import (
 )
 
 type DataGuest struct {
+	Sp_id string
 }
 
 func GuestHandler(w http.ResponseWriter, r *http.Request, space_id string) {
@@ -17,8 +18,7 @@ func GuestHandler(w http.ResponseWriter, r *http.Request, space_id string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	// 템플릿에 변수 설정
-	data := DataGuest{}
+	data := DataGuest{Sp_id: space_id}
 	tmpl.Execute(w, data)
 }

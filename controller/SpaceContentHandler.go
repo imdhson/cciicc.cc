@@ -34,8 +34,10 @@ func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string
 		user, user_success = service.GetUserFromSession(session.Value)
 	}
 
-	if !user_success {
-		http.Redirect(w, r, "/error", http.StatusFound)
+	if !user_success || user.User_related_spaceid != space_id { //user success false일 때 or space_id 불일치시
+		redirect_url := "/guest/" + space_id
+		http.Redirect(w, r, redirect_url, http.StatusFound)
+		return
 	}
 
 	space, getSpace_success := service.GetSpaceFrom_space_id(user.User_related_spaceid)

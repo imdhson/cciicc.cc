@@ -32,8 +32,7 @@ func URLHandler(w http.ResponseWriter, r *http.Request) {
 		case "join":
 			PostHandler_join_space(w, r)
 		case "json": //space/json
-		//	SpaceJSONHandler(w, r, now_url_sliced[1])
-
+			SpaceJSONHandler(w, r)
 		default:
 			// space/[space_id] , space_id는 변조 위험이 있음으로 실제 핸들링시 확인 필요. UI로서의 space_id임.
 			SpaceContentHandler(w, r, now_url_sliced[1]) //수정 필요

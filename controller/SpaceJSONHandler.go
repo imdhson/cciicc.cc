@@ -7,7 +7,7 @@ import (
 	"ub/types"
 )
 
-func SpaceJSONHandler(w http.ResponseWriter, r *http.Request, space_id string) {
+func SpaceJSONHandler(w http.ResponseWriter, r *http.Request) {
 	var user types.User
 	var user_success bool
 	session, getcookie_err := r.Cookie("ub_session")
@@ -19,7 +19,7 @@ func SpaceJSONHandler(w http.ResponseWriter, r *http.Request, space_id string) {
 		user, user_success = service.GetUserFromSession(session.Value)
 	}
 
-	if user.User_related_spaceid != space_id || !user_success { //space아이디 불일치 및 user success false일 때
+	if !user_success { //user success false일 때
 		http.Redirect(w, r, "/error", http.StatusFound)
 		return
 	}

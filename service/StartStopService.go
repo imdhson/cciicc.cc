@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"time"
 	"ub/storage"
 	"ub/types"
 )
@@ -76,6 +77,7 @@ func DetectStopService() {
 	signal.Notify(c, os.Interrupt)
 
 	for {
+		time.Sleep(time.Second * 2)
 		select {
 		case <-c:
 			log.Println()

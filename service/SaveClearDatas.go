@@ -35,5 +35,12 @@ func ClearDatas() {
 	users := types.GetInstance_users()
 	*spaces = nil
 	*users = nil
-	fmt.Println(users)
+	fmt.Println("spaces, users 데이터 삭제 완료")
+	fmt.Println("wwwfiles/assets/space_qr/* 삭제 시작")
+	delete_err := storage.DeleteAll_space_qr()
+	CriticalErr(delete_err, "storage.DeleteAll_space_qr()")
+	fmt.Println("space_qr 삭제 성공, space_qr 폴더 재생성")
+	mkdir_err := storage.MakeDir_space_qr()
+	CriticalErr(mkdir_err, "storage.MakeDir_space_qr()")
+	fmt.Println("space_qr 폴더 재생성 성공")
 }

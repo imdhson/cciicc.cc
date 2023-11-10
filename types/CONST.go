@@ -13,5 +13,6 @@ const (
 )
 
 const (
-	SESSION_EXPIRE_DURATION_HOURS = 24
+	SESSION_EXPIRE_DURATION_HOURS        = 24
+	URL_ADDESS                    string = "http://localhost" //use for QR generation
 )

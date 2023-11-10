@@ -51,6 +51,9 @@ func StartService() {
 	} else {
 		log.Println("spaces 저장된 데이터 불러오기 실패")
 	}
+
+	//space_qr 정상 작동을 위해 디렉터리 생성 시도
+	storage.MakeDir_space_qr()
 }
 
 func DetectStopService() {

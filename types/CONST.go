@@ -3,11 +3,13 @@ package types
 type Sp_c_color int
 
 const (
-	RED Sp_c_color = iota
+	WHILE  Sp_c_color = -1
+	ORANGE Sp_c_color = iota
+	SKYBLUE
 	GREEN
-	BLUE
-	ORANGE
 	PINK
+	RED
+	BLUE
 )
 
 const (

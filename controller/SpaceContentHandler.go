@@ -2,7 +2,6 @@ package controller
 
 import (
 	"html/template"
-	"log"
 	"net/http"
 	"ub/service"
 	"ub/types"
@@ -18,11 +17,13 @@ type DataSpaceContent struct {
 
 func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+
 	// 템플릿 파일 로드
 	tmpl, err := template.ParseFiles("wwwfiles/content.html")
 	if err != nil {
-		log.Fatal(err)
+		service.CriticalErr(err, "template html 로드")
 	}
+
 	//세션 가져오기
 	var user types.User
 	var user_success bool

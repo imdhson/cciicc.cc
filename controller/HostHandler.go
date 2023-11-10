@@ -2,8 +2,8 @@ package controller
 
 import (
 	"html/template"
-	"log"
 	"net/http"
+	"ub/service"
 )
 
 type DataHost struct {
@@ -15,7 +15,7 @@ func HostHandler(w http.ResponseWriter, r *http.Request) {
 	// 템플릿 파일 로드
 	tmpl, err := template.ParseFiles("wwwfiles/host.html")
 	if err != nil {
-		log.Fatal(err)
+		service.CriticalErr(err, "template html 로드")
 	}
 
 	// 템플릿에 변수 설정

@@ -2,8 +2,8 @@ package controller
 
 import (
 	"html/template"
-	"log"
 	"net/http"
+	"ub/service"
 )
 
 type DataGuest struct {
@@ -16,7 +16,7 @@ func GuestHandler(w http.ResponseWriter, r *http.Request, space_id string) {
 	// 템플릿 파일 로드
 	tmpl, err := template.ParseFiles("wwwfiles/guest.html")
 	if err != nil {
-		log.Fatal(err)
+		service.CriticalErr(err, "template html 로드")
 	}
 	// 템플릿에 변수 설정
 	data := DataGuest{Sp_id: space_id}

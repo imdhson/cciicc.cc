@@ -13,26 +13,7 @@ import (
 
 func StopService() {
 	log.Println("서버를 중지하는 중...")
-
-	//users 저장
-	users := types.GetInstance_users()
-	file_users, f_users_err := storage.CreateFile("ub_users.data")
-	ErrHandler(f_users_err, "f_users_err createFile")
-	defer file_users.Close()
-
-	user_encoded, err := json.MarshalIndent(users, " ", "	")
-	ErrHandler(err, "user_encoded")
-	file_users.Write(user_encoded)
-
-	spaces := types.GetInstance_spaces()
-	file_spaces, f_spaces_err := storage.CreateFile("ub_spaces.data")
-	ErrHandler(f_spaces_err, "f_spaces_err CreateFile")
-	defer file_spaces.Close()
-
-	spaces_encoded, err := json.MarshalIndent(spaces, " ", "	")
-	ErrHandler(err, "spaces_encoded")
-	file_spaces.Write(spaces_encoded)
-
+	SaveDatas()
 	os.Exit(0)
 }
 

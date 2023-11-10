@@ -1,14 +1,8 @@
 [
  	{
- 		"User_name": "USER11111",
- 		"User_sessionkey": "2b733bd9ab09e6c66852f84f595090b0",
+ 		"User_name": "1111u",
+ 		"User_sessionkey": "e55d2127824e4274138b1fc137f21b61",
  		"User_isHost": true,
- 		"User_related_spaceid": "r801"
- 	},
- 	{
- 		"User_name": "USERNAME2",
- 		"User_sessionkey": "47ca306f81cd4c0661e3b5e21db24a94",
- 		"User_isHost": true,
- 		"User_related_spaceid": "r801"
+ 		"User_related_spaceid": "s835"
  	}
  ]

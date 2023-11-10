@@ -33,7 +33,7 @@ func PostHandler_comments(w http.ResponseWriter, r *http.Request) {
 	comment := &types.Sp_comment{
 		Sp_c_content:   form_comment,
 		Sp_c_guestname: user.User_name,
-		Sp_c_color:     form_color_int,
+		Sp_c_color:     types.Sp_c_color(form_color_int),
 	}
 
 	service.AddCommentFrom_space_id(user.User_related_spaceid, comment)

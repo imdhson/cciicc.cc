@@ -1,8 +1,14 @@
 [
  	{
- 		"User_name": "1111u",
- 		"User_sessionkey": "e55d2127824e4274138b1fc137f21b61",
+ 		"User_name": "이현준",
+ 		"User_sessionkey": "b96fd9b07deabe0933b5b0d13cd7bb72",
  		"User_isHost": true,
- 		"User_related_spaceid": "s835"
+ 		"User_related_spaceid": "q954"
+ 	},
+ 	{
+ 		"User_name": "성재현군",
+ 		"User_sessionkey": "60e6911a341b15ca9b08e0b5575adae1",
+ 		"User_isHost": true,
+ 		"User_related_spaceid": "q954"
  	}
  ]

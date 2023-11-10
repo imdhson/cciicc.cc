@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Space: {{.Sp_name}}</title>
+</head>
+
+<body>
+  <header>
+    <h1>{{.Sp_name}}</h1>
+    <h2>{{.Sp_id}}</h2>
+    <p>{{.Sp_view}}</p>
+    <p>{{.Sp_lastupdate}}</p>
+  </header>
+  <main>
+    {{range $_, $v := .Sp_comments}}
+    <li>
+      <ul>{{$v.Sp_c_content}}</ul>
+      <ul>{{$v.Sp_c_guestname}}</ul>
+      <ul>{{$v.Sp_c_color}}</ul>
+    </li>
+    {{end}}
+  </main>
+  <footer>
+    <form action="/space/addcomment/" method="post">
+      <input type="text" name="comment" placeholder="댓글">
+      <input type="radio" name="color" value="0">ORANGE
+      <input type="radio" name="color" value="1">SKYBLUE
+      <input type="radio" name="color" value="2">GREEN
+      <input type="radio" name="color" value="3">PINK
+      <input type="radio" name="color" value="4">RED
+      <input type="radio" name="color" value="5">BLUE
+      <button type="submit">전송</button>
+    </form>
+  </footer>
+</body>
+
+</html>

@@ -1444,3 +1444,176 @@
 2023/11/10 09:41:34 [space s835  ]
 2023/11/10 09:41:38 
 2023/11/10 09:41:38 서버를 중지하는 중...
+2023/11/10 09:45:39 이전에 저장된 데이터를 불러오는 중...
+2023/11/10 09:45:39 users 저장된 데이터 불러오기 성공.
+2023/11/10 09:45:39 spaces 저장된 데이터 불러오기 성공.
+2023/11/10 09:45:39 80 포트에서 요청을 기다리는 중...
+2023/11/10 09:45:42 [space s835  ]
+2023/11/10 09:45:45 [space addcomment   ]
+2023/11/10 09:45:45 [space  ]
+2023/11/10 09:45:45 [space s835  ]
+2023/11/10 09:48:05 
+2023/11/10 09:48:05 서버를 중지하는 중...
+2023/11/10 09:48:31 이전에 저장된 데이터를 불러오는 중...
+2023/11/10 09:48:31 users 저장된 데이터 불러오기 성공.
+2023/11/10 09:48:31 spaces 저장된 데이터 불러오기 성공.
+2023/11/10 09:48:31 80 포트에서 요청을 기다리는 중...
+2023/11/10 09:48:35 [space s83512  ]
+2023/11/10 09:48:35 [guest s83512  ]
+2023/11/10 09:48:35 [assets host.css  ]
+2023/11/10 09:48:43 [space join  ]
+2023/11/10 09:48:43 [space  ]
+2023/11/10 09:48:43 [space s835  ]
+2023/11/10 09:48:47 [space s835  ]
+2023/11/10 09:48:47 SpaceContentHandler getCookie=http: named cookie not present
+2023/11/10 09:48:47 http: superfluous response.WriteHeader call from ub/controller.SpaceContentHandler (SpaceContentHandler.go:40)
+2023/11/10 09:48:47 [error  ]
+2023/11/10 09:48:47 [assets error style.css  ]
+2023/11/10 09:48:53 [space join  ]
+2023/11/10 09:48:53 [space  ]
+2023/11/10 09:48:53 [space s835  ]
+2023/11/10 09:48:57 [space addcomment   ]
+2023/11/10 09:48:57 [space  ]
+2023/11/10 09:48:57 [space s835  ]
+2023/11/10 09:48:58 [space s835  ]
+2023/11/10 09:49:01 [space addcomment   ]
+2023/11/10 09:49:01 [space  ]
+2023/11/10 09:49:01 [space s835  ]
+2023/11/10 09:55:31 [space s835  ]
+2023/11/10 09:55:42 [space s835  ]
+2023/11/10 09:55:42 template html 로드=template: content.html:18: function "_" not defined
+2023/11/10 09:55:42 http: panic serving [::1]:49405: template html 로드=template: content.html:18: function "_" not defined
+
+goroutine 27 [running]:
+net/http.(*conn).serve.func1()
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:1854 +0xb0
+panic({0x102803760, 0x140001812d0})
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/runtime/panic.go:890 +0x258
+log.Panicf({0x10274952b?, 0x14?}, {0x14000103828?, 0x1?, 0x3?})
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/log/log.go:391 +0x68
+ub/service.CriticalErr(...)
+	/Users/sondonghwi/Documents/git/usefulBoard/service/ErrHandler.go:14
+ub/controller.SpaceContentHandler({0x10286a710, 0x140001b88c0}, 0x1400019ed00, {0x140001be143, 0x4})
+	/Users/sondonghwi/Documents/git/usefulBoard/controller/SpaceContentHandler.go:24 +0x178
+ub/controller.URLHandler({0x10286a710, 0x140001b88c0}, 0x1400019ed00)
+	/Users/sondonghwi/Documents/git/usefulBoard/controller/URLHandler.go:40 +0x354
+net/http.HandlerFunc.ServeHTTP(0x14000103ad8?, {0x10286a710?, 0x140001b88c0?}, 0x10?)
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:2122 +0x38
+net/http.(*ServeMux).ServeHTTP(0x0?, {0x10286a710, 0x140001b88c0}, 0x1400019ed00)
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:2500 +0x140
+net/http.serverHandler.ServeHTTP({0x1400012ca80?}, {0x10286a710, 0x140001b88c0}, 0x1400019ed00)
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:2936 +0x2d8
+net/http.(*conn).serve(0x140000faab0, {0x10286a8d8, 0x140000993e0})
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:1995 +0x560
+created by net/http.(*Server).Serve
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:3089 +0x520
+2023/11/10 09:55:42 [space s835  ]
+2023/11/10 09:55:42 template html 로드=template: content.html:18: function "_" not defined
+2023/11/10 09:55:42 http: panic serving [::1]:49406: template html 로드=template: content.html:18: function "_" not defined
+
+goroutine 59 [running]:
+net/http.(*conn).serve.func1()
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:1854 +0xb0
+panic({0x102803760, 0x14000181490})
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/runtime/panic.go:890 +0x258
+log.Panicf({0x10274952b?, 0x14?}, {0x14000103828?, 0x1?, 0x3?})
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/log/log.go:391 +0x68
+ub/service.CriticalErr(...)
+	/Users/sondonghwi/Documents/git/usefulBoard/service/ErrHandler.go:14
+ub/controller.SpaceContentHandler({0x10286a710, 0x140001b89a0}, 0x1400019ef00, {0x140001be173, 0x4})
+	/Users/sondonghwi/Documents/git/usefulBoard/controller/SpaceContentHandler.go:24 +0x178
+ub/controller.URLHandler({0x10286a710, 0x140001b89a0}, 0x1400019ef00)
+	/Users/sondonghwi/Documents/git/usefulBoard/controller/URLHandler.go:40 +0x354
+net/http.HandlerFunc.ServeHTTP(0x1400008fad8?, {0x10286a710?, 0x140001b89a0?}, 0x10?)
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:2122 +0x38
+net/http.(*ServeMux).ServeHTTP(0x0?, {0x10286a710, 0x140001b89a0}, 0x1400019ef00)
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:2500 +0x140
+net/http.serverHandler.ServeHTTP({0x140001e4fc0?}, {0x10286a710, 0x140001b89a0}, 0x1400019ef00)
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:2936 +0x2d8
+net/http.(*conn).serve(0x14000192900, {0x10286a8d8, 0x140000993e0})
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:1995 +0x560
+created by net/http.(*Server).Serve
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:3089 +0x520
+2023/11/10 09:55:42 [space s835  ]
+2023/11/10 09:55:42 template html 로드=template: content.html:18: function "_" not defined
+2023/11/10 09:55:42 http: panic serving [::1]:49407: template html 로드=template: content.html:18: function "_" not defined
+
+goroutine 61 [running]:
+net/http.(*conn).serve.func1()
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:1854 +0xb0
+panic({0x102803760, 0x140001361e0})
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/runtime/panic.go:890 +0x258
+log.Panicf({0x10274952b?, 0x14?}, {0x14000141828?, 0x1?, 0x3?})
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/log/log.go:391 +0x68
+ub/service.CriticalErr(...)
+	/Users/sondonghwi/Documents/git/usefulBoard/service/ErrHandler.go:14
+ub/controller.SpaceContentHandler({0x10286a710, 0x140000f28c0}, 0x1400019f100, {0x140000b22c3, 0x4})
+	/Users/sondonghwi/Documents/git/usefulBoard/controller/SpaceContentHandler.go:24 +0x178
+ub/controller.URLHandler({0x10286a710, 0x140000f28c0}, 0x1400019f100)
+	/Users/sondonghwi/Documents/git/usefulBoard/controller/URLHandler.go:40 +0x354
+net/http.HandlerFunc.ServeHTTP(0x1400008fad8?, {0x10286a710?, 0x140000f28c0?}, 0x10?)
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:2122 +0x38
+net/http.(*ServeMux).ServeHTTP(0x0?, {0x10286a710, 0x140000f28c0}, 0x1400019f100)
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:2500 +0x140
+net/http.serverHandler.ServeHTTP({0x140001e5800?}, {0x10286a710, 0x140000f28c0}, 0x1400019f100)
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:2936 +0x2d8
+net/http.(*conn).serve(0x14000192ab0, {0x10286a8d8, 0x140000993e0})
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:1995 +0x560
+created by net/http.(*Server).Serve
+	/opt/homebrew/Cellar/go/1.20.4/libexec/src/net/http/server.go:3089 +0x520
+2023/11/10 09:55:47 [space s835  ]
+2023/11/10 09:55:48 [space s835  ]
+2023/11/10 09:57:06 [space s835  ]
+2023/11/10 09:57:37 [space s835  ]
+2023/11/10 09:57:45 [space s835  ]
+2023/11/10 09:57:49 [space s835  ]
+2023/11/10 09:57:50 [space s835  ]
+2023/11/10 09:58:09 [space s835  ]
+2023/11/10 09:58:10 [space s835  ]
+2023/11/10 09:58:15 
+2023/11/10 09:58:15 서버를 중지하는 중...
+2023/11/10 09:58:18 이전에 저장된 데이터를 불러오는 중...
+2023/11/10 09:58:18 users 저장된 데이터 불러오기 성공.
+2023/11/10 09:58:18 spaces 저장된 데이터 불러오기 성공.
+2023/11/10 09:58:18 80 포트에서 요청을 기다리는 중...
+2023/11/10 09:58:19 [space s835  ]
+2023/11/10 09:58:41 [space s835  ]
+2023/11/10 09:58:51 [space s835  ]
+2023/11/10 09:58:58 [space s835  ]
+2023/11/10 09:59:29 [space s835  ]
+2023/11/10 09:59:47 [space s835  ]
+2023/11/10 09:59:55 [space s835  ]
+2023/11/10 10:00:22 [space s835  ]
+2023/11/10 10:00:31 [space s835  ]
+2023/11/10 10:00:38 [space s835  ]
+2023/11/10 10:00:38 [guest s835  ]
+2023/11/10 10:00:38 [assets host.css  ]
+2023/11/10 10:00:42 [  ]
+2023/11/10 10:00:42 [favicon.ico  ]
+2023/11/10 10:00:47 [host  ]
+2023/11/10 10:00:47 [assets host.css  ]
+2023/11/10 10:01:17 [space create  ]
+2023/11/10 10:01:17 [space  ]
+2023/11/10 10:01:17 [space q954  ]
+2023/11/10 10:01:25 [space addcomment   ]
+2023/11/10 10:01:25 [space  ]
+2023/11/10 10:01:25 [space q954  ]
+2023/11/10 10:01:30 [space addcomment   ]
+2023/11/10 10:01:30 [space  ]
+2023/11/10 10:01:30 [space q954  ]
+2023/11/10 10:01:36 [  ]
+2023/11/10 10:01:36 [favicon.ico  ]
+2023/11/10 10:01:38 [guest  ]
+2023/11/10 10:01:38 [assets host.css  ]
+2023/11/10 10:01:44 [space join  ]
+2023/11/10 10:01:44 [space  ]
+2023/11/10 10:01:44 [space q954  ]
+2023/11/10 10:01:49 [space addcomment   ]
+2023/11/10 10:01:49 [space  ]
+2023/11/10 10:01:49 [space q954  ]
+2023/11/10 10:01:55 [  ]
+2023/11/10 10:01:55 [favicon.ico  ]
+2023/11/10 10:01:56 [space  ]
+2023/11/10 10:01:56 [space q954  ]
+2023/11/10 10:03:52 
+2023/11/10 10:03:52 서버를 중지하는 중...

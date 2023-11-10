@@ -1,19 +1,92 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Space: {{.Sp_name}}</title>
+  <style>
+    *{
+      font-family: sans-serif;
+    }
+    ul, li {
+      border-radius: 10px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      border: 1px solid skyblue;
+      border-radius: 10px;
+      padding: 10px
+    }
+
+    li {
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid black;
+      border-radius: 300px;
+    }
+
+    header, main, footer {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    header {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      text-align: center;
+    }
+
+    main {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+    footer {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      text-align: center;
+    }
+
+    form {
+      margin: 0 auto;
+      max-width: 500px;
+      background-color: antiquewhite;
+    }
+
+    input[type="text"], input[type="radio"] {
+      display: block;
+      width: 100%;
+      font-size: large;
+      margin-bottom: 10px;
+    }
+
+    button {
+      width: 100%;
+      font-size: large;
+      margin-top: 10px;
+    }
+  </style>
 </head>
+
 <body>
   <header>
     <h1>{{.Sp_name}}</h1>
-    <h2>{{.Sp_id}}</h2>
-    <p>{{.Sp_view}}</p>
-    <p>{{.Sp_lastupdate}}</p>
+    <h2>space ID: {{.Sp_id}}</h2>
+    <p>조회:{{.Sp_view}}</p>
+    <p>마지막 갱신:{{.Sp_lastupdate}}</p>
   </header>
   <main>
-    <p>{{.Sp_comments}}</p>
+    {{range $_, $v := .Sp_comments}}
+    <ul>
+      <li>{{$v.Sp_c_content}}</li>
+      <li>{{$v.Sp_c_guestname}}</li>
+      <li>{{$v.Sp_c_color}}</li>
+    </ul>
+    {{end}}
   </main>
   <footer>
     <form action="/space/addcomment/" method="post">
@@ -28,4 +101,5 @@
     </form>
   </footer>
 </body>
+
 </html>

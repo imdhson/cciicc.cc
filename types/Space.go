@@ -27,6 +27,6 @@ type Space struct {
 type Sp_comment struct {
 	Sp_c_content   string
 	Sp_c_guestname string
-	Sp_c_color     int
+	Sp_c_color     Sp_c_color
 	//Sp_c_comment   []Sp_comment //recursive 처리 - UI 복잡해서 일단 안하기로함
 }

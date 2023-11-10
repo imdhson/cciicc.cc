@@ -35,9 +35,9 @@ func PostHandler_create_space(w http.ResponseWriter, r *http.Request) {
 	}
 	regist_success := service.UserRegist(user)
 	if regist_success {
+		service.GenerateQRPNG(space_id)
 		http.Redirect(w, r, "/space", http.StatusFound)
 	} else {
 		http.Redirect(w, r, "/error", http.StatusFound)
 	}
-
 }

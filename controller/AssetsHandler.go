@@ -47,5 +47,5 @@ func DotFileType(in string) string { //파일 이름을 받으면 . 이후의 �
 			return string(in2[i+1:])
 		}
 	}
-	return "None"
+	return ""
 }

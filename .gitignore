@@ -24,3 +24,4 @@ go.work
 *.key
 *.log
 *.data
+*.png

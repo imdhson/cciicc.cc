@@ -13,6 +13,7 @@ type DataSpaceContent struct {
 	Sp_view       int
 	Sp_lastupdate string
 	Sp_comments   []types.Sp_comment
+	Png_path      string
 }
 
 func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string) {
@@ -53,6 +54,7 @@ func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string
 		Sp_view:       space.Sp_view,
 		Sp_lastupdate: space.Sp_lastupdate.String(),
 		Sp_comments:   space.Sp_comments,
+		Png_path:      "/assets/space_qr/" + space_id + ".png",
 	}
 	tmpl.Execute(w, data)
 }

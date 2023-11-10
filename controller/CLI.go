@@ -49,16 +49,6 @@ func CLI() {
 			}
 		case "save", "savedata":
 			service.SaveDatas()
-		case "1":
-			comment := types.Sp_comment{
-				Sp_c_content:   "form_comment",
-				Sp_c_guestname: "user.User_name",
-				Sp_c_color:     1000,
-			}
-			//spaces := types.GetInstance_spaces()
-			//(*spaces)[0].Sp_comments = append((*spaces)[0].Sp_comments, comment)
-			space, _ := service.GetSpaceFrom_space_id("s835")
-			space.Sp_comments = append(space.Sp_comments, comment)
 		default:
 			fmt.Println("invalid 명령어")
 		}

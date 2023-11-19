@@ -32,7 +32,9 @@ header h3 {
     text-decoration: none;
     font-weight: normal;
 }
-
+#content_view_count{
+    padding:0;
+}
 header a {
     color: gray;
 }

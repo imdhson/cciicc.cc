@@ -4,107 +4,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Space: {{.Sp_name}}</title>
+  <title>{{.Sp_name}} - {{.Service_name}}</title>
   <style>
-    *{
-      font-family: sans-serif;
-    }
-    ul, li {
-      border-radius: 10px;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-
-      border: 1px solid skyblue;
-      border-radius: 10px;
-      padding: 10px
-    }
-
-    li {
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid black;
-      border-radius: 300px;
-    }
-
-    header, main, footer {
-      max-width: 960px;
-      margin: 0 auto;
-    }
-
-    header {
-      padding-top: 20px;
-      padding-bottom: 20px;
-      text-align: center;
-    }
-
-    main {
-      padding-top: 20px;
-      padding-bottom: 20px;
-    }
-
-    footer {
-      padding-top: 20px;
-      padding-bottom: 20px;
-      text-align: center;
-    }
-
-    form {
-      margin: 0 auto;
-      max-width: 500px;
-      background-color: antiquewhite;
-    }
-
-    input[type="text"], input[type="radio"] {
-      display: block;
-      width: 100%;
-      height: 30px;;
-      font-size: large;
-      margin-bottom: 10px;
-    }
-
-    button {
-      width: 100%;
-      height: 30px;
-      font-size: large;
-      margin-top: 10px;
-    }
+    @import url('{{.Url_address}}/assets/content.css');
   </style>
+  <script src="{{.Url_address}}/assets/content.js" />
+  </script>
 </head>
 
-<body>
+<body onload="onLoad({{.Url_address}})"> <!-- 템플릿엔진 에러 무시 -->
   <header>
     <h1>{{.Sp_name}}</h1>
-    <h2>space ID: {{.Sp_id}}</h2>
-    <p>조회:{{.Sp_view}}</p>
-    <p>마지막 갱신:{{.Sp_lastupdate}}</p>
-    <img src="{{.Png_path}}" width="200" height="auto"/>
-    <a href= "/" ><button id="mainButton">메인화면으로 가기</button></a>
+    <a href="{{.Url_address}}">
+      <h3>{{.Url_address}}/
+    </a><b>{{.Sp_id}}</b></h3>
+    <p>{{.Content_view_count}}</p>
+    <img id="QRsmall" src="{{.Sp_png_path}}" onclick="qrsmallClick()" />
   </header>
   <main>
-    {{range $_, $v := .Sp_comments}}
-    <ul>
-      <li>댓글 아이디: {{$v.Sp_c_id}}</li>
-      <li>내용: {{$v.Sp_c_content}}</li>
-      <li>이름: {{$v.Sp_c_guestname}}</li>
-      <li>color: {{$v.Sp_c_color}}</li>
-
-    </ul>
-    {{end}}
+    <section id="QRbig">
+      <img src="{{.Sp_png_path}}" />
+    </section>
+    <section id="comments">
+      {{range $_, $v := .Sp_comments}}
+      <section id="comment_c">
+        <li>댓글 아이디: {{$v.Sp_c_id}}</li>
+        <li>내용: {{$v.Sp_c_content}}</li>
+        <li>이름: {{$v.Sp_c_guestname}}</li>
+        <li>color: {{$v.Sp_c_color}}</li>
+      </section>
+      {{end}}
+    </section>
   </main>
+  <form action="/space/addcomment/" method="post">
+    <input type="text" name="comment" placeholder="{{.User_name}}:">
+    <select>
+      <option name="color" value="-1" style="color: black;">⬛️ black</option>
+      <option name="color" value="0" style="color: orange;">🟧 orange</option>
+      <option name="color" value="1">🩵 skyblue</option>
+      <option name="color" value="2">🟩 green</option>
+      <option name="color" value="3">💗 pink</option>
+      <option name="color" value="4">🟥 red</option>
+      <option name="color" value="5">🟦 blue</option>
+    </select>
+    <button type="submit">전송</button>
+  </form>
   <footer>
-    <form action="/space/addcomment/" method="post">
-      <input type="text" name="comment" placeholder="댓글">
-      <input type="radio" name="color" value="0">ORANGE
-      <input type="radio" name="color" value="1">SKYBLUE
-      <input type="radio" name="color" value="2">GREEN
-      <input type="radio" name="color" value="3">PINK
-      <input type="radio" name="color" value="4">RED
-      <input type="radio" name="color" value="5">BLUE
-      <button type="submit">전송</button>
-    </form>
+    <p>{{.Footer_terms}}</p>
   </footer>
 </body>
 

@@ -37,7 +37,8 @@ func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string
 	if !getSpace_success {
 		http.Redirect(w, r, "/error", http.StatusFound)
 	}
-
+	//space에 조회수 1 추가
+	space.Sp_view += 1
 	// 템플릿에 변수 설정
 	type DataSpaceContent struct {
 		Service_name  string

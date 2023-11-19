@@ -12,13 +12,13 @@
   </script>
 </head>
 
-<body>
+<body onload="intervel({{.Url_address}})"> <!-- 템플릿엔진 에러 무시 -->
   <header>
     <h1>{{.Sp_name}}</h1>
     <a href="{{.Url_address}}">
       <h3>{{.Url_address}}/
     </a><b>{{.Sp_id}}</b></h3>
-    <p>{{.Content_view_count}}</p>
+    <p id="content_view_count"></p><p>{{.Content_view_count}}</p>
     <img id="QRsmall" src="{{.Sp_png_path}}" onclick="qrsmallClick()" />
   </header>
   <main>
@@ -26,14 +26,6 @@
       <img src="{{.Sp_png_path}}" />
     </section>
     <section id="comments">
-      {{range $_, $v := .Sp_comments}}
-      <section id = "comment_c">
-        <li>댓글 아이디: {{$v.Sp_c_id}}</li>
-        <li>내용: {{$v.Sp_c_content}}</li>
-        <li>이름: {{$v.Sp_c_guestname}}</li>
-        <li>color: {{$v.Sp_c_color}}</li>
-      </section>
-      {{end}}
     </section>
   </main>
   <form action="/space/addcomment/" method="post">

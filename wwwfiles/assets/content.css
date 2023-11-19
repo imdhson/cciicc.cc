@@ -1,0 +1,193 @@
+* {
+    text-decoration: none;
+    color: black;
+    transition: 1s;
+}
+
+body {
+    margin: auto;
+    border: 1px solid grey;
+    font-family: sans-serif;
+}
+
+header {
+    width: 100%;
+    height: auto;
+    display: block;
+    display: inline-flex;
+    background-color: #ececec;
+}
+
+header h1 {
+    margin-left: 1em;
+    /* border: 1px solid orange; */
+    border-radius: 20px;
+    padding: 5px;
+    height: 1em;
+}
+
+header h3 {
+    width: auto;
+    margin-left: 1em;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+header a {
+    color: gray;
+}
+
+header b {
+    color: black;
+    font-size: larger;
+}
+
+header p {
+    margin-left: 1em;
+}
+
+#QRsmall {
+    position: fixed;
+    right: 0;
+    width: 5em;
+    /* border: 1px solid pink; */
+}
+
+main {
+    /* border: 1px solid orange; */
+    margin: 1em;
+    text-align: center;
+    text-decoration: none;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+#QRbig {
+    width: 150px;
+}
+
+#QRbig img {
+    width: 300px;
+    height: auto;
+}
+
+#comments {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+
+}
+
+#comment_c {
+    list-style-type: none;
+    /* border: 1px pink solid; */
+    margin: auto;
+    width: 100%;
+    height: 100x;
+}
+
+form {
+    background-color: white;
+    display: block;
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+    border: 1px solid black;
+    border-radius: 30px;
+    padding: 1em;
+    text-align: center;
+    margin: auto;
+    max-width: 500px;
+}
+
+input,
+textarea {
+    width: calc(100% - 1em);
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 1em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #000;
+}
+
+select {
+    padding: 1em;
+    max-width: 100px;
+    margin-bottom: 1em;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: rgb(255, 159, 175);
+    transition: background-color 0.5s;
+}
+
+footer {
+    margin-top: 5em;
+    text-align: center;
+    margin-bottom: 200px;
+}
+
+footer p {
+    color: gray;
+}
+
+
+
+/* responsive web */
+@media (max-width: 850px) {
+    #QRsmall {
+        width: 50px;
+    }
+
+    header {
+        font-size: smaller;
+    }
+
+    #QRbig {
+        display: none;
+    }
+
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    form {
+        width: calc(100% - 1em);
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+}
+
+@media (max-width: 500px) {
+    header {
+        font-size: smaller;
+    }
+
+    #comments {
+        grid-template-columns: 1fr;
+    }
+
+    #comment_c {
+        width: 100%;
+    }
+}

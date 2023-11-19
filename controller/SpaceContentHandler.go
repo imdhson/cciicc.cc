@@ -7,15 +7,6 @@ import (
 	"ub/types"
 )
 
-type DataSpaceContent struct {
-	Sp_id         string
-	Sp_name       string
-	Sp_view       int
-	Sp_lastupdate string
-	Sp_comments   []types.Sp_comment
-	Png_path      string
-}
-
 func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
@@ -48,13 +39,34 @@ func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string
 	}
 
 	// 템플릿에 변수 설정
+	type DataSpaceContent struct {
+		Service_name  string
+		Url_address   string
+		Sp_id         string
+		Sp_name       string
+		Sp_view       int
+		Sp_lastupdate string
+		Sp_comments   []types.Sp_comment
+		Sp_png_path   string
+		User_name     string
+
+		Content_view_count string
+
+		Footer_terms string
+	}
 	data := DataSpaceContent{
+		Service_name:  types.SERVICE_NAME,
+		Url_address:   types.URL_ADDESS,
+		User_name:     user.User_name,
 		Sp_id:         space.Sp_id,
 		Sp_name:       space.Sp_name,
 		Sp_view:       space.Sp_view,
 		Sp_lastupdate: space.Sp_lastupdate.String(),
 		Sp_comments:   space.Sp_comments,
-		Png_path:      "/assets/space_qr/" + space_id + ".png",
+		Sp_png_path:   types.URL_ADDESS + "/assets/space_qr/" + space_id + ".png",
+
+		Content_view_count: types.CONTENT_VIEW_COUNT,
+		Footer_terms:       types.FOOTER_TERMS,
 	}
 	tmpl.Execute(w, data)
 }

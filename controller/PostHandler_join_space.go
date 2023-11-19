@@ -13,6 +13,9 @@ func PostHandler_join_space(w http.ResponseWriter, r *http.Request) {
 
 	form_space_id := strings.ToLower(r.FormValue("spaceId"))
 	form_user_name := r.FormValue("userName")
+	if form_user_name == "" { //이름 미 지정시
+		form_user_name = types.WHEN_USERNAME_EMPTY + service.Random_space_id_generator()
+	}
 
 	_, form_space_id_valid := service.GetSpaceFrom_space_id(form_space_id)
 	if form_user_name == "" || !form_space_id_valid { //username이 없거나, spaceid가 유효하지 아니하면 에러

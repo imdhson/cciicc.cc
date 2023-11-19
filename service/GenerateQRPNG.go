@@ -13,7 +13,7 @@ func GenerateQRPNG(space_id string) {
 	} else { // '/'로 끝날 떄
 		url = types.URL_ADDESS
 	}
-	url = url + "guest/" + space_id
+	url = url + space_id
 	filepath := "wwwfiles/assets/space_qr/" + space_id + ".png"
 	QR_err := qrcode.WriteFile(url, qrcode.Highest, 4096, filepath)
 	ErrHandler(QR_err, "QR_err")

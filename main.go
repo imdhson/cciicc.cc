@@ -25,4 +25,5 @@ func main() {
 	//err := http.ListenAndServeTLS(":"+strconv.Itoa(SSLPORT), "ssl/combined.crt", "ssl/private.key", mux)
 	err := http.ListenAndServe(":"+strconv.Itoa(PORT), mux) //암호화없음
 	service.CriticalErr(err, "http.ListenAndServe")
+
 }

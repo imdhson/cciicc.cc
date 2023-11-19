@@ -1,0 +1,143 @@
+* {
+    text-decoration: none;
+    color: black;
+    transition: 1s;
+}
+
+body {
+    margin: auto;
+    width: 40em;
+    border: 1px solid grey;
+    font-family: sans-serif;
+}
+
+main {
+    margin: 1em;
+    text-align: center;
+    text-decoration: none;
+}
+
+nav {
+    margin: 1em;
+    margin-top: 2em;
+
+    width: auto;
+}
+
+.mainbutton {
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 30px;
+    display: inline-block;
+    padding: 1em;
+    margin: auto;
+}
+
+.mainbutton:hover {
+    background-color: rgb(255, 159, 175);
+    transition: background-color 0.5s;
+}
+
+header h1 {
+    text-align: center;
+}
+
+footer {
+    margin-top: 5em;
+    text-align: center;
+}
+
+footer p {
+    color: gray;
+}
+
+/*
+Host, guest
+*/
+form {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: medium;
+    color: black
+}
+
+input,
+textarea {
+    width: calc( 100% - 1em );
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 1em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #000;
+}
+form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: rgb(255, 159, 175);
+    transition: background-color 0.5s;
+}
+
+#large_input{
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* responsive web */
+@media (max-width: 800px) {
+    body {
+        width: auto;
+    }
+
+    .mainbutton {
+        display: block;
+        padding: 0.5em;
+        width: 80%;
+        margin-bottom: 1em;
+    }
+
+    form {
+        max-width: 90%;
+    }
+
+}
+
+@media (max-width: 500px) {
+    .mainbutton {
+        width: 90%;
+    }
+    input, form button {
+        width: 90%;
+    }
+    
+}

@@ -1,29 +1,37 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Host: space 생성</title>
-  <link rel="stylesheet" href="/assets/host.css">
+  <title>{{.Host_detail}} - {{.Service_name}}</title>
+  <style>
+    @import url('{{.Url_address}}/assets/main.css');
+  </style>
 </head>
+
 <body>
-    <body>
-        <div class="container">
-          <h1>Host: space 생성</h1>
-          <a href= "/" ><button id="mainButton">메인화면으로 가기</button></a>
-          <form action="/space/create" method="post">
-            <div class="form-group">
-              <label for="spaceName">space 이름</label>
-              <input type="text" class="form-control" id="spaceName" name="spaceName" placeholder="space 이름을 입력하세요.">
-            </div>
-              <label for="userName">user 이름</label>
-              <input type="text" class="form-control" id="userName" name="userName" placeholder="사용자이름">
-              <button type="submit" class="btn btn-primary">생성</button>
-            </div>
-          </form>
-          
-        </div>
-      </body>
-      
+
+  <header>
+    <a href="{{.Url_address}}">
+      <h1>{{.Service_name}}</h1>
+    </a>
+  </header>
+  <main>
+    <h3>{{.Host_detail}}</h3>
+  </main>
+
+  <form action="{{.Url_address}}/space/create" method="post">
+    <label for="spaceName">{{.Host_spacename}}</label>
+    <input type="text" id = "large_input" name="spaceName" placeholder="{{.Host_spacename_input}}">
+
+    <label for="userName">{{.Host_username}}</label>
+    <input type="text" name="userName" placeholder="{{.Host_username_input}}">
+    <button type="submit">{{.Host_form_button}}</button>
+  </form>
+  <footer>
+    <p>{{.Footer_terms}}</p>
+  </footer>
 </body>
+
 </html>

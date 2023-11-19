@@ -1,7 +1,6 @@
 package service
 
 import (
-	"time"
 	"ub/types"
 )
 
@@ -14,7 +13,6 @@ func GetSpaceFrom_space_id(space_id string) (*types.Space, bool) {
 			rst_success = true
 			rst = &(*spaces)[i]
 			(*spaces)[i].Sp_view += 1
-			(*spaces)[i].Sp_lastupdate = time.Now()
 			return rst, rst_success
 		}
 	}

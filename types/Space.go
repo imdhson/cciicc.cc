@@ -25,6 +25,7 @@ type Space struct {
 }
 
 type Sp_comment struct {
+	Sp_c_id        int
 	Sp_c_content   string
 	Sp_c_guestname string
 	Sp_c_color     Sp_c_color

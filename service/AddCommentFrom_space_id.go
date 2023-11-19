@@ -1,6 +1,9 @@
 package service
 
-import "ub/types"
+import (
+	"time"
+	"ub/types"
+)
 
 func AddCommentFrom_space_id(space_id string, comment *types.Sp_comment) {
 	spaces := types.GetInstance_spaces()
@@ -11,5 +14,7 @@ func AddCommentFrom_space_id(space_id string, comment *types.Sp_comment) {
 			break
 		}
 	}
+	comment.Sp_c_id = len((*spaces)[tmpi].Sp_comments)
 	(*spaces)[tmpi].Sp_comments = append((*spaces)[tmpi].Sp_comments, *comment)
+	(*spaces)[tmpi].Sp_lastupdate = time.Now()
 }

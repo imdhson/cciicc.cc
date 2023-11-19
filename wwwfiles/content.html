@@ -86,9 +86,11 @@
   <main>
     {{range $_, $v := .Sp_comments}}
     <ul>
-      <li>{{$v.Sp_c_content}}</li>
-      <li>{{$v.Sp_c_guestname}}</li>
-      <li>{{$v.Sp_c_color}}</li>
+      <li>댓글 아이디: {{$v.Sp_c_id}}</li>
+      <li>내용: {{$v.Sp_c_content}}</li>
+      <li>이름: {{$v.Sp_c_guestname}}</li>
+      <li>color: {{$v.Sp_c_color}}</li>
+
     </ul>
     {{end}}
   </main>

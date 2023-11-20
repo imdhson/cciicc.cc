@@ -43,5 +43,5 @@ const ( //KR
 	GUEST_USERNAME_INPUT string = "당신의 닉네임을 입력하세요"
 	GUEST_FORM_BUTTON    string = "space 입장하기"
 
-	CONTENT_VIEW_COUNT string = "회 열람"
+	CONTENT_VIEW_COUNT string = "회 조회"
 )

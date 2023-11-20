@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"log"
 	"net/http"
 	"strings"
 )
@@ -10,7 +9,6 @@ func URLHandler(w http.ResponseWriter, r *http.Request) {
 	now_url_sliced := strings.Split(strings.ToLower(r.URL.Path), "/")
 	now_url_sliced = append(now_url_sliced, "", "") //인덱스초과 방지용
 	now_url_sliced = now_url_sliced[1:]
-	log.Println(now_url_sliced)
 
 	switch now_url_sliced[0] {
 	case "":

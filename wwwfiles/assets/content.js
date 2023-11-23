@@ -49,74 +49,86 @@ function qrsmallClick() {
     }
     qrsmallclick_toggle = !qrsmallclick_toggle
 }
+
+function writeComment_c(element) {
+    if (element.Sp_c_id > last_comment_id) {
+        const comment_c = document.createElement("section")
+        comment_c.id = "comment_c"
+        comment_c.setAttribute("Sp_c_id", element.Sp_c_id)
+
+        var li_content = document.createElement("li")
+        li_content.id = "comment_c_content"
+        li_content.textContent = element.Sp_c_content
+        if (element.Sp_c_content.length > 12) { //길이가 길면 글자 크기 작게 출력
+            li_content.style.fontSize = "1em"
+        }
+
+        var li_name = document.createElement("li")
+        li_name.id = "comment_c_name"
+        li_name.style.textDecoration = "underline"
+        li_name.textContent = element.Sp_c_guestname
+
+        var li_rate = document.createElement("li")
+        li_rate.id = "comment_c_rate"
+        li_rate.textContent = "❤️ " + element.Sp_c_rate
+
+        var li_rate_like = document.createElement("li")
+        li_rate_like.textContent = "👍"
+        li_rate_like.onclick = function () {
+            send_c_rate(true, element.Sp_c_id)
+            onLoad(urladdress) //클릭시 즉시 갱신
+        }
+        li_rate_like.style.fontSize = "2em"
+        li_rate_like.style.display = "none"
+
+        var li_rate_dislike = document.createElement("li")
+        li_rate_dislike.textContent = "👎"
+        li_rate_dislike.onclick = function () {
+            send_c_rate(false, element.Sp_c_id)
+            onLoad(urladdress) //클릭시 즉시 갱신
+        }
+        li_rate_dislike.style.fontSize = "2em"
+        li_rate_dislike.style.display = "none"
+        //하트 누를 때
+        li_rate.onclick = function () {
+            li_rate_like.style.display = "block"
+            li_rate_dislike.style.display = "block"
+            comment_c.style.height = "11em";
+        };
+        //댓글 영역에서 마우스 호버 해제시 
+        comment_c.onmouseleave = function () {
+            li_rate_like.style.display = "none"
+            li_rate_dislike.style.display = "none"
+            comment_c.style.height = "7em";
+        }
+
+        comment_c.append(li_content, li_name, li_rate, li_rate_like, li_rate_dislike)
+
+        document.getElementById("comments").appendChild(comment_c)
+        last_comment_id = element.Sp_c_id
+    }
+}
+
 function sortByID(Sp_comments) {
     Sp_comments.forEach(element => {
-        if (element.Sp_c_id > last_comment_id) {
-            const comment_c = document.createElement("section")
-            comment_c.id = "comment_c"
-            comment_c.setAttribute("Sp_c_id", element.Sp_c_id)
-
-            var li_content = document.createElement("li")
-            li_content.id = "comment_c_content"
-            li_content.textContent = element.Sp_c_content
-            if (element.Sp_c_content.length > 12) { //길이가 길면 글자 크기 작게 출력
-                li_content.style.fontSize = "1em"
-            }
-
-            var li_name = document.createElement("li")
-            li_name.id = "comment_c_name"
-            li_name.textContent = element.Sp_c_guestname
-
-            var li_rate = document.createElement("li")
-            li_rate.id = "comment_c_rate"
-            li_rate.textContent = "❤️ " + element.Sp_c_rate
-
-            var li_rate_like = document.createElement("li")
-            li_rate_like.textContent = "👍"
-            li_rate_like.onclick = function () {
-                send_c_rate(true, element.Sp_c_id)
-                onLoad(urladdress) //클릭시 즉시 갱신
-            }
-            li_rate_like.style.fontSize = "2em"
-            li_rate_like.style.display = "none"
-
-            var li_rate_dislike = document.createElement("li")
-            li_rate_dislike.textContent = "👎"
-            li_rate_dislike.onclick = function () {
-                send_c_rate(false, element.Sp_c_id)
-                onLoad(urladdress) //클릭시 즉시 갱신
-            }
-            li_rate_dislike.style.fontSize = "2em"
-            li_rate_dislike.style.display = "none"
-            //하트 누를 때
-            li_rate.onclick = function () {
-                li_rate_like.style.display = "block"
-                li_rate_dislike.style.display = "block"
-                comment_c.style.height = "11em";
-            };
-            //댓글 영역에서 마우스 호버 해제시 
-            comment_c.onmouseleave = function () {
-                li_rate_like.style.display = "none"
-                li_rate_dislike.style.display = "none"
-                comment_c.style.height = "7em";
-            }
-
-            comment_c.append(li_content, li_name, li_rate, li_rate_like, li_rate_dislike)
-
-            document.getElementById("comments").appendChild(comment_c)
-            last_comment_id = element.Sp_c_id
-        }
+        writeComment_c(element)
     });
-
 }
 
 function sortByRate(Sp_comments) {
-    const arrayclass = new Array.from(Sp_comments)
-    arrayclass.sort((a, b) => a.Sp_c_rate.localeCompare(b.Sp_c_rate))
-
-    arrayclass.forEach(element => {
-
+    Sp_comments.sort((a, b) => {
+        if (a.Sp_c_rate < b.Sp_c_rate) {
+            return 1;
+        } else if (a.Sp_c_rate > b.Sp_c_rate) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }); //정렬시 0에서 사라지는 문제 !
+    Sp_comments.forEach(element => {
+        writeComment_c(element)
     });
+
 }
 
 function send_c_rate(like, comment_c_id) {
@@ -143,7 +155,7 @@ function rateRefresh_on_DOM(Sp_comments) {
         Sp_comments.forEach(Sp_comments_element => {
             if (comments_element_c_id == Sp_comments_element.Sp_c_id) {
                 //comments_element.comment_c_rate.textContent = Sp_comments_element.Sp_c_rate
-                comments_element.querySelector("#comment_c_rate").textContent = "❤️ "+Sp_comments_element.Sp_c_rate
+                comments_element.querySelector("#comment_c_rate").textContent = "❤️ " + Sp_comments_element.Sp_c_rate
             }
         });
     }
@@ -158,12 +170,12 @@ function onLoad() {
         if (xhr.status == 200) {
             const jsonData = JSON.parse(xhr.responseText)
 
-              //조회수 갱신
-              p_content_view_count = document.getElementById("content_view_count")
-              p_content_view_count.textContent = jsonData.Sp_view
-  
-              //rate 갱신
-              rateRefresh_on_DOM(jsonData.Sp_comments)
+            //조회수 갱신
+            p_content_view_count = document.getElementById("content_view_count")
+            p_content_view_count.textContent = jsonData.Sp_view
+
+            //rate 갱신
+            rateRefresh_on_DOM(jsonData.Sp_comments)
 
             //time에 변동이 있을 때만 그리기
             if (last_update == jsonData.Sp_lastupdate) {
@@ -171,6 +183,7 @@ function onLoad() {
             }
             if (jsonData.Sp_comments != null) {//댓글이 존재한다는 뜻
                 popup(false)
+                sortbyRate_toggle = true
                 if (sortbyRate_toggle) { // 좋아요순대로 정렬할지의 여부
                     sortByRate(jsonData.Sp_comments)
                 } else {
@@ -190,7 +203,7 @@ function onLoad() {
                 }
 
             }
-          
+
         }
     };
     xhr.send()

@@ -44,4 +44,5 @@ const ( //KR
 	GUEST_FORM_BUTTON    string = "space 입장하기"
 
 	CONTENT_VIEW_COUNT string = "회 조회"
+	CONTENT_ORDER      string = "정렬 변경"
 )

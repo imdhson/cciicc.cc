@@ -51,6 +51,7 @@ func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string
 		Sp_png_path   string
 		User_name     string
 
+		Content_order      string
 		Content_view_count string
 
 		Footer_terms string
@@ -67,6 +68,7 @@ func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string
 		Sp_png_path:   types.URL_ADDESS + "/assets/space_qr/" + space_id + ".png",
 
 		Content_view_count: types.CONTENT_VIEW_COUNT,
+		Content_order:      types.CONTENT_ORDER,
 		Footer_terms:       types.FOOTER_TERMS,
 	}
 	tmpl.Execute(w, data)

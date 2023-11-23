@@ -1,6 +1,9 @@
 package service
 
-import "ub/types"
+import (
+	"time"
+	"ub/types"
+)
 
 func RateCommentFrom_space_id(space_id string, rate_like *bool, comment_c_id *int) {
 	spaces := types.GetInstance_spaces()
@@ -22,5 +25,6 @@ func RateCommentFrom_space_id(space_id string, rate_like *bool, comment_c_id *in
 	} else {
 		(*spaces)[tmpi_space].Sp_comments[tmpi_comment].Sp_c_rate -= 1
 	}
+	(*spaces)[tmpi_space].Sp_lastupdate = time.Now()
 
 }

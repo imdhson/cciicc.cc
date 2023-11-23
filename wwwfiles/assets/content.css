@@ -32,9 +32,7 @@ header h3 {
     text-decoration: none;
     font-weight: normal;
 }
-#content_view_count{
-    padding:0;
-}
+
 header a {
     color: gray;
 }
@@ -44,9 +42,15 @@ header b {
     font-size: larger;
 }
 
-header p {
+#content_view_count {
     margin-left: 1em;
+    padding:0;
 }
+#content_order{
+    margin-left:3em;
+    text-decoration: underline;
+}
+
 
 #QRsmall {
     position: fixed;

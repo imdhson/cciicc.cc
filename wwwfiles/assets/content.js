@@ -54,6 +54,7 @@ function sortByID(Sp_comments) {
         if (element.Sp_c_id > last_comment_id) {
             const comment_c = document.createElement("section")
             comment_c.id = "comment_c"
+            comment_c.setAttribute("Sp_c_id", element.Sp_c_id)
 
             var li_content = document.createElement("li")
             li_content.id = "comment_c_content"
@@ -67,17 +68,24 @@ function sortByID(Sp_comments) {
             li_name.textContent = element.Sp_c_guestname
 
             var li_rate = document.createElement("li")
+            li_rate.id = "comment_c_rate"
             li_rate.textContent = "❤️ " + element.Sp_c_rate
 
             var li_rate_like = document.createElement("li")
             li_rate_like.textContent = "👍"
-            li_rate_like.onclick= send_c_rate(true, element.Sp_c_id)
+            li_rate_like.onclick = function () {
+                send_c_rate(true, element.Sp_c_id)
+                onLoad(urladdress) //클릭시 즉시 갱신
+            }
             li_rate_like.style.fontSize = "2em"
             li_rate_like.style.display = "none"
 
             var li_rate_dislike = document.createElement("li")
             li_rate_dislike.textContent = "👎"
-            li_rate_dislike.onclick = send_c_rate(false, element.Sp_c_id)
+            li_rate_dislike.onclick = function () {
+                send_c_rate(false, element.Sp_c_id)
+                onLoad(urladdress) //클릭시 즉시 갱신
+            }
             li_rate_dislike.style.fontSize = "2em"
             li_rate_dislike.style.display = "none"
             //하트 누를 때
@@ -93,8 +101,6 @@ function sortByID(Sp_comments) {
                 comment_c.style.height = "7em";
             }
 
-
-
             comment_c.append(li_content, li_name, li_rate, li_rate_like, li_rate_dislike)
 
             document.getElementById("comments").appendChild(comment_c)
@@ -109,7 +115,7 @@ function sortByRate(Sp_comments) {
     arrayclass.sort((a, b) => a.Sp_c_rate.localeCompare(b.Sp_c_rate))
 
     arrayclass.forEach(element => {
-    
+
     });
 }
 
@@ -130,6 +136,20 @@ function send_c_rate(like, comment_c_id) {
     xhr.send(data);
 }
 
+function rateRefresh_on_DOM(Sp_comments) {
+    const comments = document.getElementById("comments")
+    for (comments_element of comments.children) {
+        comments_element_c_id = comments_element.getAttribute("Sp_c_id")
+        Sp_comments.forEach(Sp_comments_element => {
+            if (comments_element_c_id == Sp_comments_element.Sp_c_id) {
+                //comments_element.comment_c_rate.textContent = Sp_comments_element.Sp_c_rate
+                comments_element.querySelector("#comment_c_rate").textContent = "❤️ "+Sp_comments_element.Sp_c_rate
+            }
+        });
+    }
+
+}
+
 function onLoad() {
     //json 받아서 쓰기
     const xhr = new XMLHttpRequest();
@@ -137,6 +157,13 @@ function onLoad() {
     xhr.onload = function () {
         if (xhr.status == 200) {
             const jsonData = JSON.parse(xhr.responseText)
+
+              //조회수 갱신
+              p_content_view_count = document.getElementById("content_view_count")
+              p_content_view_count.textContent = jsonData.Sp_view
+  
+              //rate 갱신
+              rateRefresh_on_DOM(jsonData.Sp_comments)
 
             //time에 변동이 있을 때만 그리기
             if (last_update == jsonData.Sp_lastupdate) {
@@ -163,9 +190,7 @@ function onLoad() {
                 }
 
             }
-            //조회수 갱신
-            p_content_view_count = document.getElementById("content_view_count")
-            p_content_view_count.textContent = jsonData.Sp_view
+          
         }
     };
     xhr.send()
@@ -178,14 +203,7 @@ function intervel(urladdress_i) {
     setInterval(() => onLoad(urladdress), 1000)
 }
 
-
-/*
-
-
-
-*/
-
 //추가할 기능:
-// 좋아요 싫어요 js 로 전송  ing
-// 정렬 옵션 id순 or 좋아요 순 V
+// 좋아요 싫어요 js 로 전송  완료
+// 정렬 옵션 id순 or 좋아요 순 완료
 // 좋아요순 구현 시 인터랙션 안하면 새로고침하며 새로 그리기 

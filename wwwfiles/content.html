@@ -13,37 +13,41 @@
 </head>
 
 <body onload="intervel({{.Url_address}})"> <!-- 템플릿엔진 에러 무시 -->
-  <header>
-    <h1>{{.Sp_name}}</h1>
-    <a href="{{.Url_address}}">
-      <h3>{{.Url_address}}/
-    </a><b>{{.Sp_id}}</b></h3>
-    <p id="content_view_count"></p><p>{{.Content_view_count}}</p>
-    <img id="QRsmall" src="{{.Sp_png_path}}" onclick="qrsmallClick()" />
-  </header>
-  <main>
-    <section id="QRbig">
-      <img src="{{.Sp_png_path}}" />
-    </section>
-    <section id="comments">
-    </section>
-  </main>
-  <form action="/space/addcomment/" method="post">
-    <input type="text" name="comment" placeholder="{{.User_name}}:">
-    <select>
-      <option name="color" value="-1" style="color: black;">⬛️ black</option>
-      <option name="color" value="0" style="color: orange;">🟧 orange</option>
-      <option name="color" value="1">🩵 skyblue</option>
-      <option name="color" value="2">🟩 green</option>
-      <option name="color" value="3">💗 pink</option>
-      <option name="color" value="4">🟥 red</option>
-      <option name="color" value="5">🟦 blue</option>
-    </select>
-    <button type="submit">전송</button>
-  </form>
-  <footer>
-    <p>{{.Footer_terms}}</p>
-  </footer>
+
+  <section class="bodysection">
+    <header>
+      <h1>{{.Sp_name}}</h1>
+      <a href="{{.Url_address}}">
+        <h3>{{.Url_address}}/
+      </a><b>{{.Sp_id}}</b></h3>
+      <p id="content_view_count"></p>
+      <p>{{.Content_view_count}}</p>
+      <img id="QRsmall" src="{{.Sp_png_path}}" onclick="qrsmallClick()" />
+    </header>
+    <main>
+      <section id="QRbig">
+        <img src="{{.Sp_png_path}}" />
+      </section>
+      <section id="comments">
+      </section>
+    </main>
+    <form action="/space/addcomment/" method="post">
+      <input type="text" name="comment" placeholder="{{.User_name}}:" autofocus>
+      <select>
+        <option name="color" value="-1" style="color: black;">⬛️ black</option>
+        <option name="color" value="0" style="color: orange;">🟧 orange</option>
+        <option name="color" value="1">🩵 skyblue</option>
+        <option name="color" value="2">🟩 green</option>
+        <option name="color" value="3">💗 pink</option>
+        <option name="color" value="4">🟥 red</option>
+        <option name="color" value="5">🟦 blue</option>
+      </select>
+      <button type="submit">전송</button>
+    </form>
+    <footer>
+      <p>{{.Footer_terms}}</p>
+    </footer>
+  </section>
 </body>
 
 </html>

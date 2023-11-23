@@ -10,22 +10,26 @@
 </head>
 
 <body>
-  <header>
-    <a href="{{.Url_address}}"><h1>{{.Service_name}}</h1></a>
-  </header>
-  <main>
-    <p>{{.Service_detail}}</p>
-  </main>
-  <nav id = "mainButtons">
-    <a href="{{.Url_address}}/host" class="mainbutton">{{.Main_host}}</a>
-    <a href="{{.Url_address}}/guest" class="mainbutton">{{.Main_guest}}</a>
-    {{if .Main_if_next_up}}
-    <a href="{{.Url_address}}/space" class="mainbutton">{{.Main_next_up}}</a>
-    {{end}}
-  </nav>
-  <footer>
-    <p>{{.Footer_terms}}</p>
-  </footer>
+  <section class = "bodysection">
+    <header>
+      <a href="{{.Url_address}}">
+        <h1>{{.Service_name}}</h1>
+      </a>
+    </header>
+    <main>
+      <p>{{.Service_detail}}</p>
+    </main>
+    <nav id="mainButtons">
+      <a href="{{.Url_address}}/host" class="mainbutton">{{.Main_host}}</a>
+      <a href="{{.Url_address}}/guest" class="mainbutton">{{.Main_guest}}</a>
+      {{if .Main_if_next_up}}
+      <a href="{{.Url_address}}/space" class="mainbutton">{{.Main_next_up}}</a>
+      {{end}}
+    </nav>
+    <footer>
+      <p>{{.Footer_terms}}</p>
+    </footer>
+  </section>
 </body>
 
 </html>

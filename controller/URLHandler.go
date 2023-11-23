@@ -1,14 +1,17 @@
 package controller
 
 import (
+	"log"
 	"net/http"
 	"strings"
+	"ub/service"
 )
 
 func URLHandler(w http.ResponseWriter, r *http.Request) {
 	now_url_sliced := strings.Split(strings.ToLower(r.URL.Path), "/")
 	now_url_sliced = append(now_url_sliced, "", "") //인덱스초과 방지용
 	now_url_sliced = now_url_sliced[1:]
+	log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
 
 	switch now_url_sliced[0] {
 	case "":
@@ -32,7 +35,9 @@ func URLHandler(w http.ResponseWriter, r *http.Request) {
 		case "json": //space/json
 			SpaceJSONHandler(w, r)
 		case "addcomment":
-			PostHandler_comments(w, r)
+			PostHandler_comment(w, r)
+		case "comment_rate":
+			PostHandler_comment_rate(w, r)
 		default:
 			// space/[space_id] , space_id는 변조 위험이 있음으로 실제 핸들링시 확인 필요. UI로서의 space_id임.
 			SpaceContentHandler(w, r, now_url_sliced[1])

@@ -2,13 +2,14 @@
     text-decoration: none;
     color: black;
     transition: 1s;
+    font-family: sans-serif;
 }
 
-body {
+.bodysection {
     margin: auto;
-    width: 40em;
-    border: 1px solid grey;
-    font-family: sans-serif;
+    max-width: 40em;
+    padding: 1em;
+    background-color: #ebe8e8;
 }
 
 main {
@@ -76,7 +77,7 @@ label {
 
 input,
 textarea {
-    width: calc( 100% - 1em );
+    width: calc(100% - 1em);
     padding-top: 1em;
     padding-bottom: 1em;
     padding-left: 1em;
@@ -90,6 +91,7 @@ input:focus,
 textarea:focus {
     border-color: #000;
 }
+
 form button {
     width: 100%;
     padding: 10px;
@@ -107,7 +109,7 @@ form button:hover {
     transition: background-color 0.5s;
 }
 
-#large_input{
+#large_input {
     font-size: large;
     font-weight: bold;
     text-align: center;
@@ -115,7 +117,7 @@ form button:hover {
 
 /* responsive web */
 @media (max-width: 800px) {
-    body {
+    .bodysection {
         width: auto;
     }
 
@@ -136,8 +138,10 @@ form button:hover {
     .mainbutton {
         width: 90%;
     }
-    input, form button {
+
+    input,
+    form button {
         width: 90%;
     }
-    
+
 }

@@ -7,7 +7,7 @@ import (
 	"ub/types"
 )
 
-func PostHandler_comments(w http.ResponseWriter, r *http.Request) {
+func PostHandler_comment(w http.ResponseWriter, r *http.Request) {
 	form_comment := r.FormValue("comment")
 	form_color := r.FormValue("color")
 	form_color_int, form_color_int_err := strconv.Atoi(form_color)

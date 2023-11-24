@@ -1,7 +1,7 @@
 package service
 
 import (
-	"cciicc.cc/types"
+	"cciicc/types"
 )
 
 func GetSpaceFrom_space_id(space_id string) (*types.Space, bool) {

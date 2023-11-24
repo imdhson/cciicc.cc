@@ -45,3 +45,15 @@ func (spaces *Spaces) Remove_space(idx int) {
 		}
 	}
 }
+
+type Sp_c_color int
+
+const (
+	WHILE  Sp_c_color = -1
+	ORANGE Sp_c_color = iota
+	SKYBLUE
+	GREEN
+	PINK
+	RED
+	BLUE
+)

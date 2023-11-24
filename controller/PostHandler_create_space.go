@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"time"
 
-	"cciicc.cc/service"
-	"cciicc.cc/types"
+	"cciicc/service"
+	"cciicc/types"
 )
 
 func PostHandler_create_space(w http.ResponseWriter, r *http.Request) {

@@ -4,8 +4,8 @@ import (
 	"html/template"
 	"net/http"
 
-	"cciicc.cc/service"
-	"cciicc.cc/types"
+	"cciicc/service"
+	"cciicc/types"
 )
 
 func GuestHandler(w http.ResponseWriter, r *http.Request, space_id string) {

@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"cciicc.cc/service"
+	"cciicc/service"
 )
 
 func URLHandler(w http.ResponseWriter, r *http.Request) {

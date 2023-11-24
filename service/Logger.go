@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"cciicc.cc/storage"
+	"cciicc/storage"
 )
 
 func Logging(i string) {

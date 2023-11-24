@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"cciicc.cc/service"
-	"cciicc.cc/types"
+	"cciicc/service"
+	"cciicc/types"
 )
 
 func PostHandler_join_space(w http.ResponseWriter, r *http.Request) {

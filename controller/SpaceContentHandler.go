@@ -4,9 +4,9 @@ import (
 	"html/template"
 	"net/http"
 
-	"cciicc.cc/types"
+	"cciicc/types"
 
-	"cciicc.cc/service"
+	"cciicc/service"
 )
 
 func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string) {

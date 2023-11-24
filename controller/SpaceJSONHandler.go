@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"cciicc.cc/types"
+	"cciicc/types"
 
-	"cciicc.cc/service"
+	"cciicc/service"
 )
 
 func SpaceJSONHandler(w http.ResponseWriter, r *http.Request) {

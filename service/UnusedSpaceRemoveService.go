@@ -3,8 +3,8 @@ package service
 import (
 	"time"
 
-	"cciicc.cc/storage"
-	"cciicc.cc/types"
+	"cciicc/storage"
+	"cciicc/types"
 )
 
 func UnusedSpaceRemoveService() {

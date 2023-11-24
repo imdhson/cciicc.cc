@@ -1,22 +1,10 @@
 package types
 
-type Sp_c_color int
-
 const (
-	WHILE  Sp_c_color = -1
-	ORANGE Sp_c_color = iota
-	SKYBLUE
-	GREEN
-	PINK
-	RED
-	BLUE
-)
-
-const (
+	URL_ADDESS                    string = "http://localhost"
 	SESSION_EXPIRE_DURATION_HOURS        = 1
-	URL_ADDESS                    string = "http://localhost" //use for QR generation, html linking
-	WHEN_SPACENAME_EMPTY                 = "new space"        // space name을 입력하지 않았을 떄 기본값
-	WHEN_USERNAME_EMPTY                  = "user: "           //user name을 입력하지 않았을 떄 기본값
+	WHEN_SPACENAME_EMPTY          string = "new space" // space name을 입력하지 않았을 떄 기본값
+	WHEN_USERNAME_EMPTY           string = "user: "    //user name을 입력하지 않았을 떄 기본값
 )
 
 const ( //KR

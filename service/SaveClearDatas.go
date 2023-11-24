@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"cciicc.cc/types"
+	"cciicc/types"
 
-	"cciicc.cc/storage"
+	"cciicc/storage"
 )
 
 func SaveDatas() {

@@ -3,8 +3,8 @@ package controller
 import (
 	"fmt"
 
-	"cciicc.cc/service"
-	"cciicc.cc/types"
+	"cciicc/service"
+	"cciicc/types"
 )
 
 func CLI() {

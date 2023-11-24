@@ -5,12 +5,13 @@ import (
 	"net/http"
 	"strconv"
 
-	"cciicc.cc/controller"
-	"cciicc.cc/service"
+	"cciicc/controller"
+	"cciicc/service"
 )
 
 const PORT = 80
 const SSLPORT = 443
+const URL_ADDESS string = "http://localhost" //use for QR generation, html linking
 
 func main() {
 
@@ -22,9 +23,11 @@ func main() {
 	const PORT int = 80
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", controller.URLHandler)
-	log.Println(""+strconv.Itoa(PORT), "포트에서 요청을 기다리는 중...")
-	//err := http.ListenAndServeTLS(":"+strconv.Itoa(SSLPORT), "ssl/combined.crt", "ssl/private.key", mux)
+	go http.ListenAndServeTLS(":"+strconv.Itoa(SSLPORT), "certkey", "key", mux)
+	log.Println(""+strconv.Itoa(SSLPORT), "포트에서 요청을 기다리는 중...")
+
 	err := http.ListenAndServe(":"+strconv.Itoa(PORT), mux) //암호화없음
+	log.Println(""+strconv.Itoa(PORT), "포트에서 요청을 기다리는 중...")
 	service.CriticalErr(err, "http.ListenAndServe")
 
 	//next up:

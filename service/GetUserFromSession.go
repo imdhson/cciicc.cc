@@ -1,7 +1,7 @@
 package service
 
 import (
-	"cciicc.cc/types"
+	"cciicc/types"
 )
 
 func GetUserFromSession(session string) (types.User, bool) {

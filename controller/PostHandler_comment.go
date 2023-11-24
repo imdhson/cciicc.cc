@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"cciicc.cc/service"
-	"cciicc.cc/types"
+	"cciicc/service"
+	"cciicc/types"
 )
 
 func PostHandler_comment(w http.ResponseWriter, r *http.Request) {

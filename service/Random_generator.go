@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"strconv"
 
-	"cciicc.cc/types"
+	"cciicc/types"
 )
 
 func Random_space_id_generator() string {

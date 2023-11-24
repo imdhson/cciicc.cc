@@ -8,9 +8,9 @@ import (
 	"os/signal"
 	"time"
 
-	"cciicc.cc/types"
+	"cciicc/types"
 
-	"cciicc.cc/storage"
+	"cciicc/storage"
 )
 
 func StopService() {

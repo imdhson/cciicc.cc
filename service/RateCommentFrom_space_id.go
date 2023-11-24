@@ -3,7 +3,7 @@ package service
 import (
 	"time"
 
-	"cciicc.cc/types"
+	"cciicc/types"
 )
 
 func RateCommentFrom_space_id(space_id string, rate_like *bool, comment_c_id *int) {

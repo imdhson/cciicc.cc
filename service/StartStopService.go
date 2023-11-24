@@ -56,6 +56,9 @@ func StartService() {
 
 	//space_qr 정상 작동을 위해 디렉터리 생성 시도
 	storage.MakeDir_space_qr()
+
+	//일정 주기로 사용하지 않는 서비스 자동 삭제
+	go UnusedSpaceRemoveService()
 }
 
 func DetectStopService() {

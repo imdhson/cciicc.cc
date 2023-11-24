@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -12,7 +11,6 @@ import (
 func PostHandler_comment(w http.ResponseWriter, r *http.Request) {
 	form_comment := r.FormValue("comment")
 	form_color := r.FormValue("color")
-	fmt.Println(form_color, form_comment)
 	form_color_int, form_color_int_err := strconv.Atoi(form_color)
 	if form_color_int_err != nil {
 		form_color_int = -1

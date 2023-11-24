@@ -27,4 +27,12 @@ func main() {
 	err := http.ListenAndServe(":"+strconv.Itoa(PORT), mux) //암호화없음
 	service.CriticalErr(err, "http.ListenAndServe")
 
+	//next up:
+
+	// 인터랙션 하루동안 없으면 스페이스, qr 자동 삭제 - for stability
+	// 좋아요순 구현 시 인터랙션 안하면 새로고침하며 새로 그리기 [완료 테스트중]
+	// form으로 보내기를 js로 받아와서 비동기식으로 처리 [완료 테스트중]
+	// 좋아요 싫어요 js 로 전송  [완료]
+	// 정렬 옵션 id순 or 좋아요 순 [완료]
+	// 댓글 색상 처리 [완료]
 }

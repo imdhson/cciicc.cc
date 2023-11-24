@@ -39,10 +39,14 @@ func CLI() {
 			}
 		case "spaces_all":
 			spaces := types.GetInstance_spaces()
-			fmt.Println(spaces)
+			for _, v := range *spaces {
+				fmt.Println(v)
+			}
 		case "users_all":
 			users := types.GetInstance_users()
-			fmt.Println(users)
+			for _, v := range *users {
+				fmt.Println(v)
+			}
 		case "users":
 			users := types.GetInstance_users()
 			for _, v := range *users { //스페이스공간 디버그용

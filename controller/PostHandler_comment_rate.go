@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -22,8 +21,6 @@ func PostHandler_comment_rate(w http.ResponseWriter, r *http.Request) {
 	}
 	comment_c_id, err := strconv.Atoi(r.FormValue("comment_c_id"))
 	service.ErrHandler(err, "comment_c_id : rate handling")
-
-	fmt.Println(form_like, comment_c_id)
 
 	session, getcookie_err := r.Cookie("ub_session")
 

@@ -88,7 +88,7 @@ main {
     margin: auto;
     margin-top: 1em;
     max-width: calc(100% - 20px);
-    overflow: scroll;
+    overflow: auto;
     height: 7em;
     border: 1px solid rgb(198, 198, 198);
     padding: 10px;

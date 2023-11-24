@@ -23,8 +23,8 @@ func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string
 	var user_success bool
 	session, getcookie_err := r.Cookie("ub_session")
 	if getcookie_err != nil {
-		service.ErrHandler(getcookie_err, "SpaceContentHandler getCookie")
-		http.Redirect(w, r, "/error", http.StatusFound)
+		redirect_url := "/guest/" + space_id
+		http.Redirect(w, r, redirect_url, http.StatusFound)
 		return
 	} else {
 		user, user_success = service.GetUserFromSession(session.Value)

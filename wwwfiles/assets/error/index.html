@@ -24,9 +24,9 @@
 		<div class="container">
 			<div id="notfound" class="text-center ">
 				<h1>😮</h1>
-				<h2>에러가 발생하였음</h2>
-				<p>error occured</p>
-				<a href="/">usefulBoard 메인</a>
+				<h2>{{.Error_title}}</h2>
+				<p>{{.Error_content}}</p>
+				<a href="{{.Url_address}}">{{.Error_main}}</a>
 			</div>
 		</div>
 	</div>

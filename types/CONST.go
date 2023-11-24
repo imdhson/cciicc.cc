@@ -13,7 +13,7 @@ const (
 )
 
 const (
-	SESSION_EXPIRE_DURATION_HOURS        = 24
+	SESSION_EXPIRE_DURATION_HOURS        = 1
 	URL_ADDESS                    string = "http://localhost" //use for QR generation, html linking
 	WHEN_SPACENAME_EMPTY                 = "new space"        // space name을 입력하지 않았을 떄 기본값
 	WHEN_USERNAME_EMPTY                  = "user: "           //user name을 입력하지 않았을 떄 기본값
@@ -45,4 +45,8 @@ const ( //KR
 	CONTENT_VIEW_COUNT string = "회 조회"
 	CONTENT_ORDER      string = "정렬"
 	CONTENT_SEND       string = "전송"
+
+	ERROR_TITLE   string = "Error"
+	ERROR_CONTENT string = "오류가 발생하였음. 유효하지 않은 주소이거나 정상적이지 못한 동작임."
+	ERROR_MAIN    string = "새 출발 하기"
 )

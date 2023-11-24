@@ -232,8 +232,7 @@ function onLoad() {
                     sortByRate(jsonData.Sp_comments)
                 } else { //ID순 대로 정렬
                     //부드럽게 맨 아래로 이동
-                    const comments = document.querySelector('footer');
-                    comments.scrollIntoView({ behavior: "smooth", block: "end" });
+                    window.scrollTo({top: document.body.scrollHeight, behavior:"smooth", duration:5000})
 
                     sortByID(jsonData.Sp_comments)
                 }

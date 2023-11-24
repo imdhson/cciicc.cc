@@ -53,6 +53,7 @@ func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string
 
 		Content_order      string
 		Content_view_count string
+		Content_send       string
 
 		Footer_terms string
 	}
@@ -69,7 +70,9 @@ func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string
 
 		Content_view_count: types.CONTENT_VIEW_COUNT,
 		Content_order:      types.CONTENT_ORDER,
-		Footer_terms:       types.FOOTER_TERMS,
+		Content_send:       types.CONTENT_SEND,
+
+		Footer_terms: types.FOOTER_TERMS,
 	}
 	tmpl.Execute(w, data)
 }

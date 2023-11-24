@@ -14,16 +14,15 @@ const (
 
 const (
 	SESSION_EXPIRE_DURATION_HOURS        = 24
-	URL_ADDESS                    string = "http://localhost"
-	//use for QR generation, html linking
-	WHEN_SPACENAME_EMPTY = "new space" // space name을 입력하지 않았을 떄 기본값
-	WHEN_USERNAME_EMPTY  = "user: "    //user name을 입력하지 않았을 떄 기본값
+	URL_ADDESS                    string = "http://localhost" //use for QR generation, html linking
+	WHEN_SPACENAME_EMPTY                 = "new space"        // space name을 입력하지 않았을 떄 기본값
+	WHEN_USERNAME_EMPTY                  = "user: "           //user name을 입력하지 않았을 떄 기본값
 )
 
 const ( //KR
 	SERVICE_NAME   string = "cciicc"
-	SERVICE_DETAIL string = "주제나 아이디어를 쉽게 공유할 수 있어요. 교육현장이나 사내 회의 등 환경에서 도움이 될거예요."
-	FOOTER_TERMS   string = "서비스 이용시 약관과 쿠키 사용에 동의하는 것임"
+	SERVICE_DETAIL string = "주제나 아이디어를 쉽게 공유할 수 있어요. 교육현장이나 회의 등의 환경에서 도움이 될거예요."
+	FOOTER_TERMS   string = "cciicc 이용시 약관과 쿠키 사용에 동의하는 것임"
 
 	MAIN_NEXT_UP string = "이어서 시작하기"
 	MAIN_HOST    string = "새로운 space 생성하기"
@@ -44,5 +43,6 @@ const ( //KR
 	GUEST_FORM_BUTTON    string = "space 입장하기"
 
 	CONTENT_VIEW_COUNT string = "회 조회"
-	CONTENT_ORDER      string = "정렬 변경"
+	CONTENT_ORDER      string = "정렬"
+	CONTENT_SEND       string = "전송"
 )

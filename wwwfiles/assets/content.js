@@ -4,6 +4,7 @@ let last_comment_id = -1
 let qrsmallclick_toggle = false
 let sortbyRate_toggle = false
 let popup_toggle = false
+let last_interaction = new Date()
 
 function popup(toggle, text) {
     if (toggle && !popup_toggle) {
@@ -35,6 +36,7 @@ function content_orderClick() {
     last_comment_id = -1
     last_update = ""
     sortbyRate_toggle = !sortbyRate_toggle
+    sortbyRate_toggle_imdt = true
     onLoad(urladdress)
 }
 function qrsmallClick() {
@@ -62,6 +64,17 @@ function writeComment_c(element) {
     const comment_c = document.createElement("section")
     comment_c.id = "comment_c"
     comment_c.setAttribute("Sp_c_id", element.Sp_c_id)
+    comment_c_color = element.Sp_c_color
+    comment_c.style.backgroundColor = ""
+    switch (comment_c_color) {
+        case -1: comment_c.style.backgroundColor = "white" ;break;
+        case 0: comment_c.style.backgroundColor = "#ffcc99"; break;
+        case 1: comment_c.style.backgroundColor = "#99e6ff"; break;
+        case 2: comment_c.style.backgroundColor = "#80ffcc"; break;
+        case 3: comment_c.style.backgroundColor = "#ff99ff"; break;
+        case 4: comment_c.style.backgroundColor = "#ff8080"; break;
+        case 5: comment_c.style.backgroundColor = "#4d94ff"; break;
+    }
 
     var li_content = document.createElement("li")
     li_content.id = "comment_c_content"
@@ -108,6 +121,7 @@ function writeComment_c(element) {
         li_rate_dislike.style.display = "none"
         comment_c.style.height = "7em";
     }
+
 
     comment_c.append(li_content, li_name, li_rate, li_rate_like, li_rate_dislike)
 
@@ -164,7 +178,6 @@ function rateRefresh_on_DOM(Sp_comments) {
         comments_element_c_id = comments_element.getAttribute("Sp_c_id")
         Sp_comments.forEach(Sp_comments_element => {
             if (comments_element_c_id == Sp_comments_element.Sp_c_id) {
-                //comments_element.comment_c_rate.textContent = Sp_comments_element.Sp_c_rate
                 comments_element.querySelector("#comment_c_rate").textContent = "❤️ " + Sp_comments_element.Sp_c_rate
             }
         });
@@ -194,6 +207,10 @@ function onLoad() {
             if (jsonData.Sp_comments != null) {//댓글이 존재한다는 뜻
                 popup(false)
                 if (sortbyRate_toggle) { // 좋아요순대로 정렬할지의 여부
+                    //마지막 인터랙션 수행 후 0.5초이하면 리턴 0.5초 이상이어야 아래 수행 //실험 중인 기능 
+                    if (last_interaction.getTime() + 500 > Date.now()) {
+                        return
+                    }
                     sortByRate(jsonData.Sp_comments)
                 } else {
                     sortByID(jsonData.Sp_comments)
@@ -218,14 +235,44 @@ function onLoad() {
     xhr.send()
 }
 
-function intervel(urladdress_i) {
-    //인터벌 설정 1초
+function startContent(urladdress_i) {
     urladdress = urladdress_i
+
+    // mousemove 이벤트를 핸들링하는 예
+    const element = document.querySelector('main');
+    element.addEventListener('mousemove', (event) => {
+        last_interaction = new Date()
+    });
+
+    //즉시 수행 초기에 한번
     onLoad(urladdress)
+    //인터벌 설정 1초
     setInterval(() => onLoad(urladdress), 1000)
 }
+
+
+function addComment_form(event) { // 키보드의 모든 입력을 받고 엔터 혹은 터치(마우스) 클릭시에만 수행
+    console.log(event)
+    if (event == -1 || event.key == "Enter") { //터치 || 엔터
+        const xhr = new XMLHttpRequest();
+        const url = urladdress + "/space/addcomment";
+
+        const form = document.getElementById("comment_form")
+        const data = new FormData(form);
+        console.log(data)
+        xhr.open("POST", url, true);
+        xhr.send(data);
+
+        const form_text = document.getElementById("comment")
+        form_text.value = ""
+    }
+
+}
+
 
 //추가할 기능:
 // 좋아요 싫어요 js 로 전송  [완료]
 // 정렬 옵션 id순 or 좋아요 순 [완료]
-// 좋아요순 구현 시 인터랙션 안하면 새로고침하며 새로 그리기 [진행예정]  
+// 좋아요순 구현 시 인터랙션 안하면 새로고침하며 새로 그리기 [완료 테스트중]  
+// form으로 보내기를 js로 받아와서 비동기식으로 처리 [완료 테스트중]
+// 댓글 색상 처리

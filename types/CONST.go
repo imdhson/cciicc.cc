@@ -31,7 +31,7 @@ const ( //KR
 
 	HOST_DETAIL          string = "Host로 시작하기"
 	HOST_SPACENAME       string = "Space 이름"
-	HOST_SPACENAME_INPUT string = "Space 이름을 지정하세요. 예)회의실"
+	HOST_SPACENAME_INPUT string = "Space 이름을 지정하세요. 예) 회의실"
 	HOST_USERNAME        string = "당신의 닉네임"
 	HOST_USERNAME_INPUT  string = "당신의 닉네임을 입력하세요"
 	HOST_FORM_BUTTON     string = "space 생성하기"

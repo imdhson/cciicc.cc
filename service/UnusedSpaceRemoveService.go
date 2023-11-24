@@ -3,6 +3,7 @@ package service
 import (
 	"time"
 
+	"cciicc.cc/storage"
 	"cciicc.cc/types"
 )
 
@@ -14,7 +15,11 @@ func UnusedSpaceRemoveService() {
 			lastupdateSubtract_hour := v.Sp_lastupdate.Add(time.Hour * -1)
 			timeCompare := time.Now().Compare(lastupdateSubtract_hour) //-1: 1시간 이내 1: 1시간 지나서 삭제
 			if timeCompare == 1 {
-				spaces.Remove_space(i)
+				spaces.Remove_space(i) //space [i] 삭제
+
+				file_remove_err := storage.Delete_space_ar("wwwfiles/assets/space_qr/" + v.Sp_id + ".png")
+				CriticalErr(file_remove_err, "UnusedSpaceRemoveService - 파일 삭제")
+
 				isRemove = true
 				break
 			}

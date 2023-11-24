@@ -25,6 +25,7 @@ func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string
 	if getcookie_err != nil {
 		service.ErrHandler(getcookie_err, "SpaceContentHandler getCookie")
 		http.Redirect(w, r, "/error", http.StatusFound)
+		return
 	} else {
 		user, user_success = service.GetUserFromSession(session.Value)
 	}
@@ -38,6 +39,7 @@ func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string
 	space, getSpace_success := service.GetSpaceFrom_space_id(user.User_related_spaceid)
 	if !getSpace_success {
 		http.Redirect(w, r, "/error", http.StatusFound)
+		return
 	}
 	//space에 조회수 1 추가
 	space.Sp_view += 1

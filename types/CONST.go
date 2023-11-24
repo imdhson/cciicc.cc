@@ -3,6 +3,7 @@ package types
 const (
 	URL_ADDESS                    string = "http://localhost"
 	SESSION_EXPIRE_DURATION_HOURS        = 1
+	AUTOREMOVE_UNUSED_SPACE_HOURS        = 1
 	WHEN_SPACENAME_EMPTY          string = "new space" // space name을 입력하지 않았을 떄 기본값
 	WHEN_USERNAME_EMPTY           string = "user: "    //user name을 입력하지 않았을 떄 기본값
 )

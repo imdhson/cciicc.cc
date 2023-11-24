@@ -10,18 +10,18 @@
 *.env
 # Test binary, built with `go test -c`
 *.test
-*.crt
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 *.origin
 # Dependency directories (remove the comment below to include it)
 # vendor/
+*.crt
 *.pem
+*.key
 # Go workspace file
 go.work
 #custom
-*.key
 *.log
 *.data
 *.png

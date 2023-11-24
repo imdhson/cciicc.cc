@@ -27,7 +27,7 @@ const ( //KR
 
 	MAIN_NEXT_UP string = "이어서 시작하기"
 	MAIN_HOST    string = "새로운 space 생성하기"
-	MAIN_GUEST   string = "코드 입력하여 시작하기"
+	MAIN_GUEST   string = "코드 입력하여 입장하기"
 
 	HOST_DETAIL          string = "Host로 시작하기"
 	HOST_SPACENAME       string = "Space 이름"

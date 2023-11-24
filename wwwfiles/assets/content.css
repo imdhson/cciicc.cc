@@ -24,6 +24,8 @@ header h1 {
     border-radius: 20px;
     padding: 5px;
     height: 1em;
+    max-width: 500px;
+    overflow: hidden;
 }
 
 header h3 {
@@ -44,10 +46,11 @@ header b {
 
 #content_view_count {
     margin-left: 1em;
-    padding:0;
+    padding: 0;
 }
-#content_order{
-    margin-left:3em;
+
+#content_order {
+    margin-left: 3em;
     text-decoration: underline;
 }
 
@@ -93,12 +96,13 @@ main {
     word-wrap: break-word;
 }
 
-#comment_c_content{
+#comment_c_content {
     font-size: 2em;
     text-align: left;
-    
+
 }
-#comment_c_name{
+
+#comment_c_name {
     text-align: left;
     margin-bottom: 5px;
 }
@@ -174,13 +178,16 @@ footer p {
     #QRsmall {
         width: 50px;
     }
-
-    header h1{
+    header h1 {
         font-size: 15px;
+        max-width: 150px;
+        overflow: hidden;
     }
-    header h3{
+
+    header h3 {
         font-size: 10px;
     }
+
     header p {
         font-size: 10px;
     }
@@ -205,8 +212,15 @@ footer p {
 }
 
 @media (max-width: 500px) {
+
     header {
         font-size: smaller;
+    }
+
+    header h1 {
+        font-size: 10px;
+        max-width: 50px;
+        overflow: hidden;
     }
 
     #comments {

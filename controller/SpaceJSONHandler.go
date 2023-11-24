@@ -3,8 +3,10 @@ package controller
 import (
 	"encoding/json"
 	"net/http"
-	"ub/service"
-	"ub/types"
+
+	"cciicc.cc/types"
+
+	"cciicc.cc/service"
 )
 
 func SpaceJSONHandler(w http.ResponseWriter, r *http.Request) {

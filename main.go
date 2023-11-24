@@ -4,8 +4,9 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"ub/controller"
-	"ub/service"
+
+	"cciicc.cc/controller"
+	"cciicc.cc/service"
 )
 
 const PORT = 80

@@ -2,7 +2,8 @@ package service
 
 import (
 	"time"
-	"ub/types"
+
+	"cciicc.cc/types"
 )
 
 func Create_space(space_name string) string {

@@ -1,6 +1,6 @@
 package service
 
-import "ub/types"
+import "cciicc.cc/types"
 
 func UserRegist(user types.User) bool {
 	users := types.GetInstance_users()

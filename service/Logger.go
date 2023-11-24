@@ -4,7 +4,8 @@ import (
 	"io"
 	"log"
 	"os"
-	"ub/storage"
+
+	"cciicc.cc/storage"
 )
 
 func Logging(i string) {

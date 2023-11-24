@@ -3,8 +3,10 @@ package service
 import (
 	"encoding/json"
 	"fmt"
-	"ub/storage"
-	"ub/types"
+
+	"cciicc.cc/types"
+
+	"cciicc.cc/storage"
 )
 
 func SaveDatas() {

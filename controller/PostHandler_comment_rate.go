@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"ub/service"
-	"ub/types"
+
+	"cciicc.cc/service"
+	"cciicc.cc/types"
 )
 
 func PostHandler_comment_rate(w http.ResponseWriter, r *http.Request) {

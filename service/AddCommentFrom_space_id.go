@@ -2,7 +2,8 @@ package service
 
 import (
 	"time"
-	"ub/types"
+
+	"cciicc.cc/types"
 )
 
 func AddCommentFrom_space_id(space_id string, comment *types.Sp_comment) {

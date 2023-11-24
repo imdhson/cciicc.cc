@@ -1,7 +1,7 @@
 package service
 
 import (
-	"ub/types"
+	"cciicc.cc/types"
 
 	qrcode "github.com/skip2/go-qrcode"
 )

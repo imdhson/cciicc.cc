@@ -3,8 +3,9 @@ package controller
 import (
 	"net/http"
 	"time"
-	"ub/service"
-	"ub/types"
+
+	"cciicc.cc/service"
+	"cciicc.cc/types"
 )
 
 func PostHandler_create_space(w http.ResponseWriter, r *http.Request) {

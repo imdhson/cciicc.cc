@@ -3,7 +3,8 @@ package controller
 import (
 	"net/http"
 	"os"
-	"ub/service"
+
+	"cciicc.cc/service"
 )
 
 func ErrorPageHandler(w http.ResponseWriter, r *http.Request) {

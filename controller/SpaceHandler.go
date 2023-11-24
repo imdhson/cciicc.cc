@@ -2,8 +2,10 @@ package controller
 
 import (
 	"net/http"
-	"ub/service"
-	"ub/types"
+
+	"cciicc.cc/service"
+
+	"cciicc.cc/types"
 )
 
 func SpaceHandler(w http.ResponseWriter, r *http.Request, space_id string) {

@@ -7,8 +7,10 @@ import (
 	"os"
 	"os/signal"
 	"time"
-	"ub/storage"
-	"ub/types"
+
+	"cciicc.cc/types"
+
+	"cciicc.cc/storage"
 )
 
 func StopService() {

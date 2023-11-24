@@ -2,8 +2,9 @@ package controller
 
 import (
 	"fmt"
-	"ub/service"
-	"ub/types"
+
+	"cciicc.cc/service"
+	"cciicc.cc/types"
 )
 
 func CLI() {

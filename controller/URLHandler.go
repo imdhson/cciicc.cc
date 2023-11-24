@@ -4,7 +4,8 @@ import (
 	"log"
 	"net/http"
 	"strings"
-	"ub/service"
+
+	"cciicc.cc/service"
 )
 
 func URLHandler(w http.ResponseWriter, r *http.Request) {

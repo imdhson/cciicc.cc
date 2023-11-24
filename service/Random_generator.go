@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"math/rand"
 	"strconv"
-	"ub/types"
+
+	"cciicc.cc/types"
 )
 
 func Random_space_id_generator() string {

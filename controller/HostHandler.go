@@ -3,8 +3,9 @@ package controller
 import (
 	"html/template"
 	"net/http"
-	"ub/service"
-	"ub/types"
+
+	"cciicc.cc/service"
+	"cciicc.cc/types"
 )
 
 type DataHost struct {

@@ -11,16 +11,16 @@ import (
 
 const PORT = 80
 const SSLPORT = 443
-const URL_ADDESS string = "http://localhost" //use for QR generation, html linking
+
+// you need to change the URL_ADDESS which is located in types.CONST.go
 
 func main() {
 
-	//이전 데이터 불러오기
 	service.StartService()
 	go service.DetectStopService() //Ctrl+C (인터럽트)시 종료 서비스 호출
-	go controller.CLI()            //Command line 인터페이스 호출
 
-	const PORT int = 80
+	// go controller.CLI()            //Command line 인터페이스 호출 : 필요시 주석 해제
+
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", controller.URLHandler)
 	go http.ListenAndServeTLS(":"+strconv.Itoa(SSLPORT), "certkey", "key", mux)

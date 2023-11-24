@@ -38,7 +38,7 @@ const ( //KR
 
 	GUEST_DETAIL         string = "Guest로 시작하기"
 	GUEST_SPACEID        string = "Space ID 입력"
-	GUEST_SPACEID_INPUT  string = "Host가 제공한 Space ID를 입력하세요. 예)" //ex) 이후에 임의의 코드가 나옴
+	GUEST_SPACEID_INPUT  string = "Host가 제공한 Space ID를 입력하세요. 예) " //ex) 이후에 임의의 코드가 나옴
 	GUEST_USERNAME       string = "당신의 닉네임"
 	GUEST_USERNAME_INPUT string = "당신의 닉네임을 입력하세요"
 	GUEST_FORM_BUTTON    string = "space 입장하기"

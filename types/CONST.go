@@ -10,7 +10,7 @@ const (
 
 const ( //KR
 	SERVICE_NAME   string = "cciicc"
-	SERVICE_DETAIL string = "주제나 아이디어를 쉽게 공유할 수 있어요. 교육현장이나 회의 등의 환경에서 도움이 될거예요."
+	SERVICE_DETAIL string = "주제나 아이디어를 쉽게 공유할 수 있어요. 교육현장이나 회의 등의 환경에서 도움이 될거예요. 간편하게 익명으로 채팅을 할 수도 있어요."
 	FOOTER_TERMS   string = "cciicc 이용시 약관과 쿠키 사용에 동의하는 것임"
 
 	MAIN_NEXT_UP string = "이어서 시작하기"

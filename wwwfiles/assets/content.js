@@ -6,6 +6,21 @@ let sortbyRate_toggle = false
 let popup_toggle = false
 let last_interaction = new Date()
 
+function startContent(urladdress_i) {
+    urladdress = urladdress_i
+
+    // mousemove 이벤트를 핸들링하여 마지막 인터랙션 시각 저장
+    const element = document.querySelector('#comments');
+    element.addEventListener('mousemove', (event) => {
+        last_interaction = new Date()
+    });
+
+    //즉시 수행 초기에 한번
+    onLoad(urladdress)
+    //인터벌 설정 1초
+    setInterval(() => onLoad(urladdress), 1000)
+}
+
 function popup(toggle, text) {
     if (toggle && !popup_toggle) {
         console.log(toggle, !popup_toggle, toggle && !popup_toggle)
@@ -67,7 +82,7 @@ function writeComment_c(element) {
     comment_c_color = element.Sp_c_color
     comment_c.style.backgroundColor = ""
     switch (comment_c_color) {
-        case -1: comment_c.style.backgroundColor = "white" ;break;
+        case -1: comment_c.style.backgroundColor = "white"; break;
         case 0: comment_c.style.backgroundColor = "#ffcc99"; break;
         case 1: comment_c.style.backgroundColor = "#99e6ff"; break;
         case 2: comment_c.style.backgroundColor = "#80ffcc"; break;
@@ -200,19 +215,26 @@ function onLoad() {
             //rate 갱신
             rateRefresh_on_DOM(jsonData.Sp_comments)
 
+            //마지막 인터랙션 수행 후 1이하면 리턴 1초 이상이어야 아래 수행 //실험 중인 기능 
+            if (last_interaction.getTime() + 1000 > Date.now()) {
+                return
+            }
+
             //time에 변동이 있을 때만 그리기
             if (last_update == jsonData.Sp_lastupdate) {
                 return
             }
+
             if (jsonData.Sp_comments != null) {//댓글이 존재한다는 뜻
                 popup(false)
-                if (sortbyRate_toggle) { // 좋아요순대로 정렬할지의 여부
-                    //마지막 인터랙션 수행 후 0.5초이하면 리턴 0.5초 이상이어야 아래 수행 //실험 중인 기능 
-                    if (last_interaction.getTime() + 500 > Date.now()) {
-                        return
-                    }
+
+                if (sortbyRate_toggle) { // 좋아요순대로 정렬
                     sortByRate(jsonData.Sp_comments)
-                } else {
+                } else { //ID순 대로 정렬
+                    //부드럽게 맨 아래로 이동
+                    const comments = document.querySelector('footer');
+                    comments.scrollIntoView({ behavior: "smooth", block: "end" });
+
                     sortByID(jsonData.Sp_comments)
                 }
 
@@ -234,22 +256,6 @@ function onLoad() {
     };
     xhr.send()
 }
-
-function startContent(urladdress_i) {
-    urladdress = urladdress_i
-
-    // mousemove 이벤트를 핸들링하는 예
-    const element = document.querySelector('main');
-    element.addEventListener('mousemove', (event) => {
-        last_interaction = new Date()
-    });
-
-    //즉시 수행 초기에 한번
-    onLoad(urladdress)
-    //인터벌 설정 1초
-    setInterval(() => onLoad(urladdress), 1000)
-}
-
 
 function addComment_form(event) { // 키보드의 모든 입력을 받고 엔터 혹은 터치(마우스) 클릭시에만 수행
     console.log(event)

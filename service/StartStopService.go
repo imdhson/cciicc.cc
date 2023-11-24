@@ -59,6 +59,9 @@ func StartService() {
 
 	//일정 주기로 사용하지 않는 서비스 자동 삭제
 	go UnusedSpaceRemoveService()
+
+	//일정 주기로 저장 실행
+	go RegularSave()
 }
 
 func DetectStopService() {

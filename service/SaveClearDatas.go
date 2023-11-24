@@ -3,6 +3,7 @@ package service
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 
 	"cciicc.cc/types"
 
@@ -45,4 +46,11 @@ func ClearDatas() {
 	mkdir_err := storage.MakeDir_space_qr()
 	CriticalErr(mkdir_err, "storage.MakeDir_space_qr()")
 	fmt.Println("space_qr 폴더 재생성 성공")
+}
+
+func RegularSave() {
+	for {
+		time.Sleep(time.Hour * 1)
+		SaveDatas()
+	}
 }

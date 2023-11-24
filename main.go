@@ -28,7 +28,9 @@ func main() {
 	service.CriticalErr(err, "http.ListenAndServe")
 
 	//next up:
+	// 자동 데이터 저장 []
 
+	// 글 많아지면 맨 아래로 자동스크롤 only sort by id [완료]
 	// 인터랙션 하루동안 없으면 스페이스, qr 자동 삭제 - for stability [완료 테스트중]
 	// 삭제되면 네트워크 유실 에러 발생[ 완료 테스트중 ]
 
@@ -37,5 +39,4 @@ func main() {
 	// 좋아요 싫어요 js 로 전송  [완료]
 	// 정렬 옵션 id순 or 좋아요 순 [완료]
 	// 댓글 색상 처리 [완료]
-	//
 }

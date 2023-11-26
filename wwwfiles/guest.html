@@ -12,27 +12,32 @@
 
 <body>
   <section class="bodysection">
-  <header>
-    <a href="{{.Url_address}}">
-      <h1>{{.Service_name}}</h1>
+    <header>
+      <a href="{{.Url_address}}">
+        <h1>{{.Service_name}}</h1>
+      </a>
+    </header>
+    <main>
+      <h3>{{.Guest_detail}}</h3>
+    </main>
+
+    <form action="{{.Url_address}}/space/join" method="post">
+
+      <label for="spaceName">{{.Guest_spaceid}}</label>
+      <input type="text" id="large_input" name="spaceId" placeholder="{{.Guest_spaceid_input}}" value="{{.Sp_id}}"
+        required>
+
+      <label for="userName">{{.Guest_username}}</label>
+      <input type="text" name="userName" placeholder="{{.Guest_username_input}}">
+      <button type="submit">{{.Guest_form_button}}</button>
+
+    </form>
+  </section>
+  <footer>
+    <a href="{{.Url_address}}/assets/terms.html">
+      <p>{{.Footer_terms}}</p>
     </a>
-  </header>
-  <main>
-    <h3>{{.Guest_detail}}</h3>
-  </main>
-
-  <form action="{{.Url_address}}/space/join" method="post">
-
-    <label for="spaceName">{{.Guest_spaceid}}</label>
-    <input type="text" id = "large_input" name="spaceId" placeholder="{{.Guest_spaceid_input}}" value="{{.Sp_id}}" required>
-
-    <label for="userName">{{.Guest_username}}</label>
-    <input type="text" name="userName" placeholder="{{.Guest_username_input}}">
-    <button type="submit">{{.Guest_form_button}}</button>
-
-  </form>
-</section>
-
+  </footer>
 </body>
 
 </html>

@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	"time"
+	"syscall"
 
 	"cciicc/types"
 
@@ -65,16 +65,16 @@ func StartService() {
 }
 
 func DetectStopService() {
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
+	signal_var := make(chan os.Signal, 1)                      //시그널 변수 선언
+	exit := make(chan bool, 1)                                 //다중 신호 판별해야해서 불린 으로 선언
+	signal.Notify(signal_var, syscall.SIGINT, syscall.SIGTERM) //sigINT = Ctrl+C, SIGTERM = systemctl stop
+	go func() {                                                // 비동기 수행
+		<-signal_var //기다리다가 시그널 변수에 값 들어오는데 아무한테도 안넘김
+		exit <- true //바깥 exit이 대기하고있다가 수행하기 위해 true로 넣어줌
+	}()
 
-	for {
-		time.Sleep(time.Second * 2)
-		select {
-		case <-c:
-			log.Println()
-			StopService()
-		default:
-		}
-	}
+	<-exit //채널
+
+	StopService() // 정지 동작 수행
+
 }

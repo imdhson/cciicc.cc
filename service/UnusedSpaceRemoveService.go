@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"log"
 	"time"
 
@@ -14,13 +13,11 @@ func UnusedSpaceRemoveService() {
 		spaces := types.GetInstance_spaces()
 		isRemove := false
 		for i, v := range *spaces {
-			fmt.Println(i, v.Sp_id)
 			lastupdate_add_hour := v.Sp_lastupdate.Add(time.Hour * types.AUTOREMOVE_UNUSED_SPACE_HOURS)
 
 			timeCompare := time.Now().Compare(lastupdate_add_hour) //-1: 1시간 이내 1: 1시간 지나서 삭제
 
 			if timeCompare == 1 {
-				fmt.Println(i, v.Sp_id)
 				file_remove_err := storage.Delete_space_ar("wwwfiles/assets/space_qr/" + v.Sp_id + ".png")
 				CriticalErr(file_remove_err, "UnusedSpaceRemoveService - 파일 삭제")
 

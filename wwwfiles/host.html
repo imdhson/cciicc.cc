@@ -12,26 +12,28 @@
 
 <body>
   <section class="bodysection">
-  <header>
-    <a href="{{.Url_address}}" >
-      <h1>{{.Service_name}}</h1>
-    </a>
-  </header>
-  <main>
-    <h3>{{.Host_detail}}</h3>
-  </main>
+    <header>
+      <a href="{{.Url_address}}">
+        <h1>{{.Service_name}}</h1>
+      </a>
+    </header>
+    <main>
+      <h3>{{.Host_detail}}</h3>
+    </main>
 
-  <form action="{{.Url_address}}/space/create" method="post">
-    <label for="spaceName">{{.Host_spacename}}</label>
-    <input type="text" id = "large_input" name="spaceName" placeholder="{{.Host_spacename_input}}">
+    <form action="{{.Url_address}}/space/create" method="post">
+      <label for="spaceName">{{.Host_spacename}}</label>
+      <input type="text" id="large_input" name="spaceName" placeholder="{{.Host_spacename_input}}">
 
-    <label for="userName">{{.Host_username}}</label>
-    <input type="text" name="userName" placeholder="{{.Host_username_input}}">
-    <button type="submit">{{.Host_form_button}}</button>
-  </form>
-  <footer>
-    <a href = "{{.Url_address}}/assets/terms.html"><p>{{.Footer_terms}}</p></a>
-  </footer>
+      <label for="userName">{{.Host_username}}</label>
+      <input type="text" name="userName" placeholder="{{.Host_username_input}}">
+      <button type="submit">{{.Host_form_button}}</button>
+    </form>
+    <footer>
+      <a href="{{.Url_address}}/assets/terms.html">
+        <p>{{.Footer_terms}}</p>
+      </a>
+    </footer>
   </section>
 </body>
 

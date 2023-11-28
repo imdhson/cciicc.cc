@@ -23,7 +23,6 @@ function startContent(urladdress_i) {
 
 function popup(toggle, text) {
     if (toggle && !popup_toggle) {
-        console.log(toggle, !popup_toggle, toggle && !popup_toggle)
         popup_toggle = !popup_toggle
         //팝업 생성
         const popup = document.createElement("div")
@@ -257,14 +256,12 @@ function onLoad() {
 }
 
 function addComment_form(event) { // 키보드의 모든 입력을 받고 엔터 혹은 터치(마우스) 클릭시에만 수행
-    console.log(event)
     if (event == -1 || event.key == "Enter") { //터치 || 엔터
         const xhr = new XMLHttpRequest();
         const url = urladdress + "/space/addcomment";
 
         const form = document.getElementById("comment_form")
         const data = new FormData(form);
-        console.log(data)
         xhr.open("POST", url, true);
         xhr.send(data);
 

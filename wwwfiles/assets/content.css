@@ -6,7 +6,6 @@
 
 body {
     margin: auto;
-    border: 1px solid grey;
     font-family: sans-serif;
 }
 
@@ -139,9 +138,11 @@ textarea:focus {
 }
 
 select {
-    padding: 1em;
-    max-width: 100px;
+    min-width: 100px;
     margin-bottom: 1em;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 100px;
 }
 
 form button {

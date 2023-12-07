@@ -15,14 +15,14 @@ func SpaceJSONHandler(w http.ResponseWriter, r *http.Request) {
 	session, getcookie_err := r.Cookie("ub_session")
 	if getcookie_err != nil {
 		service.ErrHandler(getcookie_err, "getcookie_err")
-		http.Redirect(w, r, "/error", http.StatusFound)
+		w.WriteHeader(http.StatusForbidden)
 		return
 	} else { //오류 없을 때
 		user, user_success = service.GetUserFromSession(session.Value)
 	}
 
 	if !user_success { //user success false일 때
-		http.Redirect(w, r, "/error", http.StatusFound)
+		w.WriteHeader(http.StatusForbidden)
 		return
 	}
 

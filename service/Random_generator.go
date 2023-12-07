@@ -29,12 +29,14 @@ func Random_space_id_generator() string {
 
 func Random_sessionkey_generator(space_id string) string {
 	users := types.GetInstance_users()
-	rand_sessionkey := space_id + strconv.Itoa(rand.Intn(2^10))
+	rand_sessionkey := space_id + strconv.Itoa(rand.Intn(2^16))
 	valid := false
 	for !valid { //혹시나 같은 것을 찾으면 다시 랜덤 돌리기위함
+		valid = false
 		for _, v := range *users {
 			if rand_sessionkey == v.User_sessionkey {
-				rand_sessionkey = Random_sessionkey_generator(space_id)
+				rand_sessionkey = space_id + strconv.Itoa(rand.Intn(2^16))
+				break
 			}
 		}
 		valid = true

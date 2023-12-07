@@ -39,7 +39,7 @@ func PostHandler_join_space(w http.ResponseWriter, r *http.Request) {
 	user := types.User{
 		User_name:            form_user_name,
 		User_sessionkey:      sessionkeyStr,
-		User_isHost:          true,
+		User_isHost:          false,
 		User_related_spaceid: form_space_id,
 	}
 

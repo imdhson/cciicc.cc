@@ -34,7 +34,7 @@
     </main>
     <form id="comment_form" onsubmit="return false;">
       <input type="text" id="comment" name="comment" placeholder="{{.User_name}}:" autofocus
-        onkeypress="addComment_form(event)">
+        onkeypress="addComment_form(event)" required>
       <select name="color">
         <option value="-1">⬜️ white</option>
         <option value="0">🟧 orange</option>

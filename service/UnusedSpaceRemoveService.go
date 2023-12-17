@@ -23,7 +23,7 @@ func UnusedSpaceRemoveService() {
 				log.Println("사용되지 않는 space 삭제: ", rm_space_id)
 
 				file_remove_err := storage.Delete_space_ar("wwwfiles/assets/space_qr/" + v.Sp_id + ".png")
-				CriticalErr(file_remove_err, "UnusedSpaceRemoveService - 파일 삭제")
+				ErrHandler(file_remove_err, "UnusedSpaceRemoveService - 파일 삭제")
 
 				Remove_users_related_space_id(rm_space_id) //space_id와 연관된 유저들 삭제
 

@@ -8,3 +8,7 @@ systemctl 사용시 cli 비활성화해야함. 안그럼 무한 입력리턴 발
 https://certbot.eff.org/instructions?ws=other&os=debianbuster
 <br>
 ssl은 listenandservetls에서 키 연결하면됨.<br> 현재 certbot으로 저장된 위치에서 수행중
+<br>
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/cciicc.cc/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/cciicc.cc/privkey.pem

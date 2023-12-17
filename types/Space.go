@@ -38,10 +38,8 @@ func (spaces *Spaces) Remove_space(idx int) {
 	tmp := *spaces
 	*spaces = Spaces{}
 	for i := 0; i < len(tmp); i++ {
-		if i == idx && i > 0 { //삭제할 것을 찾았을 떄
+		if i == idx { //삭제할 것을 찾았을 떄
 			i--
-		} else if i <= 0 {
-
 		} else {
 			*spaces = append(*spaces, tmp[i])
 		}

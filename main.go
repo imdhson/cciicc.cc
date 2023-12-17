@@ -19,7 +19,7 @@ func main() {
 	service.StartService()
 	go service.DetectStopService() //Ctrl+C (인터럽트)시 종료 서비스 호출
 
-	go controller.CLI() //Command line 인터페이스 호출 : 필요시 주석 해제
+	// go controller.CLI() //Command line 인터페이스 호출 : 필요시 주석 해제
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", controller.URLHandler)

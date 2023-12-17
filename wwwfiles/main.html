@@ -5,7 +5,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-
   <title>{{.Service_name}}</title>
   <style>
     @import url('{{.Url_address}}/assets/main.css');
@@ -22,6 +21,7 @@
     <main>
       <p>{{.Service_detail}}</p>
     </main>
+
     <nav id="mainButtons">
       <a href="{{.Url_address}}/host" class="mainbutton">{{.Main_host}}</a>
       <a href="{{.Url_address}}/guest" class="mainbutton">{{.Main_guest}}</a>
@@ -29,9 +29,11 @@
       <a href="{{.Url_address}}/space" class="mainbutton">{{.Main_next_up}}</a>
       {{end}}
     </nav>
+
     <footer>
       <a href = "{{.Url_address}}/assets/terms.html"><p>{{.Footer_terms}}</p></a>
     </footer>
+    
   </section>
 </body>
 

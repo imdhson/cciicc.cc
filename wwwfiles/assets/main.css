@@ -5,12 +5,18 @@
     font-family: sans-serif;
 }
 
+header a h1 {
+    text-align: center;
+    font-size: 4em;
+}
+
 .bodysection {
     margin: auto;
     max-width: 40em;
     padding: 1em;
     background-color: #ebe8e8;
 }
+
 
 main {
     margin: 1em;
@@ -42,10 +48,6 @@ nav {
     transition: background-color 0.5s;
 }
 
-header h1 {
-    text-align: center;
-    font-size: 4em;
-}
 
 footer {
     margin-top: 5em;
@@ -121,9 +123,11 @@ form button:hover {
     .bodysection {
         width: auto;
     }
+
     header h1 {
         font-size: 2em;
     }
+
     .mainbutton {
         display: block;
         padding: 0.5em;

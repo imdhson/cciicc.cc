@@ -242,7 +242,7 @@ function onLoad() {
             }
 
             if (jsonData.Sp_comments != null) {//댓글이 존재한다는 뜻
-                popup(false)
+                // popup(false)
 
                 if (sortbyRate_toggle) { // 좋아요순대로 정렬
                     sortByRate(jsonData.Sp_comments)
@@ -260,7 +260,7 @@ function onLoad() {
                     p_content_view_count = document.getElementById("content_view_count")
                     p_content_view_count.textContent = 0
                     //팝업 생성
-                    popup(true, "empty") // no comment 
+                   // popup(true, "empty") // no comment 
                 }
 
             }

@@ -1,6 +1,7 @@
 package types
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -28,20 +29,19 @@ type Sp_comment struct {
 func GetInstance_spaces() *Spaces {
 	if spaces == nil {
 		spaces = &Spaces{}
-	} else {
 	}
 	return spaces
 }
 
 func (spaces *Spaces) Remove_space(idx int) {
 	//지워야될 곳(*spaces)[i]
-	tmp := *spaces
+	old := *spaces
 	*spaces = Spaces{}
-	for i := 0; i < len(tmp); i++ {
-		if i == idx { //삭제할 것을 찾았을 떄
-			i--
+	for i := 0; i < len(old); i++ {
+		if i == idx { //삭제할 것을 찾았을 때
+			fmt.Println("삭제중 space", i)
 		} else {
-			*spaces = append(*spaces, tmp[i])
+			*spaces = append(*spaces, old[i])
 		}
 	}
 }

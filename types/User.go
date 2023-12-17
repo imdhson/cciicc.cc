@@ -1,5 +1,7 @@
 package types
 
+import "fmt"
+
 type User struct {
 	User_name            string
 	User_sessionkey      string
@@ -13,22 +15,19 @@ var users *Users
 func GetInstance_users() *Users {
 	if users == nil {
 		users = &Users{}
-	} else {
 	}
 	return users
 }
 
 func (users *Users) Remove_user(idx int) {
 	//지워야될 곳(*users)[i]
-	tmp := *users
+	old := *users
 	*users = Users{}
-	for i := 0; i < len(tmp); i++ {
-		if i == idx && i > 0 { //삭제할 것을 찾았을 떄
-			i--
-		} else if i <= 0 {
-
+	for i := 0; i < len(old); i++ {
+		if i == idx { //삭제할 것을 찾았을 떄
+			fmt.Println("삭제중 user", i)
 		} else {
-			*users = append(*users, tmp[i])
+			*users = append(*users, old[i])
 		}
 	}
 }

@@ -19,7 +19,7 @@
       <h1>{{.Sp_name}}</h1>
       <a href="{{.Url_address}}">
         <h3>{{.Url_address}}/
-      </a><b>{{.Sp_id}}</b></h3>
+      </a><b onclick="linkCopyToClipboard('{{.Sp_id}}')">{{.Sp_id}}</b></h3>
       <p id="content_view_count"></p>
       <p>{{.Content_view_count}}</p>
       <p id="content_order" onclick="content_orderClick()">{{.Content_order}}</p>

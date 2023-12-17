@@ -3,8 +3,8 @@ let urladdress = ""
 let last_comment_id = -1
 let qrsmallclick_toggle = false
 let sortbyRate_toggle = false
-let popup_toggle = false
 let last_interaction = new Date()
+let popup_once = false
 
 function startContent(urladdress_i) {
     urladdress = urladdress_i
@@ -22,25 +22,20 @@ function startContent(urladdress_i) {
 }
 
 function popup(toggle, text) {
-    if (toggle && !popup_toggle) {
-        popup_toggle = !popup_toggle
+    if (toggle && !popup_once) {
         //팝업 생성
         const popup = document.createElement("div")
         popup.id = "popup"
-        popup.style.position = "fixed"
-        popup.style.display = "block"
         popup.textContent = text
-        popup.style.top = "5em"
-        popup.style.right = "20%"
-        popup.style.fontSize = "2em"
-        popup.style.background = "white"
-        const main = document.querySelector("header")
+        const main = document.querySelector("main")
         main.appendChild(popup)
-    } else if (!toggle && popup_toggle) {
+        popup_once = true
+    } else if (!toggle) {
         const popup = document.getElementById("popup")
         if (popup != null || popup != undefined) {
-            popup.style.display = "none"
+            document.querySelector("main").removeChild(document.getElementById("popup"))
         }
+        popup_once = false
     }
 
 }
@@ -55,21 +50,43 @@ function content_orderClick() {
 }
 function qrsmallClick() {
     var device_width = document.body.clientWidth;
-    if (device_width <= 850 && qrsmallclick_toggle) {
-        //디바이스가 850px 미만이고 
-        // 버튼이 눌러져서 트루 상태일때는 원복을 위해 한번작동함
-        return
-    }
-    if (!qrsmallclick_toggle) {
+    var big_device = device_width <= 850 ? false : true;
+
+    if (!qrsmallclick_toggle && big_device) { // 토글 f , 큰화면
         let main = document.querySelector("main")
         main.style.gridTemplateColumns = "1fr"
         let qrbig = document.getElementById("QRbig")
         qrbig.style.display = "none"
-    } else {
+    } else if (qrsmallclick_toggle && big_device) { //토글 true, 큰 화면
         let main = document.querySelector("main")
         main.style.gridTemplateColumns = "1fr 3fr"
         let qrbig = document.getElementById("QRbig")
         qrbig.style.display = "grid"
+    } else if (!qrsmallclick_toggle && !big_device) { //토글 false, 작은 화면
+        let main = document.querySelector("main")
+        main.style.gridTemplateColumns = "1fr"
+        let qrbig = document.getElementById("QRbig")
+        qrbig.style.display = "none"
+
+        let qrsmall = document.getElementById("QRsmall")
+        qrsmall.style.height = "50%"
+        qrsmall.style.top = "30px"
+        qrsmall.style.right = "30px"
+        qrsmall.style.border = "1px solid black"
+        qrsmall.style.borderRadius = "20px"
+
+    } else if (qrsmallclick_toggle && !big_device) { //토글t, 작은 화면
+        let main = document.querySelector("main")
+        main.style.gridTemplateColumns = "1fr"
+        let qrbig = document.getElementById("QRbig")
+        qrbig.style.display = "none"
+
+        let qrsmall = document.getElementById("QRsmall")
+        qrsmall.style.height = "inherit"
+        qrsmall.style.top = "0"
+        qrsmall.style.right = "0"
+        qrsmall.style.border = "none"
+        qrsmall.style.borderRadius = "0"
     }
     qrsmallclick_toggle = !qrsmallclick_toggle
 }
@@ -231,7 +248,7 @@ function onLoad() {
                     sortByRate(jsonData.Sp_comments)
                 } else { //ID순 대로 정렬
                     //부드럽게 맨 아래로 이동
-                    window.scrollTo({top: document.body.scrollHeight, behavior:"smooth", duration:5000})
+                    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth", duration: 5000 })
 
                     sortByID(jsonData.Sp_comments)
                 }
@@ -243,9 +260,7 @@ function onLoad() {
                     p_content_view_count = document.getElementById("content_view_count")
                     p_content_view_count.textContent = 0
                     //팝업 생성
-                    popup(true, "no comment")
-                } else { //댓글이 존재하면
-                    popup(false)
+                    popup(true, "empty") // no comment 
                 }
 
             }
@@ -269,4 +284,31 @@ function addComment_form(event) { // 키보드의 모든 입력을 받고 엔터
         form_text.value = ""
     }
 
+}
+
+function linkCopyToClipboard(sp_id) {
+    // 새로운 텍스트 영역 요소 생성
+    const textArea = document.createElement('textarea');
+    textArea.value = urladdress + "/" + sp_id; // 복사하고자 하는 텍스트 설정
+
+    // 스타일 설정하여 화면에 표시되지 않도록 함
+    textArea.style.position = 'absolute';
+    textArea.style.left = '-9999px';
+
+    document.body.appendChild(textArea); // DOM에 추가
+    textArea.focus(); // 텍스트 영역에 포커스
+    textArea.select(); // 텍스트 영역의 텍스트 선택
+
+    try {
+        // 텍스트 복사 시도
+        document.execCommand('copy');
+        popup(true, "Copied to clipboard")
+        setTimeout(function () {
+            popup(false);
+        }, 1000);
+    } catch (err) {
+        console.error('Failed to copy text', err);
+    }
+
+    document.body.removeChild(textArea); // DOM에서 텍스트 영역 제거
 }

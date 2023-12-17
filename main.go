@@ -19,7 +19,7 @@ func main() {
 	service.StartService()
 	go service.DetectStopService() //Ctrl+C (인터럽트)시 종료 서비스 호출
 
-	// go controller.CLI()            //Command line 인터페이스 호출 : 필요시 주석 해제
+	go controller.CLI() //Command line 인터페이스 호출 : 필요시 주석 해제
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", controller.URLHandler)
@@ -32,9 +32,10 @@ func main() {
 
 	//next up:
 
-	//space 자동 삭제시 관련된 user들 자동 삭제[완료]
-	// 인터랙션 하루동안 없으면 스페이스, qr 자동 삭제 - for stability 오류발견 0번쩨 인덱스 삭제가 안됨
+	// 다수에 사용자가 동시 사용시 계정 섞이는 문제[ 테스트중]
+	// 인터랙션 하루동안 없으면 스페이스, qr 자동 삭제 - for stability 오류발견 0번쩨 인덱스 삭제가 안됨 [완료, 테스트중]
 
+	//space 자동 삭제시 관련된 user들 자동 삭제[완료]
 	// 자동 데이터 저장 [완료]
 	// form으로 보내기를 js로 받아와서 비동기식으로 처리 [완료]
 	// 좋아요순 구현 시 인터랙션 안하면 새로고침하며 새로 그리기 [완료]

@@ -1,8 +1,6 @@
 package service
 
 import (
-	"crypto/md5"
-	"fmt"
 	"math/rand"
 	"strconv"
 
@@ -42,9 +40,9 @@ func Random_sessionkey_generator(space_id string) string {
 		valid = true
 	}
 	//해쉬함수
-	hash := md5.New()
-	hash.Write([]byte(rand_sessionkey))
-	hashSum := hash.Sum(nil)
-	sessionkeyStr := fmt.Sprintf("%x", hashSum)
-	return sessionkeyStr
+	// hash := md5.New()
+	// hash.Write([]byte(rand_sessionkey))
+	// hashSum := hash.Sum(nil)
+	// sessionkeyStr := fmt.Sprintf("%x", hashSum)
+	return rand_sessionkey
 }

@@ -10,20 +10,22 @@ type Spaces []Space
 var spaces *Spaces
 
 type Space struct {
-	Sp_id         string
-	Sp_name       string
-	Sp_view       int
-	Sp_lastupdate time.Time
-	Sp_comments   []Sp_comment
+	Sp_id           string
+	Sp_name         string
+	Sp_view         int
+	Sp_lastupdate   time.Time
+	Sp_chats        []Sp_chats
+	Sp_file_status  Sp_file_status
+	Sp_file_name    string
+	Sp_file_context int // 파일의 위치: 초단위시각, 페이지 등
 }
 
-type Sp_comment struct {
+type Sp_chats struct {
 	Sp_c_id        int
 	Sp_c_rate      int //좋아요 싫어요 기능
 	Sp_c_content   string
 	Sp_c_guestname string
-	Sp_c_color     Sp_c_color
-	//Sp_c_comment   []Sp_comment //recursive 처리 - UI 복잡해서 일단 안하기로함
+	// Sp_c_color     Sp_c_color
 }
 
 func GetInstance_spaces() *Spaces {
@@ -56,4 +58,14 @@ const (
 	PINK
 	RED
 	BLUE
+)
+
+type Sp_file_status int
+
+const (
+	SP_FILESTATUS_PDF Sp_file_status = iota
+	SP_FILESTATUS_AUDIO
+	SP_FILESTATUS_IMAGE
+	SP_FILESTATUS_VIDEO
+	SP_FILESTATUS_TEXT
 )

@@ -6,7 +6,7 @@ import (
 	"cciicc/types"
 )
 
-func AddCommentFrom_space_id(space_id string, comment *types.Sp_comment) {
+func AddCommentFrom_space_id(space_id string, comment *types.Sp_chats) {
 	spaces := types.GetInstance_spaces()
 	var tmpi int
 	for i, v := range *spaces {
@@ -16,7 +16,7 @@ func AddCommentFrom_space_id(space_id string, comment *types.Sp_comment) {
 		}
 	}
 
-	comment.Sp_c_id = len((*spaces)[tmpi].Sp_comments)
-	(*spaces)[tmpi].Sp_comments = append((*spaces)[tmpi].Sp_comments, *comment)
+	comment.Sp_c_id = len((*spaces)[tmpi].Sp_chats)
+	(*spaces)[tmpi].Sp_chats = append((*spaces)[tmpi].Sp_chats, *comment)
 	(*spaces)[tmpi].Sp_lastupdate = time.Now()
 }

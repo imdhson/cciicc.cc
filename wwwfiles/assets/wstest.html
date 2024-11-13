@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        #messageLog { height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+        #messageInput { width: 70%; padding: 5px; }
+        #sendButton { padding: 5px 10px; }
+    </style>
+</head>
+<body>
+    <h1>WebSocket Debug</h1>
+    <div id="messageLog"></div>
+    <input type="text" id="messageInput" placeholder="Enter message">
+    <button id="sendButton">Send</button>
+
+    <script>
+        const messageLog = document.getElementById('messageLog');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+
+        const socket = new WebSocket('ws://localhost/ws');
+
+        socket.onopen = function(event) {
+            logMessage('Connected to WebSocket server');
+        };
+
+        socket.onmessage = function(event) {
+            logMessage('Received: ' + event.data);
+        };
+
+        socket.onclose = function(event) {
+            logMessage('Disconnected from WebSocket server');
+        };
+
+        socket.onerror = function(error) {
+            logMessage('WebSocket Error: ' + error.message);
+        };
+
+        sendButton.onclick = function() {
+            const message = messageInput.value;
+            socket.send(message);
+            logMessage('Sent: ' + message);
+            messageInput.value = '';
+        };
+
+        function logMessage(message) {
+            const p = document.createElement('p');
+            p.textContent = message;
+            messageLog.appendChild(p);
+            messageLog.scrollTop = messageLog.scrollHeight;
+        }
+    </script>
+</body>
+</html>

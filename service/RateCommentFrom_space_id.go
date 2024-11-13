@@ -16,15 +16,15 @@ func RateCommentFrom_space_id(space_id string, rate_like *bool, comment_c_id *in
 			break
 		}
 	}
-	for i, v := range (*spaces)[tmpi_space].Sp_comments {
+	for i, v := range (*spaces)[tmpi_space].Sp_chats {
 		if v.Sp_c_id == *comment_c_id {
 			tmpi_comment = i //space안 comments에서 comment객체 찾아서 인덱스 저장
 		}
 	}
 	if *rate_like {
-		(*spaces)[tmpi_space].Sp_comments[tmpi_comment].Sp_c_rate += 1
+		(*spaces)[tmpi_space].Sp_chats[tmpi_comment].Sp_c_rate += 1
 	} else {
-		(*spaces)[tmpi_space].Sp_comments[tmpi_comment].Sp_c_rate -= 1
+		(*spaces)[tmpi_space].Sp_chats[tmpi_comment].Sp_c_rate -= 1
 	}
 	(*spaces)[tmpi_space].Sp_lastupdate = time.Now()
 

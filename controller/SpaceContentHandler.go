@@ -51,7 +51,7 @@ func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string
 		Sp_name       string
 		Sp_view       int
 		Sp_lastupdate string
-		Sp_comments   []types.Sp_comment
+		Sp_chats      []types.Sp_chats
 		Sp_png_path   string
 		User_name     string
 
@@ -69,7 +69,7 @@ func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string
 		Sp_name:       space.Sp_name,
 		Sp_view:       space.Sp_view,
 		Sp_lastupdate: space.Sp_lastupdate.String(),
-		Sp_comments:   space.Sp_comments,
+		Sp_chats:      space.Sp_chats,
 		Sp_png_path:   types.URL_ADDESS + "/assets/space_qr/" + space_id + ".png",
 
 		Content_view_count: types.CONTENT_VIEW_COUNT,

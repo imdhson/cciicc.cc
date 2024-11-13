@@ -51,6 +51,8 @@ func URLHandler(w http.ResponseWriter, r *http.Request) {
 			log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
 			SpaceContentHandler(w, r, now_url_sliced[1])
 		}
+	case "ws":
+		WebSocketHandler(w, r)
 	default:
 		log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
 		GuestHandler(w, r, now_url_sliced[0]) // url/guest/id 와 같으나 간소화된 url도 지원함

@@ -32,12 +32,6 @@ type Ws_Hub struct {
 	mu        sync.Mutex           // 동시성 제어를 위한 뮤텍스
 }
 
-// 새로운 Ws_Hub를 생성합니다.
-func Ws_NewHub() *Ws_Hub {
-	return &Ws_Hub{
-		ws_spaces: make(map[string]*Ws_Space),
-	}
-}
 func GetInstance_ws_hub() *Ws_Hub { //single ton
 	if ws_hub == nil {
 		ws_hub = &Ws_Hub{

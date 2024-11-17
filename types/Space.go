@@ -21,8 +21,8 @@ type Space struct {
 }
 
 type Sp_chats struct {
-	Sp_c_id        int
-	Sp_c_rate      int //좋아요 싫어요 기능
+	Sp_c_id int
+	// Sp_c_rate      int //좋아요 싫어요 기능
 	Sp_c_content   string
 	Sp_c_guestname string
 	// Sp_c_color     Sp_c_color
@@ -48,22 +48,23 @@ func (spaces *Spaces) Remove_space(idx int) {
 	}
 }
 
-type Sp_c_color int
+// type Sp_c_color int
 
-const (
-	WHILE  Sp_c_color = -1
-	ORANGE Sp_c_color = iota
-	SKYBLUE
-	GREEN
-	PINK
-	RED
-	BLUE
-)
+// const (
+// 	WHILE  Sp_c_color = -1
+// 	ORANGE Sp_c_color = iota
+// 	SKYBLUE
+// 	GREEN
+// 	PINK
+// 	RED
+// 	BLUE
+// )
 
 type Sp_file_status int
 
 const (
-	SP_FILESTATUS_PDF Sp_file_status = iota
+	SP_FILESTATUS_NONE Sp_file_status = iota
+	SP_FILESTATUS_PDF
 	SP_FILESTATUS_AUDIO
 	SP_FILESTATUS_IMAGE
 	SP_FILESTATUS_VIDEO

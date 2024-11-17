@@ -43,9 +43,9 @@ func URLHandler(w http.ResponseWriter, r *http.Request) {
 		case "addcomment":
 			log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
 			PostHandler_comment(w, r)
-		case "comment_rate":
-			log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
-			PostHandler_comment_rate(w, r)
+		// case "comment_rate":
+		// 	log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
+		// 	PostHandler_comment_rate(w, r)
 		default:
 			// space/[space_id] , space_id는 변조 위험이 있음으로 실제 핸들링시 확인 필요. UI로서의 space_id임.
 			log.Printf("%v/%v", service.GetIP(r), now_url_sliced)

@@ -81,57 +81,57 @@ func (h *Ws_Hub) Ws_RemoveSpace(space_id string) {
 	log.Printf("웹소켓 spaceid: %s가 삭제되었습니다.", space_id)
 }
 
-// 클라이언트로부터 메시지를 읽는 펌프 함수입니다.
-func (h *Ws_Hub) readPump(ws_client *Ws_Client, ws_space *Ws_Space) {
-	defer func() {
-		ws_space.mu.Lock()
-		delete(ws_space.ws_clients, ws_client)
-		ws_space.mu.Unlock()
-		ws_client.conn.Close()
-	}()
+// // 클라이언트로부터 메시지를 읽는 펌프 함수입니다.
+// func (h *Ws_Hub) readPump(ws_client *Ws_Client, ws_space *Ws_Space) {
+// 	defer func() {
+// 		ws_space.mu.Lock()
+// 		delete(ws_space.ws_clients, ws_client)
+// 		ws_space.mu.Unlock()
+// 		ws_client.conn.Close()
+// 	}()
 
-	for {
-		// 클라이언트로부터 메시지를 읽습니다.
-		_, message, err := ws_client.conn.ReadMessage()
-		if err != nil {
-			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
-				log.Printf("error: %v", err)
-			}
-			break
-		}
-		// 받은 메시지를 같은 게시글의 모든 클라이언트에게 브로드캐스트합니다.
-		h.broadcast(message, ws_space)
-	}
-}
+// 	for {
+// 		// 클라이언트로부터 메시지를 읽습니다.
+// 		_, message, err := ws_client.conn.ReadMessage()
+// 		if err != nil {
+// 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
+// 				log.Printf("error: %v", err)
+// 			}
+// 			break
+// 		}
+// 		// 받은 메시지를 같은 게시글의 모든 클라이언트에게 브로드캐스트합니다.
+// 		h.broadcast(message, ws_space)
+// 	}
+// }
 
-// 클라이언트로 메시지를 보내는 펌프 함수입니다.
-func (h *Ws_Hub) writePump(ws_client *Ws_Client, ws_space *Ws_Space) {
-	defer func() {
-		ws_client.conn.Close()
-	}()
+// // 클라이언트로 메시지를 보내는 펌프 함수입니다.
+// func (h *Ws_Hub) writePump(ws_client *Ws_Client, ws_space *Ws_Space) {
+// 	defer func() {
+// 		ws_client.conn.Close()
+// 	}()
 
-	for {
-		select {
-		case message, ok := <-ws_client.send:
-			if !ok {
-				// 채널이 닫혔으면 연결을 종료합니다.
-				ws_client.conn.WriteMessage(websocket.CloseMessage, []byte{})
-				return
-			}
+// 	for {
+// 		select {
+// 		case message, ok := <-ws_client.send:
+// 			if !ok {
+// 				// 채널이 닫혔으면 연결을 종료합니다.
+// 				ws_client.conn.WriteMessage(websocket.CloseMessage, []byte{})
+// 				return
+// 			}
 
-			// 메시지를 클라이언트로 전송합니다.
-			w, err := ws_client.conn.NextWriter(websocket.TextMessage)
-			if err != nil {
-				return
-			}
-			w.Write(message)
+// 			// 메시지를 클라이언트로 전송합니다.
+// 			w, err := ws_client.conn.NextWriter(websocket.TextMessage)
+// 			if err != nil {
+// 				return
+// 			}
+// 			w.Write(message)
 
-			if err := w.Close(); err != nil {
-				return
-			}
-		}
-	}
-}
+// 			if err := w.Close(); err != nil {
+// 				return
+// 			}
+// 		}
+// 	}
+// }
 
 // 메시지를 게시글의 모든 클라이언트에게 브로드캐스트합니다.
 func (h *Ws_Hub) broadcast(message []byte, ws_space *Ws_Space) {
@@ -180,14 +180,13 @@ func (h *Ws_Hub) WebSocketHandler(w http.ResponseWriter, r *http.Request) {
 		conn: conn,
 		send: make(chan []byte, 256),
 	}
-	ws_space := h.Ws_GetOrCreateSpace(user.User_related_spaceid)
+	ws_space := h.Ws_GetOrCreateSpace(user.User_related_spaceid) //space_id 입력으로 ws_space를 얻어줌
 
 	ws_space.mu.Lock()
 	ws_space.ws_clients[ws_client] = true
 	ws_space.mu.Unlock()
 
 	// 클라이언트의 읽기와 쓰기를 처리하는 고루틴을 시작합니다.
-	go h.readPump(ws_client, ws_space)
-	go h.writePump(ws_client, ws_space)
-
+	// go h.readPump(ws_client, ws_space)
+	// go h.writePump(ws_client, ws_space)
 }

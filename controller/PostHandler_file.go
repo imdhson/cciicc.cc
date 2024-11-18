@@ -5,7 +5,6 @@ import (
 	"cciicc/types"
 	"encoding/json"
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -28,7 +27,7 @@ func PostHandler_file(w http.ResponseWriter, r *http.Request) {
 		user, user_success = service.GetUserFromSession(session.Value)
 	}
 
-	if !user_success { //user success false일 때 or space_id 불일치시
+	if !user_success || !user.User_isHost { //user success false일 때 or 호스트가 아닐 때
 		http.Error(w, "user을 찾을 수 없음", http.StatusBadRequest)
 		return
 	}
@@ -78,7 +77,6 @@ func PostHandler_file(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//space.Sp_filestatus 변경
-	log.Println(filepath.Ext(filehandlerFormFile.Filename))
 	if filepath.Ext(filehandlerFormFile.Filename) == ".pdf" { //파일 확장자가 pdf일 경우
 		space.Sp_file_status = types.SP_FILESTATUS_PDF
 		space.Sp_file_ext = filepath.Ext(filehandlerFormFile.Filename)

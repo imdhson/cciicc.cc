@@ -1,1 +1,130 @@
-<h1>guest space content</h1>
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>{{.Sp_name}} - {{.Service_name}}</title>
+  <style>
+    @import url('{{.Url_address}}/assets/content.css');
+  </style>
+  <script src="{{.Url_address}}/assets/content.js" />
+  </script>
+</head>
+
+<body onload="space_content_onload({{.Url_address}})"> <!-- 템플릿엔진 에러 무시 -->
+
+  <section class="bodysection">
+    <header>
+      <a href="{{.Url_address}}">
+        <h1>{{.Sp_name}}</h1>
+      </a>
+      <a href="{{.Url_address}}">
+        <h3>{{.Url_address}}/
+      </a><b onclick="linkCopyToClipboard('{{.Sp_id}}')">{{.Sp_id}}</b></h3>
+      <p id="content_view_count">{{.Sp_view}}</p>
+      <p>{{.Content_view_count}}</p>
+      <img id="QRsmall" src="{{.Sp_png_path}}" onclick="qrsmallClick()" />
+    </header>
+    <main>
+      <!-- PDF 표시 영역 -->
+      <div id="pdf-viewer">
+        <canvas id="pdf-render"></canvas>
+        <div id="pdf-controls">
+          <button id="prev-page">이전 페이지</button>
+          <span id="page-num"></span>
+          <button id="next-page">다음 페이지</button>
+        </div>
+      </div>
+    </main>
+    <form id="comment_form" onsubmit="return false;">
+      <input type="text" id="comment" name="chat" placeholder="{{.User_name}}:" autofocus
+        onkeypress="addComment_form(event)" required>
+      <select name="color">
+        <option value="-1">⬜️ white</option>
+        <option value="0">🟧 orange</option>
+        <option value="1">🩵 skyblue</option>
+        <option value="2">🟩 green</option>
+        <option value="3">💗 pink</option>
+        <option value="4">🟥 red</option>
+        <option value="5">🟦 blue</option>
+      </select>
+      <button type="button" onclick="addComment_form(-1)">{{.Content_send}}</button>
+    </form>
+    <footer>
+      <a href="{{.Url_address}}/assets/terms.html">
+        <p>{{.Footer_terms}}</p>
+      </a>
+    </footer>
+  </section>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+<script>
+    let pdfDoc = null,
+        pageNum = 1,
+        pageRendering = false,
+        pageNumPending = null,
+        scale = 1.5;
+
+    function loadPDF(url) {
+        pdfjsLib.getDocument(url).promise.then(function(pdf) {
+            pdfDoc = pdf;
+            document.getElementById('page-num').textContent = pageNum + ' / ' + pdf.numPages;
+            renderPage(pageNum);
+        });
+    }
+
+    function renderPage(num) {
+        pageRendering = true;
+        pdfDoc.getPage(num).then(function(page) {
+            const canvas = document.getElementById('pdf-render');
+            const ctx = canvas.getContext('2d');
+            const viewport = page.getViewport({scale: scale});
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            const renderContext = {
+                canvasContext: ctx,
+                viewport: viewport
+            };
+            page.render(renderContext);
+
+            pageRendering = false;
+            if (pageNumPending !== null) {
+                renderPage(pageNumPending);
+                pageNumPending = null;
+            }
+        });
+
+        document.getElementById('page-num').textContent = num + ' / ' + pdfDoc.numPages;
+    }
+
+    function queueRenderPage(num) {
+        if (pageRendering) {
+            pageNumPending = num;
+        } else {
+            renderPage(num);
+        }
+    }
+
+    function onPrevPage() {
+        if (pageNum <= 1) {
+            return;
+        }
+        pageNum--;
+        queueRenderPage(pageNum);
+    }
+
+    function onNextPage() {
+        if (pageNum >= pdfDoc.numPages) {
+            return;
+        }
+        pageNum++;
+        queueRenderPage(pageNum);
+    }
+
+    document.getElementById('prev-page').addEventListener('click', onPrevPage);
+    document.getElementById('next-page').addEventListener('click', onNextPage);
+</script>
+</html>

@@ -82,7 +82,7 @@ function linkCopyToClipboard(sp_id) {
     try {
         // 텍스트 복사 시도
         document.execCommand('copy');
-        popup(true, "Copied to clipboard")
+        popup(true, "클립보드에 복사했어요.")
         setTimeout(function () {
             popup(false);
         }, 1000);

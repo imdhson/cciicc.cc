@@ -2,7 +2,6 @@ package controller
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -33,7 +32,6 @@ func SpaceFileHandler(w http.ResponseWriter, r *http.Request) {
 	space, _ := service.GetSpaceFrom_space_id(user.User_related_spaceid)
 	if space.Sp_file_status == types.SP_FILESTATUS_PDF {
 		space_filepath = filepath.Clean("wwwfiles/host_file/" + user.User_related_spaceid + space.Sp_file_ext)
-		log.Println(space_filepath, "123123123123123")
 	}
 
 	// 파일 열기

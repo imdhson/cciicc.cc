@@ -7,7 +7,7 @@ import (
 	"cciicc/types"
 )
 
-func PostHandler_comment(w http.ResponseWriter, r *http.Request) {
+func PostHandler_chat(w http.ResponseWriter, r *http.Request) {
 	form_chat := r.FormValue("chat")
 
 	session, getcookie_err := r.Cookie("ub_session")

@@ -42,7 +42,7 @@ func URLHandler(w http.ResponseWriter, r *http.Request) {
 			SpaceJSONHandler(w, r)
 		case "addcomment":
 			log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
-			PostHandler_comment(w, r)
+			PostHandler_chat(w, r)
 		// case "comment_rate":
 		// 	log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
 		// 	PostHandler_comment_rate(w, r)

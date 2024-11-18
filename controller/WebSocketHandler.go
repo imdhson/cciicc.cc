@@ -105,34 +105,34 @@ func (h *Ws_Hub) Ws_RemoveSpace(space_id string) {
 // 	}
 // }
 
-// // 클라이언트로 메시지를 보내는 펌프 함수입니다.
-// func (h *Ws_Hub) writePump(ws_client *Ws_Client, ws_space *Ws_Space) {
-// 	defer func() {
-// 		ws_client.conn.Close()
-// 	}()
+// 클라이언트로 메시지를 보내는 펌프 함수입니다.
+func (h *Ws_Hub) writePump(ws_client *Ws_Client, ws_space *Ws_Space) {
+	defer func() {
+		ws_client.conn.Close()
+	}()
 
-// 	for {
-// 		select {
-// 		case message, ok := <-ws_client.send:
-// 			if !ok {
-// 				// 채널이 닫혔으면 연결을 종료합니다.
-// 				ws_client.conn.WriteMessage(websocket.CloseMessage, []byte{})
-// 				return
-// 			}
+	for {
+		select {
+		case message, ok := <-ws_client.send:
+			if !ok {
+				// 채널이 닫혔으면 연결을 종료합니다.
+				ws_client.conn.WriteMessage(websocket.CloseMessage, []byte{})
+				return
+			}
 
-// 			// 메시지를 클라이언트로 전송합니다.
-// 			w, err := ws_client.conn.NextWriter(websocket.TextMessage)
-// 			if err != nil {
-// 				return
-// 			}
-// 			w.Write(message)
+			// 메시지를 클라이언트로 전송합니다.
+			w, err := ws_client.conn.NextWriter(websocket.TextMessage)
+			if err != nil {
+				return
+			}
+			w.Write(message)
 
-// 			if err := w.Close(); err != nil {
-// 				return
-// 			}
-// 		}
-// 	}
-// }
+			if err := w.Close(); err != nil {
+				return
+			}
+		}
+	}
+}
 
 // 메시지를 게시글의 모든 클라이언트에게 브로드캐스트합니다.
 func (h *Ws_Hub) broadcast(message []byte, ws_space *Ws_Space) {
@@ -140,11 +140,12 @@ func (h *Ws_Hub) broadcast(message []byte, ws_space *Ws_Space) {
 	defer ws_space.mu.Unlock()
 	log.Println("ws broadcast 호출됨 !")
 	for ws_client := range ws_space.ws_clients {
-		log.Println(ws_client)
+		log.Println(ws_client, message)
 		select {
 		case ws_client.send <- message: //message를 전송함
 		default:
 			// 클라이언트가 메시지를 받을 수 없으면 연결을 종료합니다.
+			log.Println("ws client close 됨")
 			close(ws_client.send)
 			delete(ws_space.ws_clients, ws_client)
 		}
@@ -195,5 +196,5 @@ func (h *Ws_Hub) WebSocketHandler(w http.ResponseWriter, r *http.Request) {
 
 	// 클라이언트의 읽기와 쓰기를 처리하는 고루틴을 시작합니다.
 	// go h.readPump(ws_client, ws_space)
-	// go h.writePump(ws_client, ws_space)
+	go h.writePump(ws_client, ws_space)
 }

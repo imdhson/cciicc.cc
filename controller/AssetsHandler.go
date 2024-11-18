@@ -3,32 +3,33 @@ package controller
 import (
 	"net/http"
 	"os"
+	"path/filepath"
 )
 
 func AssetsHanlder(w http.ResponseWriter, r *http.Request, url string) {
-	docsfile := DotFileType(url)
-	switch docsfile {
-	case "jpg":
+	ext := filepath.Ext(url)
+	switch ext {
+	case ".jpg":
 		w.Header().Set("Content-Type", "image/jpg; charset=utf-8")
-	case "png":
+	case ".png":
 		w.Header().Set("Content-Type", "image/png; charset=utf-8")
-	case "jpeg":
+	case ".jpeg":
 		w.Header().Set("Content-Type", "image/jpeg; charset=utf-8")
-	case "js":
+	case ".js":
 		w.Header().Set("Content-Type", "text/javascript; charset=utf-8")
-	case "css":
+	case ".css":
 		w.Header().Set("Content-Type", "text/css; charset=utf-8")
-	case "scss":
+	case ".scss":
 		w.Header().Set("Content-Type", "text/css; charset=utf-8")
-	case "html":
+	case ".html":
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	case "mp4":
+	case ".mp4":
 		w.Header().Set("Content-Type", "video/mp4; charset=utf-8")
-	case "avi":
+	case ".avi":
 		w.Header().Set("Content-Type", "video/avi; charset=utf-8")
-	case "mov":
+	case ".mov":
 		w.Header().Set("Content-Type", "video/mov; charset=utf-8")
-	case "webm":
+	case ".webm":
 		w.Header().Set("Content-Type", "video/webm; charset=utf-8")
 	}
 	wwwfile, err := os.ReadFile("wwwfiles/" + url) // www/assets/main.css 와 같이 작동하게 됨

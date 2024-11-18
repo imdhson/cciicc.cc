@@ -48,6 +48,54 @@ function qrsmallClick() {
 
 function space_content_onload(urladdress_i) {
     urladdress = urladdress_i
+
+    const socket = new WebSocket("/ws");
+
+    // 연결이 열리면 실행되는 이벤트 핸들러
+    socket.onopen = function (event) {
+        console.log("WebSocket 연결이 열렸습니다.");
+        console.log(event.data)
+
+        // 서버로 메시지 전송
+        socket.send("클라이언트에서 보내는 메시지입니다!");
+    };
+
+    // 서버로부터 메시지를 받으면 실행되는 이벤트 핸들러 
+    socket.onmessage = function (event) {
+        console.log("서버로부터 메시지 수신:", event.data);
+        if (event.data.Sp_file_status != 0) {
+            loadPDF("/space/file")
+        }
+    };
+
+    // 연결이 닫히면 실행되는 이벤트 핸들러
+    socket.onclose = function (event) {
+        if (event.wasClean) {
+            console.log(`연결이 정상적으로 종료되었습니다. 코드: ${event.code}, 이유: ${event.reason}`);
+        } else {
+            console.log('연결이 비정상적으로 종료되었습니다.');
+        }
+    };
+
+    // 에러가 발생하면 실행되는 이벤트 핸들러
+    socket.onerror = function (error) {
+        console.error(`WebSocket 에러 발생: ${error.message}`);
+    };
+
+    // 서버로 메시지를 보내는 함수
+    function sendMessage(message) {
+        // 연결 상태 확인
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(message);
+        } else {
+            console.log("WebSocket 연결이 열려있지 않습니다.");
+        }
+    }
+
+    // 연결 종료 함수
+    function closeConnection() {
+        socket.close();
+    }
 }
 
 function addComment_form(event) { // 키보드의 모든 입력을 받고 엔터 혹은 터치(마우스) 클릭시에만 수행
@@ -92,3 +140,87 @@ function linkCopyToClipboard(sp_id) {
 
     document.body.removeChild(textArea); // DOM에서 텍스트 영역 제거
 }
+
+let pdfDoc = null,
+    pageNum = 1,
+    pageRendering = false,
+    pageNumPending = null,
+    scale = 1.5;
+
+function uploadPDF() {
+    const file = document.getElementById('pdf-file').files[0];
+    if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        fetch('/space/addfile', {
+            method: 'POST',
+            body: formData
+        }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    loadPDF('/space/file');
+                }
+            });
+    }
+}
+
+function loadPDF(url) {
+    pdfjsLib.getDocument(url).promise.then(function (pdf) {
+        pdfDoc = pdf;
+        document.getElementById('page-num').textContent = pageNum + ' / ' + pdf.numPages;
+        renderPage(pageNum);
+    });
+}
+
+function renderPage(num) {
+    pageRendering = true;
+    pdfDoc.getPage(num).then(function (page) {
+        const canvas = document.getElementById('pdf-render');
+        const ctx = canvas.getContext('2d');
+        const viewport = page.getViewport({ scale: scale });
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        const renderContext = {
+            canvasContext: ctx,
+            viewport: viewport
+        };
+        page.render(renderContext);
+
+        pageRendering = false;
+        if (pageNumPending !== null) {
+            renderPage(pageNumPending);
+            pageNumPending = null;
+        }
+    });
+
+    document.getElementById('page-num').textContent = num + ' / ' + pdfDoc.numPages;
+}
+
+function queueRenderPage(num) {
+    if (pageRendering) {
+        pageNumPending = num;
+    } else {
+        renderPage(num);
+    }
+}
+
+function onPrevPage() {
+    if (pageNum <= 1) {
+        return;
+    }
+    pageNum--;
+    queueRenderPage(pageNum);
+}
+
+function onNextPage() {
+    if (pageNum >= pdfDoc.numPages) {
+        return;
+    }
+    pageNum++;
+    queueRenderPage(pageNum);
+}
+
+document.getElementById('prev-page').addEventListener('click', onPrevPage);
+document.getElementById('next-page').addEventListener('click', onNextPage);

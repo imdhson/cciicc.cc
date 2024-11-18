@@ -51,7 +51,7 @@ func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string
 		Sp_name       string
 		Sp_view       int
 		Sp_lastupdate string
-		Sp_chats      []types.Sp_chats
+		Sp_chats      []types.Sp_chat
 		Sp_png_path   string
 		User_name     string
 

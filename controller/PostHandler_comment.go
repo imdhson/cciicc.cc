@@ -8,7 +8,7 @@ import (
 )
 
 func PostHandler_comment(w http.ResponseWriter, r *http.Request) {
-	form_comment := r.FormValue("comment")
+	form_chat := r.FormValue("chat")
 
 	session, getcookie_err := r.Cookie("ub_session")
 
@@ -24,12 +24,17 @@ func PostHandler_comment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//comment 구조체 생성
-	comment := &types.Sp_chats{
-		Sp_c_content:   form_comment,
+	//chat 구조체 생성
+	sp_chat := &types.Sp_chat{
+		Sp_c_content:   form_chat,
 		Sp_c_guestname: user.User_name,
 	}
+	service.AddChatFrom_space_id(user.User_related_spaceid, sp_chat)
 
-	service.AddCommentFrom_space_id(user.User_related_spaceid, comment)
+	//추가하고 같은 ws_space에 websocket broadcast 시도
+	ws_hub := GetInstance_ws_hub()
+	ws_space := ws_hub.Ws_GetOrCreateSpace(user.User_related_spaceid)
+	ws_hub.broadcast([]byte("123123123213123"), ws_space)
+
 	http.Redirect(w, r, "/space", http.StatusFound)
 }

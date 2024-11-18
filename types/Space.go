@@ -14,13 +14,13 @@ type Space struct {
 	Sp_name         string
 	Sp_view         int
 	Sp_lastupdate   time.Time
-	Sp_chats        []Sp_chats
+	Sp_chats        []Sp_chat
 	Sp_file_status  Sp_file_status
 	Sp_file_name    string
 	Sp_file_context int // 파일의 위치: 초단위시각, 페이지 등
 }
 
-type Sp_chats struct {
+type Sp_chat struct {
 	Sp_c_id int
 	// Sp_c_rate      int //좋아요 싫어요 기능
 	Sp_c_content   string

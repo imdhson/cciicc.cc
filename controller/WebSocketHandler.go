@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 	"sync"
@@ -137,10 +138,11 @@ func (h *Ws_Hub) Ws_RemoveSpace(space_id string) {
 func (h *Ws_Hub) broadcast(message []byte, ws_space *Ws_Space) {
 	ws_space.mu.Lock()
 	defer ws_space.mu.Unlock()
-
+	log.Println("ws broadcast 호출됨 !")
 	for ws_client := range ws_space.ws_clients {
+		log.Println(ws_client)
 		select {
-		case ws_client.send <- message:
+		case ws_client.send <- message: //message를 전송함
 		default:
 			// 클라이언트가 메시지를 받을 수 없으면 연결을 종료합니다.
 			close(ws_client.send)
@@ -166,14 +168,19 @@ func (h *Ws_Hub) WebSocketHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// space, _ := service.GetSpaceFrom_space_id(user.User_related_spaceid) !!!!!!!!!!!!!!!!!!!!!!
-	// space_encoded, _ := json.MarshalIndent(space, " ", "	") !!!!!!!!!!!!!!!!!!!!!1
-
 	// WebSocket 연결을 위한 업그레이더 설정
 	var upgrader = websocket.Upgrader{} // ReadBufferSize:  1024,WriteBufferSize: 1024, 주석 처리 시 기본 옵션 사용
 
 	conn, err := upgrader.Upgrade(w, r, nil)
 	service.ErrHandler(err, "websocket upgrader")
+
+	space_content, space_content_success := service.GetSpaceFrom_space_id(user.User_related_spaceid)
+	if !space_content_success {
+		return
+	}
+	space_content_encoded, err := json.MarshalIndent(space_content, " ", "	")
+	service.ErrHandler(err, "wssockethandler jsonmarshal")
+	conn.WriteMessage(websocket.TextMessage, space_content_encoded)
 
 	// 새 클라이언트를 생성하고 해당 게시글에 추가합니다.
 	ws_client := &Ws_Client{

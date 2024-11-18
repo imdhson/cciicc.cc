@@ -6,7 +6,7 @@ import (
 	"cciicc/types"
 )
 
-func AddCommentFrom_space_id(space_id string, comment *types.Sp_chats) {
+func AddChatFrom_space_id(space_id string, comment *types.Sp_chat) {
 	spaces := types.GetInstance_spaces()
 	var tmpi int
 	for i, v := range *spaces {

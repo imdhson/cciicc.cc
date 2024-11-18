@@ -40,9 +40,14 @@ func URLHandler(w http.ResponseWriter, r *http.Request) {
 			PostHandler_join_space(w, r)
 		case "json": //space/json
 			SpaceJSONHandler(w, r)
+		case "file": //space/file
+			SpaceFileHandler(w, r)
 		case "addcomment":
 			log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
 			PostHandler_chat(w, r)
+		case "addfile":
+			log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
+			PostHandler_file(w, r)
 		// case "comment_rate":
 		// 	log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
 		// 	PostHandler_comment_rate(w, r)

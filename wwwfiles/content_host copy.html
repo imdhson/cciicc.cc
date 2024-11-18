@@ -12,7 +12,7 @@
   </script>
 </head>
 
-<body onload="startContent({{.Url_address}})"> <!-- 템플릿엔진 에러 무시 -->
+<body onload="space_content_onload({{.Url_address}})"> <!-- 템플릿엔진 에러 무시 -->
 
   <section class="bodysection">
     <header>
@@ -21,15 +21,11 @@
       <a href="{{.Url_address}}">
         <h3>{{.Url_address}}/
       </a><b onclick="linkCopyToClipboard('{{.Sp_id}}')">{{.Sp_id}}</b></h3>
-      <p id="content_view_count"></p>
+      <p id="content_view_count">{{.Sp_view}}</p>
       <p>{{.Content_view_count}}</p>
-      <p id="content_order" onclick="content_orderClick()">{{.Content_order}}</p>
       <img id="QRsmall" src="{{.Sp_png_path}}" onclick="qrsmallClick()" />
     </header>
     <main>
-      <section id="QRbig">
-        <img src="{{.Sp_png_path}}" />
-      </section>
       <section id="comments">
       </section>
     </main>

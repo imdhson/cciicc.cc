@@ -16,6 +16,7 @@ type Space struct {
 	Sp_lastupdate   time.Time
 	Sp_chats        []Sp_chat
 	Sp_file_status  Sp_file_status
+	Sp_file_ext     string
 	Sp_file_name    string
 	Sp_file_context int // 파일의 위치: 초단위시각, 페이지 등
 }

@@ -97,44 +97,6 @@ main {
 
 }
 
-#QRbig img {
-    width: 250px;
-    height: auto;
-    position: fixed;
-    left: 0;
-}
-
-#comments {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    width: 100%;
-
-}
-
-#comment_c {
-    list-style-type: none;
-    margin: auto;
-    margin-top: 1em;
-    max-width: calc(100% - 20px);
-    overflow: auto;
-    height: 7em;
-    border: 1px solid rgb(198, 198, 198);
-    padding: 10px;
-    border-radius: 15px;
-    word-wrap: break-word;
-}
-
-#comment_c_content {
-    font-size: 2em;
-    text-align: left;
-
-}
-
-#comment_c_name {
-    text-align: left;
-    margin-bottom: 5px;
-}
-
 form {
     background-color: white;
     display: block;

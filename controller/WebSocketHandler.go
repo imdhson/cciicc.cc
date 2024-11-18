@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
 	"sync"
@@ -138,9 +137,7 @@ func (h *Ws_Hub) writePump(ws_client *Ws_Client, ws_space *Ws_Space) {
 func (h *Ws_Hub) broadcast(message []byte, ws_space *Ws_Space) {
 	ws_space.mu.Lock()
 	defer ws_space.mu.Unlock()
-	log.Println("ws broadcast 호출됨 !")
 	for ws_client := range ws_space.ws_clients {
-		log.Println(ws_client, message)
 		select {
 		case ws_client.send <- message: //message를 전송함
 		default:
@@ -179,9 +176,9 @@ func (h *Ws_Hub) WebSocketHandler(w http.ResponseWriter, r *http.Request) {
 	if !space_content_success {
 		return
 	}
-	space_content_encoded, err := json.MarshalIndent(space_content, " ", "	")
+	// space_content_encoded, err := json.MarshalIndent(space_content, " ", "	")
 	service.ErrHandler(err, "wssockethandler jsonmarshal")
-	conn.WriteMessage(websocket.TextMessage, space_content_encoded)
+	conn.WriteJSON(space_content)
 
 	// 새 클라이언트를 생성하고 해당 게시글에 추가합니다.
 	ws_client := &Ws_Client{

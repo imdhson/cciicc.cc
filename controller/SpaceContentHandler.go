@@ -11,13 +11,6 @@ import (
 
 func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-
-	// 템플릿 파일 로드
-	tmpl, err := template.ParseFiles("wwwfiles/content.html")
-	if err != nil {
-		service.CriticalErr(err, "template html 로드")
-	}
-
 	//세션 가져오기
 	var user types.User
 	var user_success bool
@@ -34,6 +27,22 @@ func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string
 		redirect_url := "/guest/" + space_id
 		http.Redirect(w, r, redirect_url, http.StatusFound)
 		return
+	}
+
+	var tmpl *template.Template
+	if user.User_isHost { // user가 host이면 spacecontent host 템플릿 반환
+		// 템플릿 파일 로드
+		tmpl_i, err := template.ParseFiles("wwwfiles/content_host.html")
+		tmpl = tmpl_i
+		if err != nil {
+			service.CriticalErr(err, "template html 로드 host")
+		}
+	} else { // user가 guest이면 space content guest 템플릿 반환
+		tmpl_i, err := template.ParseFiles("wwwfiles/content_guest.html")
+		tmpl = tmpl_i
+		if err != nil {
+			service.CriticalErr(err, "template html 로드 guest")
+		}
 	}
 
 	space, getSpace_success := service.GetSpaceFrom_space_id(user.User_related_spaceid)

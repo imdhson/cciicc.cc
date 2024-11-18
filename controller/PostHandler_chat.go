@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"cciicc/service"
@@ -34,7 +35,10 @@ func PostHandler_chat(w http.ResponseWriter, r *http.Request) {
 	//추가하고 같은 ws_space에 websocket broadcast 시도
 	ws_hub := GetInstance_ws_hub()
 	ws_space := ws_hub.Ws_GetOrCreateSpace(user.User_related_spaceid)
-	ws_hub.broadcast([]byte("123123123213123"), ws_space)
+	ws_chat_content := types.New_Sp_ws_type_chat(sp_chat.Sp_c_guestname, sp_chat.Sp_c_content)
+	ws_chat_content_encoded, err := json.MarshalIndent(ws_chat_content, " ", "	")
+	service.ErrHandler(err, "posthandler chat json")
+	ws_hub.broadcast([]byte(ws_chat_content_encoded), ws_space)
 
 	http.Redirect(w, r, "/space", http.StatusFound)
 }

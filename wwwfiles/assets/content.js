@@ -1,6 +1,7 @@
 let urladdress = ""
 let qrsmallclick_toggle = false
 let popup_once = false
+let file_context = 1
 
 function popup(toggle, text) {
     if (toggle && !popup_once) {
@@ -54,7 +55,6 @@ function space_content_onload(urladdress_i) {
     // 연결이 열리면 실행되는 이벤트 핸들러
     socket.onopen = function (event) {
         console.log("WebSocket 연결이 열렸습니다.");
-        console.log(event.data)
 
         // 서버로 메시지 전송
         socket.send("클라이언트에서 보내는 메시지입니다!");
@@ -63,7 +63,8 @@ function space_content_onload(urladdress_i) {
     // 서버로부터 메시지를 받으면 실행되는 이벤트 핸들러 
     socket.onmessage = function (event) {
         console.log("서버로부터 메시지 수신:", event.data);
-        if (event.data.Sp_file_status != 0) {
+        if (event.data.Sp_file_status != 0 && event.data.Sp_file_context != null) {
+            file_context = event.data.Sp_file_context
             loadPDF("/space/file")
         }
     };
@@ -141,11 +142,10 @@ function linkCopyToClipboard(sp_id) {
     document.body.removeChild(textArea); // DOM에서 텍스트 영역 제거
 }
 
-let pdfDoc = null,
-    pageNum = 1,
-    pageRendering = false,
-    pageNumPending = null,
-    scale = 1.5;
+let pdfDoc = null
+let pageRendering = false,
+pageNumPending = null,
+scale = 1.5;
 
 function uploadPDF() {
     const file = document.getElementById('pdf-file').files[0];
@@ -168,8 +168,8 @@ function uploadPDF() {
 function loadPDF(url) {
     pdfjsLib.getDocument(url).promise.then(function (pdf) {
         pdfDoc = pdf;
-        document.getElementById('page-num').textContent = pageNum + ' / ' + pdf.numPages;
-        renderPage(pageNum);
+        document.getElementById('page-num').textContent = file_context + ' / ' + pdf.numPages;
+        renderPage(file_context);
     });
 }
 
@@ -199,10 +199,9 @@ function renderPage(num) {
 }
 
 function queueRenderPage(num) {
-
     //post file context로 페이지넘버 전송
     let formData = new FormData();
-    formData.append('pageNum', num)
+    formData.append('file_context', num)
     fetch('/space/filecontext', {
         method: 'POST',
         body: formData,
@@ -224,19 +223,19 @@ function queueRenderPage(num) {
 }
 
 function onPrevPage() {
-    if (pageNum <= 1) {
+    if (file_context <= 1) {
         return;
     }
-    pageNum--;
-    queueRenderPage(pageNum);
+    file_context--;
+    queueRenderPage(file_context);
 }
 
 function onNextPage() {
-    if (pageNum >= pdfDoc.numPages) {
+    if (file_context >= pdfDoc.numPages) {
         return;
     }
-    pageNum++;
-    queueRenderPage(pageNum);
+    file_context++;
+    queueRenderPage(file_context);
 }
 
 

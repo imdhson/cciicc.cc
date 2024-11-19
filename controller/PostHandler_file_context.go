@@ -4,14 +4,12 @@ import (
 	"cciicc/service"
 	"cciicc/types"
 	"encoding/json"
-	"log"
 	"net/http"
 	"strconv"
 )
 
 func PostHandler_file_context(w http.ResponseWriter, r *http.Request) {
-	pageNum := r.FormValue("pageNum")
-	log.Println("--------, file context")
+	pageNum := r.FormValue("file_context")
 	session, getcookie_err := r.Cookie("ub_session")
 
 	var user types.User

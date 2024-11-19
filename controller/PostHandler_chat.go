@@ -16,12 +16,13 @@ func PostHandler_chat(w http.ResponseWriter, r *http.Request) {
 	var user types.User
 	var user_success bool
 	if getcookie_err != nil {
-		http.Redirect(w, r, "/error", http.StatusFound)
+		http.Error(w, "user is not host", http.StatusForbidden)
+		return
 	} else {
 		user, user_success = service.GetUserFromSession(session.Value)
 	}
 	if getcookie_err != nil && !user_success {
-		http.Redirect(w, r, "/error", http.StatusFound)
+		http.Error(w, "user is not host", http.StatusForbidden)
 		return
 	}
 

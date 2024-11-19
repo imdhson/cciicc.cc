@@ -42,6 +42,8 @@ func URLHandler(w http.ResponseWriter, r *http.Request) {
 			SpaceJSONHandler(w, r)
 		case "file": //space/file
 			SpaceFileHandler(w, r)
+		case "filecontext":
+			PostHandler_file_context(w, r)
 		case "addcomment":
 			log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
 			PostHandler_chat(w, r)

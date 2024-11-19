@@ -199,6 +199,23 @@ function renderPage(num) {
 }
 
 function queueRenderPage(num) {
+
+    //post file context로 페이지넘버 전송
+    let formData = new FormData();
+    formData.append('pageNum', num)
+    fetch('/space/filecontext', {
+        method: 'POST',
+        body: formData,
+    })
+        .then(response => response.status)
+        .then(data => {
+            console.log('성공:', data);
+        })
+        .catch((error) => {
+            console.error('에러:', error);
+        });
+
+
     if (pageRendering) {
         pageNumPending = num;
     } else {
@@ -222,5 +239,4 @@ function onNextPage() {
     queueRenderPage(pageNum);
 }
 
-document.getElementById('prev-page').addEventListener('click', onPrevPage);
-document.getElementById('next-page').addEventListener('click', onNextPage);
+

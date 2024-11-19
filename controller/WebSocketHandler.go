@@ -93,14 +93,20 @@ func (h *Ws_Hub) Ws_RemoveSpace(space_id string) {
 // 	for {
 // 		// 클라이언트로부터 메시지를 읽습니다.
 // 		_, message, err := ws_client.conn.ReadMessage()
+
 // 		if err != nil {
 // 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
 // 				log.Printf("error: %v", err)
 // 			}
 // 			break
 // 		}
+
+// 		// //[]byte를 json 변환
+// 		var jsonData types.Sp_ws_type_file_context
+// 		err = json.Unmarshal(message, &jsonData)
+// 		service.ErrHandler(err, "ws handler json unmarshal")
 // 		// 받은 메시지를 같은 게시글의 모든 클라이언트에게 브로드캐스트합니다.
-// 		h.broadcast(message, ws_space)
+// 		// h.broadcast(message, ws_space)
 // 	}
 // }
 

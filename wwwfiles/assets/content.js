@@ -63,8 +63,12 @@ function space_content_onload(urladdress_i) {
     // 서버로부터 메시지를 받으면 실행되는 이벤트 핸들러 
     socket.onmessage = function (event) {
         console.log("서버로부터 메시지 수신:", event.data);
-        if (event.data.Sp_file_status != 0 && event.data.Sp_file_context != null) {
-            file_context = event.data.Sp_file_context
+        let jsonData = JSON.parse(event.data)
+        if (jsonData.Sp_file_status == 1 && jsonData.Sp_file_ext == '.pdf'){
+            loadPDF("/space/file")
+        }
+        if (jsonData.Sp_ws_type == 'file_context' && jsonData.Sp_file_context != null) {
+            file_context = parseInt(jsonData.Sp_file_context)
             loadPDF("/space/file")
         }
     };

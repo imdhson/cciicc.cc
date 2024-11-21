@@ -56,6 +56,52 @@ header b {
     text-decoration: underline;
 }
 
+.upload-container {
+    position: relative;
+    width: 300px;
+    margin: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+}
+#uploadToggle {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+#uploadToggle:hover {
+    background-color: #45a049;
+}
+#uploadArea {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+    background-color: white;
+    padding: 0 10px;
+    border: 1px solid #ddd;
+    opacity: 0;
+}
+#uploadArea.show {
+    max-height: 200px;
+    padding: 10px;
+    opacity: 1;
+    transition: max-height 0.5s ease-in, padding 0.5s ease-in, opacity 0.5s ease-in;
+}
+#fileInput {
+    margin-bottom: 10px;
+}
+#uploadButton {
+    padding: 5px 10px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
 
 #QRsmall {
     position: fixed;

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파일 업로드 버튼</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+        .upload-container {
+            position: relative;
+            width: 300px;
+            margin: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        #toggleButton {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #toggleButton:hover {
+            background-color: #45a049;
+        }
+        #uploadArea {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            background-color: white;
+            padding: 0 10px;
+            border: 1px solid #ddd;
+            opacity: 0;
+        }
+        #uploadArea.show {
+            max-height: 200px;
+            padding: 10px;
+            opacity: 1;
+            transition: max-height 0.5s ease-in, padding 0.5s ease-in, opacity 0.5s ease-in;
+        }
+        #fileInput {
+            margin-bottom: 10px;
+        }
+        #uploadButton {
+            padding: 5px 10px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-container">
+        <button id="toggleButton">업로드 창 보기</button>
+        <div id="uploadArea">
+            <input type="file" id="fileInput">
+            <button id="uploadButton">업로드</button>
+        </div>
+    </div>
+
+    <script>
+        const toggleButton = document.getElementById('toggleButton');
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const uploadButton = document.getElementById('uploadButton');
+
+        toggleButton.addEventListener('click', () => {
+            uploadArea.classList.toggle('show');
+            if (uploadArea.classList.contains('show')) {
+                toggleButton.textContent = '업로드 창 닫기';
+            } else {
+                toggleButton.textContent = '업로드 창 보기';
+            }
+        });
+
+        uploadButton.addEventListener('click', () => {
+            if (fileInput.files.length > 0) {
+                alert('파일이 선택되었습니다. 업로드를 시작합니다.');
+                // 실제 업로드 처리 로직을 구현할 수 있습니다.
+            } else {
+                alert('파일을 선택해주세요.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 let urladdress = ""
 let qrsmallclick_toggle = false
+let uploadareaclock_toggle = false
 let popup_once = false
 let file_context = 1
 
@@ -22,22 +23,20 @@ function popup(toggle, text) {
 
 }
 
-function qrsmallClick() {
-    if (!qrsmallclick_toggle) { //토글 false, 작은 화면
-        let main = document.querySelector("main")
-        main.style.gridTemplateColumns = "1fr"
+const uploadToggle = document.getElementById('uploadToggle');
+const uploadArea = document.getElementById('uploadArea');
+const fileInput = document.getElementById('fileInput');
+const uploadButton = document.getElementById('uploadButton');
 
-        let qrsmall = document.getElementById("QRsmall")
+function qrsmallClick() {
+    let qrsmall = document.getElementById("QRsmall")
+    if (!qrsmallclick_toggle) { //토글 false, 작은 화면
         qrsmall.style.height = "50%"
         qrsmall.style.top = "30px"
         qrsmall.style.right = "30px"
         qrsmall.style.border = "1px solid black"
         qrsmall.style.borderRadius = "20px"
     } else { //토글t, 작은 화면
-        let main = document.querySelector("main")
-        main.style.gridTemplateColumns = "1fr"
-
-        let qrsmall = document.getElementById("QRsmall")
         qrsmall.style.height = "inherit"
         qrsmall.style.top = "0"
         qrsmall.style.right = "0"
@@ -49,6 +48,41 @@ function qrsmallClick() {
 
 function space_content_onload(urladdress_i) {
     urladdress = urladdress_i
+    uploadToggle.addEventListener('click', () => {
+        uploadArea.classList.toggle('show');
+        if (uploadArea.classList.contains('show')) {
+            uploadToggle.textContent = '업로드 창 닫기';
+        } else {
+            uploadToggle.textContent = '업로드 창 보기';
+        }
+    });
+
+    uploadButton.addEventListener('click', () => {
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/space/file', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response)
+                .then(data => {
+                    alert('파일이 성공적으로 업로드되었습니다.');
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('업로드 중 오류 발생:', error);
+                    alert('파일 업로드에 실패했습니다.');
+                });
+
+            // 실제 업로드 처리 로직을 구현할 수 있습니다.
+
+        } else {
+            alert('파일을 선택해주세요.');
+        }
+    });
 
     const socket = new WebSocket("/ws");
 
@@ -64,8 +98,9 @@ function space_content_onload(urladdress_i) {
     socket.onmessage = function (event) {
         console.log("서버로부터 메시지 수신:", event.data);
         let jsonData = JSON.parse(event.data)
-        if (jsonData.Sp_file_status == 1 && jsonData.Sp_file_ext == '.pdf'){
+        if (jsonData.Sp_file_status == 1 && jsonData.Sp_file_ext == '.pdf') {
             loadPDF("/space/file")
+            file_context = jsonData.Sp_file_context == 0 ? 1 : jsonData.Sp_file_context
         }
         if (jsonData.Sp_ws_type == 'file_context' && jsonData.Sp_file_context != null) {
             file_context = parseInt(jsonData.Sp_file_context)
@@ -148,8 +183,8 @@ function linkCopyToClipboard(sp_id) {
 
 let pdfDoc = null
 let pageRendering = false,
-pageNumPending = null,
-scale = 1.5;
+    pageNumPending = null,
+    scale = 1.5;
 
 function uploadPDF() {
     const file = document.getElementById('pdf-file').files[0];

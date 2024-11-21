@@ -9,7 +9,6 @@
     @import url('{{.Url_address}}/assets/content.css');
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
-  <script src="{{.Url_address}}/assets/content.js"></script>
 </head>
 
 <body onload="space_content_onload({{.Url_address}})"> <!-- 템플릿엔진 에러 무시 -->
@@ -28,10 +27,12 @@
     </header>
     <main>
       <!-- PDF 업로드 영역 -->
-      <div id="pdf-upload">
-        <h2>PDF 업로드</h2>
-        <input type="file" id="pdf-file" accept="application/pdf">
-        <button onclick="uploadPDF()">업로드</button>
+      <div class="upload-container">
+        <button id="uploadToggle">업로드 열기</button>
+        <div id="uploadArea">
+          <input type="file" id="fileInput">
+          <button id="uploadButton">업로드</button>
+        </div>
       </div>
 
       <!-- PDF 표시 영역 -->
@@ -65,5 +66,6 @@
     </footer>
   </section>
 </body>
+<script src="{{.Url_address}}/assets/content.js"></script>
 
 </html>

@@ -9,7 +9,6 @@
     @import url('{{.Url_address}}/assets/content.css');
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
-  <script src="{{.Url_address}}/assets/content.js"></script>
 </head>
 
 <body onload="space_content_onload({{.Url_address}})"> <!-- 템플릿엔진 에러 무시 -->
@@ -27,7 +26,6 @@
       <img id="QRsmall" src="{{.Sp_png_path}}" onclick="qrsmallClick()" />
     </header>
     <main>
-
       <!-- PDF 표시 영역 -->
       <div id="pdf-viewer">
         <canvas id="pdf-render"></canvas>
@@ -59,5 +57,6 @@
     </footer>
   </section>
 </body>
+<script src="{{.Url_address}}/assets/content.js"></script>
 
 </html>

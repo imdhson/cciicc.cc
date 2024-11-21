@@ -46,43 +46,17 @@ function qrsmallClick() {
     qrsmallclick_toggle = !qrsmallclick_toggle
 }
 
+function uploadToggle_onclick(){
+    uploadArea.classList.toggle('show')
+    if(uploadArea.classList.contains('show')){
+        uploadToggle.textContent = '업로드 창 닫기'
+    } else{
+        uploadToggle.textContent = '업로드 창 보기'
+    }
+}
+
 function space_content_onload(urladdress_i) {
     urladdress = urladdress_i
-    uploadToggle.addEventListener('click', () => {
-        uploadArea.classList.toggle('show');
-        if (uploadArea.classList.contains('show')) {
-            uploadToggle.textContent = '업로드 창 닫기';
-        } else {
-            uploadToggle.textContent = '업로드 창 보기';
-        }
-    });
-
-    uploadButton.addEventListener('click', () => {
-        if (fileInput.files.length > 0) {
-            const file = fileInput.files[0];
-            const formData = new FormData();
-            formData.append('file', file);
-
-            fetch('/space/file', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response)
-                .then(data => {
-                    alert('파일이 성공적으로 업로드되었습니다.');
-                    console.log(data);
-                })
-                .catch(error => {
-                    console.error('업로드 중 오류 발생:', error);
-                    alert('파일 업로드에 실패했습니다.');
-                });
-
-            // 실제 업로드 처리 로직을 구현할 수 있습니다.
-
-        } else {
-            alert('파일을 선택해주세요.');
-        }
-    });
 
     const socket = new WebSocket("/ws");
 
@@ -187,7 +161,7 @@ let pageRendering = false,
     scale = 1.5;
 
 function uploadPDF() {
-    const file = document.getElementById('pdf-file').files[0];
+    const file = document.getElementById('fileInput').files[0];
     if (file) {
         const formData = new FormData();
         formData.append('file', file);

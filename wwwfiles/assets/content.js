@@ -4,23 +4,30 @@ let uploadareaclock_toggle = false
 let popup_once = false
 let file_context = 1
 
-function popup(toggle, text) {
-    if (toggle && !popup_once) {
-        //팝업 생성
-        const popup = document.createElement("div")
-        popup.id = "popup"
-        popup.textContent = text
-        const main = document.querySelector("main")
-        main.appendChild(popup)
-        popup_once = true
-    } else if (!toggle) {
-        const popup = document.getElementById("popup")
-        if (popup != null || popup != undefined) {
-            document.querySelector("main").removeChild(document.getElementById("popup"))
-        }
-        popup_once = false
-    }
-
+function showPopup(message) {
+    const popup = document.getElementById('popup');
+    const overlay = document.getElementById('overlay');
+    
+    popup.textContent = message;
+    popup.style.display = 'block';
+    overlay.style.display = 'block';
+    
+    setTimeout(() => {
+        popup.style.opacity = '1';
+        popup.style.transform = 'translate(-50%, -50%) scale(1)';
+        overlay.style.opacity = '1';
+    }, 10);
+    
+    setTimeout(() => {
+        popup.style.opacity = '0';
+        popup.style.transform = 'translate(-50%, -50%) scale(0.8)';
+        overlay.style.opacity = '0';
+        
+        setTimeout(() => {
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+        }, 400);
+    }, 2000);
 }
 
 const uploadToggle = document.getElementById('uploadToggle');
@@ -29,21 +36,15 @@ const fileInput = document.getElementById('fileInput');
 const uploadButton = document.getElementById('uploadButton');
 
 function qrsmallClick() {
-    let qrsmall = document.getElementById("QRsmall")
-    if (!qrsmallclick_toggle) { //토글 false, 작은 화면
-        qrsmall.style.height = "50%"
-        qrsmall.style.top = "30px"
-        qrsmall.style.right = "30px"
-        qrsmall.style.border = "1px solid black"
-        qrsmall.style.borderRadius = "20px"
-    } else { //토글t, 작은 화면
-        qrsmall.style.height = "inherit"
-        qrsmall.style.top = "0"
-        qrsmall.style.right = "0"
-        qrsmall.style.border = "none"
-        qrsmall.style.borderRadius = "0"
+    const qrsmall = document.getElementById("QRsmall");
+    
+    if (!qrsmallclick_toggle) {
+        qrsmall.classList.add('expanded');
+    } else {
+        qrsmall.classList.remove('expanded');
     }
-    qrsmallclick_toggle = !qrsmallclick_toggle
+    
+    qrsmallclick_toggle = !qrsmallclick_toggle;
 }
 
 function uploadToggle_onclick(){
@@ -60,15 +61,11 @@ function space_content_onload(urladdress_i) {
 
     const socket = new WebSocket("/ws");
 
-    // 연결이 열리면 실행되는 이벤트 핸들러
     socket.onopen = function (event) {
         console.log("WebSocket 연결이 열렸습니다.");
-
-        // 서버로 메시지 전송
         socket.send("클라이언트에서 보내는 메시지입니다!");
     };
 
-    // 서버로부터 메시지를 받으면 실행되는 이벤트 핸들러 
     socket.onmessage = function (event) {
         console.log("서버로부터 메시지 수신:", event.data);
         let jsonData = JSON.parse(event.data)
@@ -82,7 +79,6 @@ function space_content_onload(urladdress_i) {
         }
     };
 
-    // 연결이 닫히면 실행되는 이벤트 핸들러
     socket.onclose = function (event) {
         if (event.wasClean) {
             console.log(`연결이 정상적으로 종료되었습니다. 코드: ${event.code}, 이유: ${event.reason}`);
@@ -91,14 +87,11 @@ function space_content_onload(urladdress_i) {
         }
     };
 
-    // 에러가 발생하면 실행되는 이벤트 핸들러
     socket.onerror = function (error) {
         console.error(`WebSocket 에러 발생: ${error.message}`);
     };
 
-    // 서버로 메시지를 보내는 함수
     function sendMessage(message) {
-        // 연결 상태 확인
         if (socket.readyState === WebSocket.OPEN) {
             socket.send(message);
         } else {
@@ -106,14 +99,13 @@ function space_content_onload(urladdress_i) {
         }
     }
 
-    // 연결 종료 함수
     function closeConnection() {
         socket.close();
     }
 }
 
-function addComment_form(event) { // 키보드의 모든 입력을 받고 엔터 혹은 터치(마우스) 클릭시에만 수행
-    if (event == -1 || event.key == "Enter") { //터치 || 엔터
+function addComment_form(event) {
+    if (event == -1 || event.key == "Enter") {
         const xhr = new XMLHttpRequest();
         const url = urladdress + "/space/addcomment";
 
@@ -125,34 +117,19 @@ function addComment_form(event) { // 키보드의 모든 입력을 받고 엔터
         const form_text = document.getElementById("comment")
         form_text.value = ""
     }
-
 }
 
 function linkCopyToClipboard(sp_id) {
-    // 새로운 텍스트 영역 요소 생성
-    const textArea = document.createElement('textarea');
-    textArea.value = urladdress + "/" + sp_id; // 복사하고자 하는 텍스트 설정
-
-    // 스타일 설정하여 화면에 표시되지 않도록 함
-    textArea.style.position = 'absolute';
-    textArea.style.left = '-9999px';
-
-    document.body.appendChild(textArea); // DOM에 추가
-    textArea.focus(); // 텍스트 영역에 포커스
-    textArea.select(); // 텍스트 영역의 텍스트 선택
-
-    try {
-        // 텍스트 복사 시도
-        document.execCommand('copy');
-        popup(true, "클립보드에 복사했어요.")
-        setTimeout(function () {
-            popup(false);
-        }, 1000);
-    } catch (err) {
-        console.error('Failed to copy text', err);
-    }
-
-    document.body.removeChild(textArea); // DOM에서 텍스트 영역 제거
+    const urladdress_copy = urladdress + "/" + sp_id;
+    
+    navigator.clipboard.writeText(urladdress_copy)
+        .then(() => {
+            showPopup("클립보드에 복사되었어요");
+        })
+        .catch(err => {
+            console.error('클립보드 복사 실패:', err);
+            showPopup("클립보드 복사에 실패했습니다");
+        });
 }
 
 let pdfDoc = null
@@ -214,7 +191,6 @@ function renderPage(num) {
 }
 
 function queueRenderPage(num) {
-    //post file context로 페이지넘버 전송
     let formData = new FormData();
     formData.append('file_context', num)
     fetch('/space/filecontext', {
@@ -228,7 +204,6 @@ function queueRenderPage(num) {
         .catch((error) => {
             console.error('에러:', error);
         });
-
 
     if (pageRendering) {
         pageNumPending = num;
@@ -252,5 +227,3 @@ function onNextPage() {
     file_context++;
     queueRenderPage(file_context);
 }
-
-

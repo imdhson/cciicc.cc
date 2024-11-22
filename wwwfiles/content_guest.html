@@ -26,14 +26,13 @@
 
   <div class="content-wrapper">
     <main>
-
       <div id="pdf-viewer">
-        <canvas id="pdf-render"></canvas>
         <div id="pdf-controls">
           <button id="prev-page" onclick="onPrevPage()">이전</button>
           <span id="page-num"></span>
           <button id="next-page" onclick="onNextPage()">다음</button>
         </div>
+        <canvas id="pdf-render"></canvas>
       </div>
     </main>
 
@@ -49,6 +48,8 @@
       <p>{{.Footer_terms}}</p>
     </a>
   </footer>
+  <div id="overlay"></div>
+  <div id="popup"></div>
 </body>
 <script src="{{.Url_address}}/assets/content.js"></script>
 

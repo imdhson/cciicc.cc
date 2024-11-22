@@ -1,16 +1,18 @@
 * {
     text-decoration: none;
-    color: black;
-    transition: 1s;
+    color: #333;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 body {
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: #f5f5f5;
 }
 
 header {
@@ -20,50 +22,40 @@ header {
     align-items: center;
     position: fixed;
     top: 0;
-    background-color: #ececec;
+    background-color: #ffffff;
     z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
-    margin-left: 1em;
-    border-radius: 20px;
-    padding: 5px;
-    height: 1em;
-    max-width: 500px;
-    overflow: hidden;
+    margin-left: 1.5em;
+    font-size: 24px;
+    font-weight: 700;
+    color: #26b198;
 }
 
 header h3 {
-    width: auto;
-    margin-left: 1em;
-    text-decoration: none;
-    font-weight: normal;
-}
-
-header a {
-    color: gray;
+    margin-left: 1.5em;
+    font-weight: 400;
+    color: #666;
 }
 
 header b {
-    color: black;
-    font-size: larger;
+    color: #26b198;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 #content_view_count {
-    margin-left: 1em;
-    padding: 0;
-}
-
-#content_order {
-    margin-left: 3em;
-    text-decoration: underline;
+    margin-left: 1.5em;
+    color: #888;
 }
 
 .content-wrapper {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding-top: 80px;
+    padding-top: 100px;
 }
 
 main {
@@ -79,20 +71,24 @@ main {
     top: 100px;
     left: 20px;
     width: 300px;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
     z-index: 1000;
+    overflow: hidden;
+    transition: all 0.3s ease;
 }
 
 #uploadToggle {
     width: 100%;
-    padding: 10px;
+    padding: 15px;
     background-color: #26b198;
     color: white;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, padding 0.3s;
+    font-weight: 600;
+    text-align: left;
 }
 
 #uploadToggle:hover {
@@ -104,30 +100,34 @@ main {
     overflow: hidden;
     transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out;
     background-color: white;
-    padding: 0 10px;
+    padding: 0 15px;
     opacity: 0;
 }
 
 #uploadArea.show {
     max-height: 200px;
-    padding: 20px 10px 10px;
+    padding: 20px 15px;
     opacity: 1;
-    transition: max-height 0.5s ease-in, padding 0.5s ease-in, opacity 0.5s ease-in;
 }
 
 #fileInput {
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
 #uploadButton {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     background-color: #000000;
     color: white;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
+    border-radius: 5px;
+    font-weight: 600;
 }
 
 #uploadButton:hover {
@@ -135,207 +135,296 @@ main {
 }
 
 #pdf-viewer {
-    display: none;
     width: 100%;
     max-width: 800px;
-    background-color: #f0f0f0;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-#pdf-render {
-    width: 100%;
-    height: auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 #pdf-controls {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#pdf-render {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
 #prev-page, #next-page {
-    background-color: #3498db;
+    background-color: #26b198;
     color: white;
     border: none;
-    padding: 10px 20px;
-    margin: 0 10px;
-    border-radius: 5px;
+    padding: 12px 24px;
+    margin: 0 15px;
+    border-radius: 25px;
     font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.1s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
 }
 
 #prev-page:hover, #next-page:hover {
-    background-color: #2980b9;
+    background-color: #3be3c4;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
 #prev-page:active, #next-page:active {
-    transform: scale(0.95);
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#page-num {
-    font-size: 16px;
-    margin: 0 15px;
+#prev-page::before, #next-page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: all 0.5s;
 }
 
-#prev-page::before {
+#prev-page:hover::before, #next-page:hover::before {
+    left: 100%;
+}
+
+#prev-page::after {
     content: "◀";
-    margin-right: 5px;
+    margin-right: 8px;
 }
 
 #next-page::after {
     content: "▶";
-    margin-left: 5px;
+    margin-left: 8px;
 }
-
 #QRsmall {
     position: fixed;
-    top: 0;
-    right: 0;
-    height: 80px;
+    top: 10px;
+    right: 10px;
+    height: 60px;
     width: auto;
+    transition: all 1s ease;
+    cursor: pointer;
+    z-index: 1000;
 }
 
-#QRsmall:active {
-    transform: scale(0.95);
+#QRsmall.expanded {
+    top: 30px;
+    right: 30px;
+    height: 50%;
+    border: 1px solid black;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+#QRsmall:hover {
+    transform: scale(1.1);
 }
 
 form {
     background-color: white;
     position: fixed;
-    bottom: 1em;
-    right: 1em;
-    border: 1px solid black;
-    border-radius: 30px;
-    padding: 1em;
+    bottom: 20px;
+    right: 20px;
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
     text-align: center;
-    max-width: 500px;
-    width: calc(100% - 3em);
+    max-width: 300px;
+    width: calc(100% - 40px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
 input,
 textarea {
-    width: calc(100% - 1em);
-    padding: 1em;
-    margin-bottom: 1em;
-    border: 1px solid #ccc;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
     border-radius: 5px;
     outline: none;
+    font-size: 14px;
 }
 
 input:focus,
 textarea:focus {
-    border-color: #000;
+    border-color: #26b198;
+    box-shadow: 0 0 0 2px rgba(38, 177, 152, 0.2);
 }
 
 form button {
     width: 100%;
-    padding: 10px;
-    background-color: #000;
+    padding: 12px;
+    background-color: #26b198;
     color: #fff;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 form button:hover {
-    background-color: rgb(255, 159, 175);
-    transition: background-color 0.5s;
+    background-color: #3be3c4;
+    transform: translateY(-2px);
 }
 
 footer {
     text-align: center;
-    padding: 100px 0 100px 0;
-    background-color: #f8f8f8;
+    padding: 20px 0;
+    background-color: #ffffff;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 }
 
 footer p {
-    color: gray;
-}
-
-@media (max-width: 850px) {
-    header {
-        height: 3em;
-    }
-
-    header h1 {
-        font-size: 15px;
-        max-width: 150px;
-    }
-
-    header h3 {
-        font-size: 10px;
-    }
-
-    header p {
-        font-size: 10px;
-    }
-
-    .content-wrapper {
-        padding-top: 3em;
-    }
-
-    #QRsmall {
-        height: 3em;
-    }
-
-    form {
-        width: calc(100% - 2em);
-        border-radius: 0;
-        border: none;
-        bottom: 0;
-        left: 0;
-        right: 0;
-    }
-
-    .upload-container {
-        top: 60px;
-        right: 10px;
-        width: 250px;
-    }
+    color: #888;
+    font-size: 14px;
 }
 
 #popup {
     position: fixed;
-    display: block;
-    top: 80px;
-    left: 30%;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
     width: auto;
-    color: rgb(248, 122, 143);
+    color: #000000;
     font-weight: bold;
-    font-size: 3em;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 20px;
-    padding: 5px;
-    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.5);
+    font-size: 24px;
+    background-color: rgba(255, 255, 255, 1);
+    border: none;
+    border-radius: 10px;
+    padding: 15px 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    z-index: 1999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
 @media (max-width: 500px) {
+    #popup {
+        font-size: 18px;
+        padding: 10px 20px;
+    }
+}
+@media (max-width: 850px) {
     header {
-        font-size: smaller;
+        height: 60px;
     }
 
     header h1 {
-        font-size: 10px;
-        max-width: 50px;
+        font-size: 18px;
+        max-width: 150px;
+    }
+
+    header h3 {
+        font-size: 12px;
+    }
+
+    .content-wrapper {
+        padding-top: 80px;
+    }
+
+    .upload-container {
+        top: 70px;
+        left: 10px;
+        right: 10px;
+        width: calc(100% - 20px);
+        max-width: 300px;
+    }
+
+    #uploadToggle {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    form {
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        width: calc(100% - 20px);
+        max-width: none;
+        border-radius: 10px;
+        padding: 15px;
+    }
+
+    #QRsmall {
+        height: 40px;
+    }
+}
+
+@media (max-width: 500px) {
+    header h1 {
+        font-size: 14px;
+        max-width: 100px;
     }
 
     #pdf-viewer {
-        padding: 10px;
+        padding: 15px;
     }
 
     #prev-page, #next-page {
-        padding: 8px 15px;
+        padding: 10px 20px;
         font-size: 14px;
     }
 
     .upload-container {
-        width: 200px;
+        top: 60px;
+    }
+
+    #uploadToggle {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    form {
+        padding: 10px;
+    }
+
+    form input,
+    form textarea {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+
+    form button {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    #QRsmall {
+        height: 30px;
+    }
+
+    #popup {
+        font-size: 18px;
+        padding: 10px 20px;
     }
 }

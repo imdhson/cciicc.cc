@@ -179,6 +179,8 @@ function uploadPDF() {
 }
 
 function loadPDF(url) {
+    const pdf_viewerDOM = document.getElementById('pdf-viewer')
+    pdf_viewerDOM.style.display = 'block'
     pdfjsLib.getDocument(url).promise.then(function (pdf) {
         pdfDoc = pdf;
         document.getElementById('page-num').textContent = file_context + ' / ' + pdf.numPages;

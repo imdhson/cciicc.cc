@@ -5,24 +5,27 @@
 }
 
 body {
-    margin: auto;
-    margin-top: 5em;
+    margin: 0;
+    padding: 0;
     font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 header {
     width: 100%;
     height: 80px;
-    display: block;
-    display: inline-flex;
+    display: flex;
+    align-items: center;
     position: fixed;
     top: 0;
     background-color: #ececec;
+    z-index: 1000;
 }
 
 header h1 {
     margin-left: 1em;
-    /* border: 1px solid orange; */
     border-radius: 20px;
     padding: 5px;
     height: 1em;
@@ -56,96 +59,152 @@ header b {
     text-decoration: underline;
 }
 
+.content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 80px;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
 .upload-container {
-    position: relative;
+    position: fixed;
+    top: 100px;
+    left: 20px;
     width: 300px;
-    margin: auto;
+    background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
-    overflow: hidden;
+    z-index: 1000;
 }
+
 #uploadToggle {
     width: 100%;
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #26b198;
     color: white;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
 }
+
 #uploadToggle:hover {
-    background-color: #45a049;
+    background-color: #3be3c4;
 }
+
 #uploadArea {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+    transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out;
     background-color: white;
     padding: 0 10px;
-    border: 1px solid #ddd;
     opacity: 0;
 }
+
 #uploadArea.show {
     max-height: 200px;
-    padding: 10px;
+    padding: 20px 10px 10px;
     opacity: 1;
     transition: max-height 0.5s ease-in, padding 0.5s ease-in, opacity 0.5s ease-in;
 }
+
 #fileInput {
+    width: 100%;
     margin-bottom: 10px;
 }
+
 #uploadButton {
-    padding: 5px 10px;
-    background-color: #008CBA;
+    width: 100%;
+    padding: 10px;
+    background-color: #000000;
     color: white;
     border: none;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
+#uploadButton:hover {
+    background-color: #333333;
+}
+
+#pdf-viewer {
+    display: none;
+    width: 100%;
+    max-width: 800px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#pdf-render {
+    width: 100%;
+    height: auto;
+}
+
+#pdf-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#prev-page, #next-page {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+#prev-page:hover, #next-page:hover {
+    background-color: #2980b9;
+}
+
+#prev-page:active, #next-page:active {
+    transform: scale(0.95);
+}
+
+#page-num {
+    font-size: 16px;
+    margin: 0 15px;
+}
+
+#prev-page::before {
+    content: "◀";
+    margin-right: 5px;
+}
+
+#next-page::after {
+    content: "▶";
+    margin-left: 5px;
+}
 
 #QRsmall {
     position: fixed;
     top: 0;
     right: 0;
-    height: inherit;
+    height: 80px;
     width: auto;
 }
 
 #QRsmall:active {
-    /* 클릭 시 적용할 스타일 */
-    transform: scale(0.50);
-    /* 클릭 시 약간 축소 */
-}
-
-main {
-    /* border: 1px solid orange; */
-    margin-top: 100px;
-    text-align: center;
-    text-decoration: none;
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-}
-
-#popup {
-    position: fixed;
-    display: block;
-    top: 80px;
-    left: 30%;
-    width: auto;
-    color: rgb(254, 126, 41);
-    font-weight: normal;
-    font-size: 3em;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.3);
-
+    transform: scale(0.95);
 }
 
 form {
     background-color: white;
-    display: block;
     position: fixed;
     bottom: 1em;
     right: 1em;
@@ -153,16 +212,14 @@ form {
     border-radius: 30px;
     padding: 1em;
     text-align: center;
-    margin: auto;
     max-width: 500px;
+    width: calc(100% - 3em);
 }
 
 input,
 textarea {
     width: calc(100% - 1em);
-    padding-top: 1em;
-    padding-bottom: 1em;
-    padding-left: 1em;
+    padding: 1em;
     margin-bottom: 1em;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -172,14 +229,6 @@ textarea {
 input:focus,
 textarea:focus {
     border-color: #000;
-}
-
-select {
-    min-width: 100px;
-    margin-bottom: 1em;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 100px;
 }
 
 form button {
@@ -200,18 +249,15 @@ form button:hover {
 }
 
 footer {
-    margin-top: 5em;
     text-align: center;
-    margin-bottom: 200px;
+    padding: 100px 0 100px 0;
+    background-color: #f8f8f8;
 }
 
 footer p {
     color: gray;
 }
 
-
-
-/* responsive web */
 @media (max-width: 850px) {
     header {
         height: 3em;
@@ -220,7 +266,6 @@ footer p {
     header h1 {
         font-size: 15px;
         max-width: 150px;
-        overflow: hidden;
     }
 
     header h3 {
@@ -231,27 +276,47 @@ footer p {
         font-size: 10px;
     }
 
-    #QRbig {
-        display: none;
+    .content-wrapper {
+        padding-top: 3em;
     }
 
-    main {
-        grid-template-columns: 1fr;
-        font-size: smaller;
+    #QRsmall {
+        height: 3em;
     }
 
     form {
-        width: calc(100% - 3em);
+        width: calc(100% - 2em);
         border-radius: 0;
         border: none;
         bottom: 0;
         left: 0;
         right: 0;
     }
+
+    .upload-container {
+        top: 60px;
+        right: 10px;
+        width: 250px;
+    }
+}
+
+#popup {
+    position: fixed;
+    display: block;
+    top: 80px;
+    left: 30%;
+    width: auto;
+    color: rgb(248, 122, 143);
+    font-weight: bold;
+    font-size: 3em;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 5px;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 500px) {
-
     header {
         font-size: smaller;
     }
@@ -259,14 +324,18 @@ footer p {
     header h1 {
         font-size: 10px;
         max-width: 50px;
-        overflow: hidden;
     }
 
-    #comments {
-        grid-template-columns: 1fr;
+    #pdf-viewer {
+        padding: 10px;
     }
 
-    #comment_c {
-        width: 100%;
+    #prev-page, #next-page {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+
+    .upload-container {
+        width: 200px;
     }
 }

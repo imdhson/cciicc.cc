@@ -118,10 +118,16 @@ let pageRendering = false,
 
 function uploadPDF() {
     const file = document.getElementById('fileInput').files[0];
+    console.log(file.name.toLowerCase().endsWith('.pdf'))
+    //BETA PDF only
+    if(!file.name.toLowerCase().endsWith('.pdf')){//PDF이면
+        showPopup("지금은 PDF 파일만 올릴 수 있어요.")
+        return
+    }
+
     if (file) {
         const formData = new FormData();
         formData.append('file', file);
-
         fetch('/space/addfile', {
             method: 'POST',
             body: formData

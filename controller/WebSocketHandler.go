@@ -183,7 +183,7 @@ func (h *Ws_Hub) WebSocketHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// space_content_encoded, err := json.MarshalIndent(space_content, " ", "	")
-	service.ErrHandler(err, "wssockethandler jsonmarshal")
+	// service.ErrHandler(err, "wssockethandler jsonmarshal")
 	conn.WriteJSON(space_content)
 
 	// 새 클라이언트를 생성하고 해당 게시글에 추가합니다.

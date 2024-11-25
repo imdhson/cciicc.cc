@@ -9,48 +9,55 @@
 body {
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
     background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
 }
 
 .bodysection {
-    margin: auto;
-    max-width: 800px;
-    padding: 2rem;
+    max-width: 40em;
+    width: 100%;
     background-color: #ffffff;
+    padding: 2em;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+    margin: 2em 1em;
 }
 
 header a h1 {
     text-align: center;
-    font-size: 3em;
+    font-size: 5em;
     color: #26b198;
     font-weight: 700;
-    margin-bottom: 1.5em;
+    margin-bottom: 1em;
 }
 
 main {
     text-align: center;
-    margin: 2em 0;
+    margin: 1em 0;
+    color: #666;
 }
 
 nav {
-    margin: 2em 0;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     gap: 1em;
+    margin: 2em 0;
 }
 
 .mainbutton {
+    text-decoration: none;
     background-color: #26b198;
     color: white;
     font-weight: 600;
-    padding: 12px 24px;
+    text-align: center;
     border-radius: 25px;
+    display: inline-block;
+    padding: 12px 24px;
+    width: 100%;
+    max-width: 300px;
     transition: all 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -62,8 +69,11 @@ nav {
 }
 
 footer {
-    margin-top: 3em;
+    margin-top: 2em;
     text-align: center;
+    padding: 1em 0;
+    background-color: #ffffff;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 }
 
 footer p {
@@ -71,26 +81,37 @@ footer p {
     font-size: 14px;
 }
 
+/* Form Styles */
 form {
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
     padding: 20px;
-    background-color: white;
     border-radius: 10px;
+    background-color: #ffffff;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-input, textarea {
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+input,
+textarea {
     width: 100%;
     padding: 12px 15px;
     margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
     outline: none;
+    font-size: 14px;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
     border-color: #26b198;
     box-shadow: 0 0 0 2px rgba(38, 177, 152, 0.2);
 }
@@ -99,12 +120,13 @@ form button {
     width: 100%;
     padding: 12px;
     background-color: #26b198;
-    color: white;
+    color: #fff;
     font-size: 16px;
     font-weight: 600;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 form button:hover {
@@ -112,28 +134,42 @@ form button:hover {
     transform: translateY(-2px);
 }
 
-@media (max-width: 800px) {
-    .bodysection {
-        margin: 1rem;
-        padding: 1rem;
-    }
-
-    header a h1 {
-        font-size: 2em;
-    }
-
-    .mainbutton {
-        width: 100%;
-        text-align: center;
-    }
+#large_input {
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
 }
 
-@media (max-width: 500px) {
+/* Responsive Design */
+@media (max-width: 800px) {
+    .bodysection {
+        margin: 1em;
+        padding: 1em;
+    }
+
     header a h1 {
         font-size: 1.5em;
     }
 
-    form {
-        padding: 15px;
+    .mainbutton {
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 500px) {
+    .bodysection {
+        margin: 0.5em;
+        padding: 0.5em;
+    }
+
+    .mainbutton {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+
+    input, 
+    form button {
+        padding: 10px;
+        font-size: 14px;
     }
 }

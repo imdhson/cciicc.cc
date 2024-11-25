@@ -3,6 +3,7 @@ let qrsmallclick_toggle = false
 let uploadareaclock_toggle = false
 let popup_once = false
 let file_context = 1
+let user_isHost = false
 
 function showPopup(message) {
     const popup = document.getElementById('popup');
@@ -75,6 +76,7 @@ function space_content_onload(urladdress_i) {
         }
         if (jsonData.Sp_ws_type == 'file_context' && jsonData.Sp_file_context != null) {
             file_context = parseInt(jsonData.Sp_file_context)
+            user_isHost ? null : showPopup("호스트가 파일 변경 중...")
             loadPDF("/space/file")
         }
     };
@@ -226,4 +228,8 @@ function onNextPage() {
     }
     file_context++;
     queueRenderPage(file_context);
+}
+
+function ImHost(){
+    user_isHost = true
 }

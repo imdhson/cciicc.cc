@@ -135,6 +135,7 @@ main {
 }
 
 #pdf-viewer {
+    display: none;
     width: 100%;
     max-width: 800px;
     background-color: #ffffff;

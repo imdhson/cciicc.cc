@@ -1,154 +1,139 @@
 * {
     text-decoration: none;
-    color: black;
-    transition: 1s;
-    font-family: sans-serif;
+    color: #333;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
 }
 
-header a h1 {
-    text-align: center;
-    font-size: 4em;
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f5f5f5;
 }
 
 .bodysection {
     margin: auto;
-    max-width: 40em;
-    padding: 1em;
-    background-color: #ebe8e8;
+    max-width: 800px;
+    padding: 2rem;
+    background-color: #ffffff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 
+header a h1 {
+    text-align: center;
+    font-size: 3em;
+    color: #26b198;
+    font-weight: 700;
+    margin-bottom: 1.5em;
+}
 
 main {
-    margin: 1em;
     text-align: center;
-    text-decoration: none;
+    margin: 2em 0;
 }
 
 nav {
-    margin: 1em;
-    margin-top: 2em;
-
-    width: auto;
+    margin: 2em 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
 }
 
 .mainbutton {
-    text-decoration: none;
-    background-color: black;
+    background-color: #26b198;
     color: white;
-    font-weight: bold;
-    text-align: center;
-    border-radius: 30px;
-    display: inline-block;
-    padding: 1em;
-    margin: auto;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .mainbutton:hover {
-    background-color: rgb(255, 159, 175);
-    transition: background-color 0.5s;
+    background-color: #3be3c4;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
-
 footer {
-    margin-top: 5em;
+    margin-top: 3em;
     text-align: center;
 }
 
 footer p {
-    color: gray;
+    color: #888;
+    font-size: 14px;
 }
 
-/*
-Host, guest
-*/
 form {
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
     padding: 20px;
-    border-radius: 5px;
-    background-color: #f5f5f5;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 16px;
-    font-weight: medium;
-    color: black
-}
-
-input,
-textarea {
-    width: calc(100% - 1em);
-    padding-top: 1em;
-    padding-bottom: 1em;
-    padding-left: 1em;
-    margin-bottom: 1em;
-    border: 1px solid #ccc;
+input, textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
     border-radius: 5px;
     outline: none;
 }
 
-input:focus,
-textarea:focus {
-    border-color: #000;
+input:focus, textarea:focus {
+    border-color: #26b198;
+    box-shadow: 0 0 0 2px rgba(38, 177, 152, 0.2);
 }
 
 form button {
     width: 100%;
-    padding: 10px;
-    background-color: #000;
-    color: #fff;
+    padding: 12px;
+    background-color: #26b198;
+    color: white;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
 form button:hover {
-    background-color: rgb(255, 159, 175);
-    transition: background-color 0.5s;
+    background-color: #3be3c4;
+    transform: translateY(-2px);
 }
 
-#large_input {
-    font-size: large;
-    font-weight: bold;
-    text-align: center;
-}
-
-/* responsive web */
 @media (max-width: 800px) {
     .bodysection {
-        width: auto;
+        margin: 1rem;
+        padding: 1rem;
     }
 
-    header h1 {
+    header a h1 {
         font-size: 2em;
     }
 
     .mainbutton {
-        display: block;
-        padding: 0.5em;
-        width: 80%;
-        margin-bottom: 1em;
+        width: 100%;
+        text-align: center;
     }
-
-    form {
-        max-width: 90%;
-    }
-
 }
 
 @media (max-width: 500px) {
-    .mainbutton {
-        width: 90%;
+    header a h1 {
+        font-size: 1.5em;
     }
 
-    input,
-    form button {
-        width: 90%;
+    form {
+        padding: 15px;
     }
-
 }

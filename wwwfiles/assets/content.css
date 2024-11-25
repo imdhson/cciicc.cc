@@ -8,7 +8,7 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: sans-serif;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -328,6 +328,40 @@ footer p {
     opacity: 0;
     transition: opacity 0.4s ease;
 }
+
+.floating-message {
+    position: absolute;
+    right: 20px; /* 우측 여백 */
+    bottom: 20px; /* 하단 여백 */
+    font-size: 2em;
+    font-weight: bold;
+    color: black;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 그림자 효과 */
+    background-color: rgba(38, 177, 152, 0.083);
+    backdrop-filter: blur(5px);
+    border-radius: 100px;
+    padding: 10px;
+    opacity: 0;
+    transition: transform 15s, opacity 15s;
+    animation: floatInFromBottomRight 15s forwards;
+}
+@keyframes floatInFromBottomRight {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
 
 @media (max-width: 500px) {
     #popup {

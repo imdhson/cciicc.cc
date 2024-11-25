@@ -5,32 +5,6 @@ let popup_once = false
 let file_context = 1
 let user_isHost = false
 
-function showPopup(message) {
-    const popup = document.getElementById('popup');
-    const overlay = document.getElementById('overlay');
-    
-    popup.textContent = message;
-    popup.style.display = 'block';
-    overlay.style.display = 'block';
-    
-    setTimeout(() => {
-        popup.style.opacity = '1';
-        popup.style.transform = 'translate(-50%, -50%) scale(1)';
-        overlay.style.opacity = '1';
-    }, 10);
-    
-    setTimeout(() => {
-        popup.style.opacity = '0';
-        popup.style.transform = 'translate(-50%, -50%) scale(0.8)';
-        overlay.style.opacity = '0';
-        
-        setTimeout(() => {
-            popup.style.display = 'none';
-            overlay.style.display = 'none';
-        }, 400);
-    }, 2000);
-}
-
 const uploadToggle = document.getElementById('uploadToggle');
 const uploadArea = document.getElementById('uploadArea');
 const fileInput = document.getElementById('fileInput');
@@ -78,6 +52,9 @@ function space_content_onload(urladdress_i) {
             file_context = parseInt(jsonData.Sp_file_context)
             user_isHost ? null : showPopup("호스트가 파일 변경 중...")
             loadPDF("/space/file")
+        }
+        if (jsonData.Sp_ws_type == 'chat') {
+            floatingMessage(jsonData.Sp_c_content)
         }
     };
 
@@ -155,6 +132,7 @@ function uploadPDF() {
                 }
             });
     }
+    uploadToggle_onclick()
 }
 
 function loadPDF(url) {
@@ -233,3 +211,48 @@ function onNextPage() {
 function ImHost(){
     user_isHost = true
 }
+
+
+function showPopup(message) {
+    const popup = document.getElementById('popup');
+    const overlay = document.getElementById('overlay');
+    
+    popup.textContent = message;
+    popup.style.display = 'block';
+    overlay.style.display = 'block';
+    
+    setTimeout(() => {
+        popup.style.opacity = '1';
+        popup.style.transform = 'translate(-50%, -50%) scale(1)';
+        overlay.style.opacity = '1';
+    }, 10);
+    
+    setTimeout(() => {
+        popup.style.opacity = '0';
+        popup.style.transform = 'translate(-50%, -50%) scale(0.8)';
+        overlay.style.opacity = '0';
+        
+        setTimeout(() => {
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+        }, 400);
+    }, 2000);
+}
+function floatingMessage(text) {
+        const messageElement = document.createElement('div');
+        messageElement.textContent = text;
+        messageElement.className = 'floating-message';
+        
+        document.getElementById('message-container').appendChild(messageElement);
+        
+        // 랜덤한 수평 및 수직 위치 오프셋 적용
+        const horizontalOffset = Math.random() * window.innerWidth * 0.8; // 화면 너비의 최대 80%까지 랜덤 오프셋
+        messageElement.style.right = `${horizontalOffset}px`;
+        
+        const verticalOffset = Math.random() * window.innerHeight * 0.8; // 화면 높이의 최대 80%까지 랜덤 오프셋
+        messageElement.style.bottom = `${verticalOffset}px`;
+        
+        setTimeout(() => {
+            messageElement.remove();
+        }, 15000); // 애니메이션 시간과 동일하게 설정
+    }

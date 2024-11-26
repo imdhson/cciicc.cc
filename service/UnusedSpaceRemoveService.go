@@ -30,8 +30,9 @@ func UnusedSpaceRemoveService() {
 				ErrHandler(file_remove_err, "UnusedSpaceRemoveService - host_file삭제")
 				Remove_users_related_space_id(rm_space_id) //space_id와 연관된 유저들 삭제
 
-				spaces.Remove_space(rm_space_id, i) //space [i] 삭제
+				spaces.Remove_space(i) //space [i] 삭제
 
+				//space와 연관있는 웹소켓 ws_space 삭제 시작
 				isRemove = true
 				break
 			}

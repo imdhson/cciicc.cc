@@ -1,7 +1,6 @@
 package types
 
 import (
-	"cciicc/controller"
 	"fmt"
 	"time"
 )
@@ -37,7 +36,7 @@ func GetInstance_spaces() *Spaces {
 	return spaces
 }
 
-func (spaces *Spaces) Remove_space(space_id string, idx int) {
+func (spaces *Spaces) Remove_space(idx int) {
 	//지워야될 곳(*spaces)[i]
 	old := *spaces
 	*spaces = Spaces{}
@@ -48,10 +47,6 @@ func (spaces *Spaces) Remove_space(space_id string, idx int) {
 			*spaces = append(*spaces, old[i])
 		}
 	}
-
-	//space와 연관있는 웹소켓 ws_space 삭제 시작
-	ws_hub := controller.GetInstance_ws_hub()
-	ws_hub.Ws_RemoveSpace(space_id)
 }
 
 // type Sp_c_color int

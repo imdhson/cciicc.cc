@@ -22,8 +22,11 @@ func UnusedSpaceRemoveService() {
 				rm_space_id := (*spaces)[i].Sp_id
 				log.Println("사용되지 않는 space 삭제: ", rm_space_id)
 
-				file_remove_err := storage.Delete_space_ar("wwwfiles/assets/space_qr/" + v.Sp_id + ".png")
-				ErrHandler(file_remove_err, "UnusedSpaceRemoveService - 파일 삭제")
+				file_remove_err := storage.Delete_space_qr("wwwfiles/assets/space_qr/" + v.Sp_id + ".png")
+				ErrHandler(file_remove_err, "UnusedSpaceRemoveService -QR 파일 삭제")
+				file_remove_err = nil
+				file_remove_err = storage.Delete_space_host_file(rm_space_id)
+				ErrHandler(file_remove_err, "UnusedSpaceRemoveService - host_file삭제")
 
 				Remove_users_related_space_id(rm_space_id) //space_id와 연관된 유저들 삭제
 
@@ -34,8 +37,8 @@ func UnusedSpaceRemoveService() {
 			}
 		}
 		if !isRemove { //리무브를 했으면 break하기때문에 sleep를 안하고 즉시 반복수행
-			log.Println("wait next for AUTOREMOVE_UNUSED_SPACE_HOURS ")
-			time.Sleep(time.Hour * types.AUTOREMOVE_UNUSED_SPACE_HOURS) //1시간 마다 순회하며 수행
+			log.Println("wait next AUTOREMOVE_UNUSED_SPACE_HOURS ")
+			time.Sleep(time.Hour * types.AUTOREMOVE_UNUSED_SPACE_HOURS) //n시간 마다 순회하며 수행
 		}
 	}
 }

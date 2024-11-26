@@ -33,6 +33,9 @@ func UnusedSpaceRemoveService() {
 				spaces.Remove_space(i) //space [i] 삭제
 
 				//space와 연관있는 웹소켓 ws_space 삭제 시작
+				ws_hub := types.GetInstance_ws_hub()
+				ws_hub.Ws_RemoveSpace(rm_space_id)
+
 				isRemove = true
 				break
 			}

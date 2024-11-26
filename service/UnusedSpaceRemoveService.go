@@ -24,13 +24,13 @@ func UnusedSpaceRemoveService() {
 
 				file_remove_err := storage.Delete_space_qr("wwwfiles/assets/space_qr/" + v.Sp_id + ".png")
 				ErrHandler(file_remove_err, "UnusedSpaceRemoveService -QR 파일 삭제")
+
 				file_remove_err = nil
 				file_remove_err = storage.Delete_space_host_file(rm_space_id)
 				ErrHandler(file_remove_err, "UnusedSpaceRemoveService - host_file삭제")
-
 				Remove_users_related_space_id(rm_space_id) //space_id와 연관된 유저들 삭제
 
-				spaces.Remove_space(i) //space [i] 삭제
+				spaces.Remove_space(rm_space_id, i) //space [i] 삭제
 
 				isRemove = true
 				break

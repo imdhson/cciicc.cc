@@ -86,11 +86,11 @@ func PostHandler_file(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(response)
 
 	//같은 ws_space에 websocket broadcast 시도
-	ws_hub := GetInstance_ws_hub()
+	ws_hub := types.GetInstance_ws_hub()
 	ws_space := ws_hub.Ws_GetOrCreateSpace(user.User_related_spaceid)
 	ws_file_context := types.New_Sp_ws_type_file_context(space.Sp_file_status, "1")
 	ws_file_context_encoded, err := json.MarshalIndent(ws_file_context, " ", "	")
 	service.ErrHandler(err, "posthandler file context json")
-	ws_hub.broadcast([]byte(ws_file_context_encoded), ws_space)
+	ws_hub.Broadcast([]byte(ws_file_context_encoded), ws_space)
 
 }

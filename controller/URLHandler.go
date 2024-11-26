@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"cciicc/service"
+	"cciicc/types"
 )
 
 func URLHandler(w http.ResponseWriter, r *http.Request) {
@@ -61,8 +62,8 @@ func URLHandler(w http.ResponseWriter, r *http.Request) {
 			SpaceContentHandler(w, r, now_url_sliced[1])
 		}
 	case "ws":
-		ws_hub := GetInstance_ws_hub()
-		ws_hub.WebSocketHandler(w, r)
+		ws_hub := types.GetInstance_ws_hub()
+		WebSocketHandler(ws_hub, w, r)
 	default:
 		log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
 		GuestHandler(w, r, now_url_sliced[0]) // url/guest/id 와 같으나 간소화된 url도 지원함

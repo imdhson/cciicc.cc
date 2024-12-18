@@ -1,4 +1,4 @@
-# LLM AI활용 영어 학습 도우미 - AStartrip
+# 실시간 파일, 의견 공유 플랫폼 | cciicc
 
 ## 소개
 
@@ -19,7 +19,7 @@
 ### 3. 서버 실행하기
 아래 명령어를 사용하여 프로젝트를 설치하고 실행합니다:
 ```
-git clone https://github.com/imdhson/aStartrip.git ;
+git clone https://github.com/imdhson/cciicc.cc.git ;
 cd aStartrip ;
 ./gradlew bootRun ;
 ```

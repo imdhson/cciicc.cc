@@ -92,5 +92,4 @@ func PostHandler_file(w http.ResponseWriter, r *http.Request) {
 	ws_file_context_encoded, err := json.MarshalIndent(ws_file_context, " ", "	")
 	service.ErrHandler(err, "posthandler file context json")
 	ws_hub.Broadcast([]byte(ws_file_context_encoded), ws_space)
-
 }

@@ -14,17 +14,36 @@ cciicc는 웹 기반 실시간 연동 파일, 텍스트 공유 플랫폼입니�
 ### 1. requirements
 - Go언어 1.23 이상
 
-### 2. 환경 변수 수정하기
-- 
-### 3. 서버 실행하기
+### 2. git clone
+```bash
+git clone https://github.com/imdhson/cciicc.cc.git ; 
+cd cciicc.cc ;
+```
+
+### 3. 환경 변수 수정하기
+
+[CONST.go](types/CONST.go)에서 URL_ADDRESS를 실제 서버에 맞게 수정하세요.
+
+그리고 https(SSL) 통신을 활성화 하려면 [main.go](main.go)에서
+```
+go http.ListenAndServeTLS(":"+strconv.Itoa(SSLPORT), "certkey", "key", mux)
+```
+
+'certkey'와 'key'문자열을 시스템에 위치한 .pem 파일로 수정하여야 합니다.
+
+[certbot](https://certbot.eff.org/)을 사용해서 키를 발급받으시면 아래 위치에 저장됩니다. 참조하세요.
+```
+Certificate is saved at: /etc/letsencrypt/live/도메인명/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/도메인명/privkey.pem
+```
+
+### 4. 서버 실행하기
 아래 명령어를 사용하여 프로젝트를 설치하고 실행합니다:
 ```bash
-git clone https://github.com/imdhson/cciicc.cc.git
-cd cciicc.cc
-go run main.go
+go run main.go ;
 ```
-### 4. 접속하기
-웹브라우저를 열고 [http://localhost:8000](http://localhost:8000) 에 접속하세요.
+### 5. 접속하기
+모던 웹 브라우저를 열고 [http://localhost:8000](http://localhost:8000) 에 접속하세요.
 
 ## 주요 기능
 
@@ -41,7 +60,17 @@ go run main.go
 
 ## 라이선스
 
-이 프로젝트는 [MIT LICENSE](LICENSE.md) 하에 배포됩니다.
+이 프로젝트는 [MIT license](LICENSE.md) 하에 배포됩니다.
+
+### dependency
+
+#### go-qrcode
+
+[go-qrcode](https://github.com/skip2/go-qrcode.git) | MIT license
+
+#### pdf.js
+[pdf.js](https://github.com/mozilla/pdf.js.git) | Apache-2.0 license
+
 
 ## 연락처
 

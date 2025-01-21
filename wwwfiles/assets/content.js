@@ -144,6 +144,8 @@ function uploadPDF() {
 function loadPDF(url) {
     const pdf_viewerDOM = document.getElementById('pdf-viewer')
     pdf_viewerDOM.style.display = 'block'
+
+    // 최신 PDF.js 라이브러리 버전 사용
     pdfjsLib.getDocument(url).promise.then(function (pdf) {
         pdfDoc = pdf;
         document.getElementById('page-num').textContent = file_context + ' / ' + pdf.numPages;
@@ -155,14 +157,31 @@ function renderPage(num) {
     pageRendering = true;
     pdfDoc.getPage(num).then(function (page) {
         const canvas = document.getElementById('pdf-render');
-        const ctx = canvas.getContext('2d');
-        const viewport = page.getViewport({ scale: scale });
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });  // willReadFrequently 속성 추가
+        const viewport = page.getViewport({ scale: 2 });  // scale 값 2로 변경
         canvas.height = viewport.height;
         canvas.width = viewport.width;
 
         const renderContext = {
             canvasContext: ctx,
-            viewport: viewport
+            viewport: viewport,
+            background: "rgba(0,0,0,0)",
+            annotationLayer: {},
+            optionalContentConfigPromise: undefined,
+            annotationCanvasMap: undefined,
+            renderInteractiveForms: false,
+            enableWebGL: false,
+            useOnlyCssZoom: true,
+            maxCanvasPixels: 16777216,
+            pageColors: undefined,
+            eventBus: undefined,
+            renderingQueue: undefined,
+            textLayerMode: 0,  // DISABLE
+            removePageBorders: false,  
+            renderer: "canvas",
+            disableFontFace: false,
+            useSystemFonts: false,
+            rotatePages: false  // rotatePages 옵션 설정
         };
         page.render(renderContext);
 
@@ -218,7 +237,6 @@ function ImHost(){
     user_isHost = true
 }
 
-
 function showPopup(message) {
     const popup = document.getElementById('popup');
     const overlay = document.getElementById('overlay');
@@ -244,21 +262,22 @@ function showPopup(message) {
         }, 400);
     }, 2000);
 }
+
 function floatingMessage(text) {
-        const messageElement = document.createElement('div');
-        messageElement.textContent = text;
-        messageElement.className = 'floating-message';
-        
-        document.getElementById('message-container').appendChild(messageElement);
-        
-        // 랜덤한 수평 및 수직 위치 오프셋 적용
-        const horizontalOffset = Math.random() * window.innerWidth * 0.8; // 화면 너비의 최대 80%까지 랜덤 오프셋
-        messageElement.style.right = `${horizontalOffset}px`;
-        
-        const verticalOffset = Math.random() * window.innerHeight * 0.8; // 화면 높이의 최대 80%까지 랜덤 오프셋
-        messageElement.style.bottom = `${verticalOffset}px`;
-        
-        setTimeout(() => {
-            messageElement.remove();
-        }, 15000); // 애니메이션 시간과 동일하게 설정
-    }
+    const messageElement = document.createElement('div');
+    messageElement.textContent = text;
+    messageElement.className = 'floating-message';
+    
+    document.getElementById('message-container').appendChild(messageElement);
+    
+    // 랜덤한 수평 및 수직 위치 오프셋 적용
+    const horizontalOffset = Math.random() * window.innerWidth * 0.8; // 화면 너비의 최대 80%까지 랜덤 오프셋
+    messageElement.style.right = `${horizontalOffset}px`;
+    
+    const verticalOffset = Math.random() * window.innerHeight * 0.8; // 화면 높이의 최대 80%까지 랜덤 오프셋
+    messageElement.style.bottom = `${verticalOffset}px`;
+    
+    setTimeout(() => {
+        messageElement.remove();
+    }, 15000); // 애니메이션 시간과 동일하게 설정
+}

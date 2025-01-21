@@ -28,6 +28,12 @@ func MakeDir_space_qr() error {
 	mkdir_err := os.Mkdir("wwwfiles/assets/space_qr", 0755)
 	return mkdir_err
 }
+
+func MakeDir_host_file() error {
+	mkdir_err := os.Mkdir("wwwfiles/host_file", 0755)
+	return mkdir_err
+}
+
 func Delete_space_qr(space_id string) error {
 	//QR코드제거
 	file_remove_err := os.Remove("wwwfiles/assets/space_qr/" + space_id + ".png")

@@ -11,15 +11,15 @@ import (
 func UnusedSpaceRemoveService() {
 	for { //종료시까지 무한 루프 돌아야해서 이 안에 코드 작성
 		spaces := types.GetInstance_spaces()
-		isRemove := false
 
-		for i, v := range *spaces {
+		for i := len(*spaces) - 1; i >= 0; i-- {
+			v := (*spaces)[i]
 			lastupdate_add_hour := v.Sp_lastupdate.Add(time.Hour * types.AUTOREMOVE_UNUSED_SPACE_HOURS)
 
 			timeCompare := time.Now().Compare(lastupdate_add_hour) //compare 반환 값 :: -1: 1시간 이내 1: 1시간 지나서 삭제
 
 			if timeCompare == 1 {
-				rm_space_id := (*spaces)[i].Sp_id
+				rm_space_id := v.Sp_id
 				log.Println("사용되지 않는 space 삭제: ", rm_space_id)
 
 				file_remove_err := storage.Delete_space_qr("wwwfiles/assets/space_qr/" + v.Sp_id + ".png")
@@ -35,15 +35,11 @@ func UnusedSpaceRemoveService() {
 				//space와 연관있는 웹소켓 ws_space 삭제 시작
 				ws_hub := types.GetInstance_ws_hub()
 				ws_hub.Ws_RemoveSpace(rm_space_id)
-
-				isRemove = true
-				break
 			}
 		}
-		if !isRemove { //리무브를 했으면 break하기때문에 sleep를 안하고 즉시 반복수행
-			log.Println("wait next AUTOREMOVE_UNUSED_SPACE_HOURS ")
-			time.Sleep(time.Hour * types.AUTOREMOVE_UNUSED_SPACE_HOURS) //n시간 마다 순회하며 수행
-		}
+
+		log.Println("wait next AUTOREMOVE_UNUSED_SPACE_HOURS ")
+		time.Sleep(time.Hour * types.AUTOREMOVE_UNUSED_SPACE_HOURS) //n시간 마다 순회하며 수행
 	}
 }
 

@@ -22,7 +22,7 @@
     </main>
 
     <form action="{{.Url_address}}/space/join" method="post">
-
+      {{.CsrfField}}
       <label for="spaceName">{{.Guest_spaceid}}</label>
       <input type="text" id="large_input" name="spaceId" placeholder="{{.Guest_spaceid_input}}" value="{{.Sp_id}}"
         required>

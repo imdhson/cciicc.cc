@@ -6,6 +6,8 @@ import (
 
 	"cciicc/service"
 	"cciicc/types"
+
+	"github.com/gorilla/csrf"
 )
 
 type DataHost struct {
@@ -31,6 +33,7 @@ func HostHandler(w http.ResponseWriter, r *http.Request) {
 		Host_form_button     string
 
 		Footer_terms string
+		CsrfField    template.HTML
 	}
 	data := Data{
 		Service_name:         types.SERVICE_NAME,
@@ -42,6 +45,7 @@ func HostHandler(w http.ResponseWriter, r *http.Request) {
 		Host_username_input:  types.HOST_USERNAME_INPUT,
 		Host_form_button:     types.HOST_FORM_BUTTON,
 		Footer_terms:         types.FOOTER_TERMS,
+		CsrfField:            csrf.TemplateField(r),
 	}
 	tmpl.Execute(w, data)
 

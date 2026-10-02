@@ -3,10 +3,14 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 
 	"cciicc/controller"
 	"cciicc/service"
+
+	"github.com/gorilla/csrf"
+	"github.com/gorilla/securecookie"
 )
 
 const PORT = 80
@@ -22,10 +26,21 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", controller.URLHandler)
-	go http.ListenAndServeTLS(":"+strconv.Itoa(SSLPORT), "certkey", "key", mux)
+
+	var csrfAuthKey []byte
+	if key := os.Getenv("CSRF_AUTH_KEY"); len(key) == 32 {
+		csrfAuthKey = []byte(key)
+	} else {
+		csrfAuthKey = securecookie.GenerateRandomKey(32)
+	}
+
+	CSRF := csrf.Protect(csrfAuthKey, csrf.Secure(false)) // NOTE: In production, consider csrf.Secure(true) for HTTPS
+	handler := CSRF(mux)
+
+	go http.ListenAndServeTLS(":"+strconv.Itoa(SSLPORT), "certkey", "key", handler)
 	log.Println(""+strconv.Itoa(SSLPORT), "포트에서 요청을 기다리는 중...")
 
-	err := http.ListenAndServe(":"+strconv.Itoa(PORT), mux) //암호화없음
+	err := http.ListenAndServe(":"+strconv.Itoa(PORT), handler) //암호화없음
 	log.Println(""+strconv.Itoa(PORT), "포트에서 요청을 기다리는 중...")
 	service.CriticalErr(err, "http.ListenAndServe")
 

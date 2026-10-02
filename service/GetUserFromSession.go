@@ -6,12 +6,10 @@ import (
 
 func GetUserFromSession(session string) (types.User, bool) {
 	users := types.GetInstance_users()
-	var rst types.User
-	for _, v := range *users {
-		if session == v.User_sessionkey {
-			rst = v
-			return rst, true
+	for i := range *users {
+		if session == (*users)[i].User_sessionkey {
+			return (*users)[i], true
 		}
 	}
-	return rst, false
+	return types.User{}, false
 }

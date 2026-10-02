@@ -20,14 +20,9 @@ func GetInstance_users() *Users {
 }
 
 func (users *Users) Remove_user(idx int) {
-	//지워야될 곳(*users)[i]
-	old := *users
-	*users = Users{}
-	for i := 0; i < len(old); i++ {
-		if i == idx { //삭제할 것을 찾았을 떄
-			fmt.Println("삭제중 user", i)
-		} else {
-			*users = append(*users, old[i])
-		}
+	if idx < 0 || idx >= len(*users) {
+		return
 	}
+	fmt.Println("삭제중 user", idx)
+	*users = append((*users)[:idx], (*users)[idx+1:]...)
 }

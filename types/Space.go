@@ -37,15 +37,9 @@ func GetInstance_spaces() *Spaces {
 }
 
 func (spaces *Spaces) Remove_space(idx int) {
-	//지워야될 곳(*spaces)[i]
-	old := *spaces
-	*spaces = Spaces{}
-	for i := 0; i < len(old); i++ {
-		if i == idx { //삭제할 것을 찾았을 때
-			fmt.Println("삭제중 space", i)
-		} else {
-			*spaces = append(*spaces, old[i])
-		}
+	if idx >= 0 && idx < len(*spaces) {
+		fmt.Println("삭제중 space", idx)
+		*spaces = append((*spaces)[:idx], (*spaces)[idx+1:]...)
 	}
 }
 

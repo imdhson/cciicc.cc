@@ -9,14 +9,29 @@ import (
 )
 
 func TestAssetsHanlderSecurePath(t *testing.T) {
+	// Create a temporary directory to act as the working directory
+	tempDir := t.TempDir()
+
+	// Save the current working directory and restore it after the test
+	originalWD, err := os.Getwd()
+	if err != nil {
+		t.Fatalf("Failed to get current working directory: %v", err)
+	}
+	defer os.Chdir(originalWD)
+
+	// Change to the temporary directory
+	err = os.Chdir(tempDir)
+	if err != nil {
+		t.Fatalf("Failed to change to temporary directory: %v", err)
+	}
+
 	// Create a wwwfiles directory
 	wwwfilesDir := filepath.Join(".", "wwwfiles")
 	os.MkdirAll(wwwfilesDir, 0755)
-	defer os.RemoveAll(wwwfilesDir) // clean up after test
 
 	// Ensure wwwfiles/assets/error/index.html exists for ErrorPageHandler
 	os.MkdirAll(filepath.Join(wwwfilesDir, "assets", "error"), 0755)
-	err := os.WriteFile(filepath.Join(wwwfilesDir, "assets", "error", "index.html"), []byte("<html>Error</html>"), 0644)
+	err = os.WriteFile(filepath.Join(wwwfilesDir, "assets", "error", "index.html"), []byte("<html>Error</html>"), 0644)
 	if err != nil {
 		t.Fatalf("Failed to create error index.html: %v", err)
 	}
@@ -27,7 +42,6 @@ func TestAssetsHanlderSecurePath(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to create secret file: %v", err)
 	}
-	defer os.Remove(secretFile)
 
 	// Ensure wwwfiles/css/main.css exists
 	os.MkdirAll(filepath.Join(wwwfilesDir, "css"), 0755)
@@ -143,5 +157,55 @@ func TestDotFileType(t *testing.T) {
 				t.Errorf("DotFileType(%q) = %q; want %q", tc.input, result, tc.expected)
 			}
 		})
+	}
+}
+
+func TestAssetsHanlder_NotFound(t *testing.T) {
+	// Create a temporary directory to act as the working directory
+	tempDir := t.TempDir()
+
+	// Save the current working directory and restore it after the test
+	originalWD, err := os.Getwd()
+	if err != nil {
+		t.Fatalf("Failed to get current working directory: %v", err)
+	}
+	defer os.Chdir(originalWD)
+
+	// Change to the temporary directory
+	err = os.Chdir(tempDir)
+	if err != nil {
+		t.Fatalf("Failed to change to temporary directory: %v", err)
+	}
+
+	// Create a wwwfiles directory for error page
+	wwwfilesDir := filepath.Join(".", "wwwfiles")
+	os.MkdirAll(wwwfilesDir, 0755)
+
+	// Ensure wwwfiles/assets/error/index.html exists for ErrorPageHandler
+	os.MkdirAll(filepath.Join(wwwfilesDir, "assets", "error"), 0755)
+	err = os.WriteFile(filepath.Join(wwwfilesDir, "assets", "error", "index.html"), []byte("<html>Error: {{.Error_title}}</html>"), 0644)
+	if err != nil {
+		t.Fatalf("Failed to create error index.html: %v", err)
+	}
+
+	req, err := http.NewRequest("GET", "/assets/non-existent-file.css", nil)
+	if err != nil {
+		t.Fatalf("Could not create request: %v", err)
+	}
+
+	rr := httptest.NewRecorder()
+
+	// Call the handler with a non-existent file path
+	AssetsHanlder(rr, req, "non-existent-file.css")
+
+	// The ErrorPageHandler writes to the response
+	body := rr.Body.String()
+	if body == "" {
+		t.Errorf("Expected error page content, got empty string")
+	}
+
+	// We expect the fallback error template to be rendered
+	if len(body) < 12 || body[:12] != "<html>Error:" {
+		t.Errorf("Expected fallback error page content, got %q", body)
 	}
 }

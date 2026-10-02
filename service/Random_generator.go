@@ -10,7 +10,7 @@ import (
 	"cciicc/types"
 )
 
-func cryptoRandIntn(max int64) int {
+var cryptoRandIntn = func(max int64) int {
 	n, err := rand.Int(rand.Reader, big.NewInt(max))
 	if err != nil {
 		// Fallback or panic; in standard environments, rand.Reader should not fail.
@@ -42,14 +42,14 @@ func Random_sessionkey_generator(space_id string) string {
 	rand_sessionkey := space_id + strconv.Itoa(cryptoRandIntn(1<<16))
 	valid := false
 	for !valid { //혹시나 같은 것을 찾으면 다시 랜덤 돌리기위함
-		valid = false
+		valid = true
 		for _, v := range *users {
 			if rand_sessionkey == v.User_sessionkey {
 				rand_sessionkey = space_id + strconv.Itoa(cryptoRandIntn(1<<16))
+				valid = false
 				break
 			}
 		}
-		valid = true
 	}
 	//해쉬함수
 	hash := md5.New()

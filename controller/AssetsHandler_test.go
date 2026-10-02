@@ -92,3 +92,56 @@ func TestAssetsHanlderSecurePath(t *testing.T) {
 		})
 	}
 }
+
+func TestDotFileType(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    string
+		expected string
+	}{
+		{
+			name:     "Standard extension",
+			input:    "file.jpg",
+			expected: "jpg",
+		},
+		{
+			name:     "Multiple dots",
+			input:    "archive.tar.gz",
+			expected: "gz",
+		},
+		{
+			name:     "No extension",
+			input:    "README",
+			expected: "",
+		},
+		{
+			name:     "Starts with a dot",
+			input:    ".gitignore",
+			expected: "gitignore",
+		},
+		{
+			name:     "Empty string",
+			input:    "",
+			expected: "",
+		},
+		{
+			name:     "Special characters",
+			input:    "file name.mp4",
+			expected: "mp4",
+		},
+		{
+			name:     "Ending in a dot",
+			input:    "file.",
+			expected: "",
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			result := DotFileType(tc.input)
+			if result != tc.expected {
+				t.Errorf("DotFileType(%q) = %q; want %q", tc.input, result, tc.expected)
+			}
+		})
+	}
+}

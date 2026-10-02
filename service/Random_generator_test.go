@@ -1,6 +1,8 @@
 package service
 
 import (
+	"crypto/md5"
+	"fmt"
 	"regexp"
 	"testing"
 
@@ -50,4 +52,71 @@ func TestRandomSpaceIdGeneratorCollision(t *testing.T) {
 
 	// Clean up
 	*spaces = types.Spaces{}
+}
+
+func TestRandomSessionkeyGeneratorFormat(t *testing.T) {
+	users := types.GetInstance_users()
+	*users = types.Users{}
+
+	space_id := "testspace"
+	key := Random_sessionkey_generator(space_id)
+
+	// MD5 hash in hex is exactly 32 characters long
+	if len(key) != 32 {
+		t.Errorf("Expected session key length 32, got %d", len(key))
+	}
+
+	matched, _ := regexp.MatchString("^[0-9a-f]{32}$", key)
+	if !matched {
+		t.Errorf("Generated session key %s is not a valid MD5 hex string", key)
+	}
+}
+
+func TestRandomSessionkeyGeneratorCollision(t *testing.T) {
+	// Setup custom rand function to force collision
+	originalCryptoRandIntn := cryptoRandIntn
+	defer func() {
+		cryptoRandIntn = originalCryptoRandIntn
+	}()
+
+	users := types.GetInstance_users()
+	*users = types.Users{}
+
+	space_id := "testspace"
+
+	// Mock sequence
+	seq := []int{100, 100, 200}
+	idx := 0
+	cryptoRandIntn = func(max int64) int {
+		if idx < len(seq) {
+			val := seq[idx]
+			idx++
+			return val
+		}
+		return 300 // fallback
+	}
+
+	// Set up collision condition
+	// 1st generated unhashed key: "testspace" + "100" = "testspace100"
+	*users = append(*users, types.User{User_sessionkey: "testspace100"})
+
+	// Expect 2nd generation: "testspace100" -> collides again
+	// Expect 3rd generation: "testspace200" -> valid
+	// Should break loop and md5 hash "testspace200"
+
+	key := Random_sessionkey_generator(space_id)
+
+	// verify that idx advanced to 3 (meaning it called cryptoRandIntn 3 times: initial + 2 collisions checked)
+	if idx != 3 {
+		t.Errorf("Expected cryptoRandIntn to be called 3 times, got %d", idx)
+	}
+
+	// Verify the final key generated is the MD5 of "testspace200"
+	hash := md5.New()
+	hash.Write([]byte("testspace200"))
+	expectedKey := fmt.Sprintf("%x", hash.Sum(nil))
+
+	if key != expectedKey {
+		t.Errorf("Expected session key %s (MD5 of testspace200), got %s", expectedKey, key)
+	}
 }

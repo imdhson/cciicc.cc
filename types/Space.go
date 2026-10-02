@@ -26,7 +26,6 @@ type Sp_chat struct {
 	// Sp_c_rate      int //좋아요 싫어요 기능
 	Sp_c_content   string
 	Sp_c_guestname string
-	// Sp_c_color     Sp_c_color
 }
 
 func GetInstance_spaces() *Spaces {
@@ -42,18 +41,6 @@ func (spaces *Spaces) Remove_space(idx int) {
 		*spaces = append((*spaces)[:idx], (*spaces)[idx+1:]...)
 	}
 }
-
-// type Sp_c_color int
-
-// const (
-// 	WHILE  Sp_c_color = -1
-// 	ORANGE Sp_c_color = iota
-// 	SKYBLUE
-// 	GREEN
-// 	PINK
-// 	RED
-// 	BLUE
-// )
 
 type Sp_file_status int
 

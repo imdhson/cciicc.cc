@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func PostHandler_file(w http.ResponseWriter, r *http.Request) {
@@ -43,8 +44,14 @@ func PostHandler_file(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 
+	ext := strings.ToLower(filepath.Ext(filepath.Base(filehandlerFormFile.Filename)))
+	if ext != ".pdf" {
+		http.Error(w, "Invalid file extension", http.StatusBadRequest)
+		return
+	}
+
 	// 서버에 파일 생성 wwwfiles/host_file/ space_id.확장자
-	dst, err := os.Create("wwwfiles/host_file/" + user.User_related_spaceid + filepath.Ext(filehandlerFormFile.Filename))
+	dst, err := os.Create("wwwfiles/host_file/" + user.User_related_spaceid + ext)
 	if err != nil {
 		service.ErrHandler(err, "post hanlder os create")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -77,9 +84,9 @@ func PostHandler_file(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//space.Sp_filestatus 변경
-	if filepath.Ext(filehandlerFormFile.Filename) == ".pdf" { //파일 확장자가 pdf일 경우
+	if ext == ".pdf" { //파일 확장자가 pdf일 경우
 		space.Sp_file_status = types.SP_FILESTATUS_PDF
-		space.Sp_file_ext = filepath.Ext(filehandlerFormFile.Filename)
+		space.Sp_file_ext = ext
 	}
 
 	//성공 쓰기

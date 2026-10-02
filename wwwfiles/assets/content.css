@@ -134,7 +134,7 @@ main {
     background-color: #333333;
 }
 
-#pdf-viewer {
+#pdf-viewer, #media-viewer {
     display: none;
     width: 100%;
     max-width: 800px;
@@ -421,7 +421,7 @@ footer p {
         max-width: 100px;
     }
 
-    #pdf-viewer {
+    #pdf-viewer, #media-viewer {
         padding: 15px;
     }
 

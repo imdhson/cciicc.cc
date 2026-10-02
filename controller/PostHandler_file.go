@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func PostHandler_file(w http.ResponseWriter, r *http.Request) {
@@ -77,10 +78,18 @@ func PostHandler_file(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//space.Sp_filestatus 변경
-	if filepath.Ext(filehandlerFormFile.Filename) == ".pdf" { //파일 확장자가 pdf일 경우
+	ext := strings.ToLower(filepath.Ext(filehandlerFormFile.Filename))
+	switch ext {
+	case ".pdf":
 		space.Sp_file_status = types.SP_FILESTATUS_PDF
-		space.Sp_file_ext = filepath.Ext(filehandlerFormFile.Filename)
+	case ".png", ".jpg", ".jpeg", ".gif", ".webp":
+		space.Sp_file_status = types.SP_FILESTATUS_IMAGE
+	case ".mp3", ".wav", ".ogg":
+		space.Sp_file_status = types.SP_FILESTATUS_AUDIO
+	case ".mp4", ".webm":
+		space.Sp_file_status = types.SP_FILESTATUS_VIDEO
 	}
+	space.Sp_file_ext = ext
 
 	//성공 쓰기
 	json.NewEncoder(w).Encode(response)

@@ -44,14 +44,18 @@ function space_content_onload(urladdress_i) {
     socket.onmessage = function (event) {
         console.log("서버로부터 메시지 수신:", event.data);
         let jsonData = JSON.parse(event.data)
-        if (jsonData.Sp_file_status == 1 && jsonData.Sp_file_ext == '.pdf') {
+        if (jsonData.Sp_file_status == 1) {
             loadPDF("/space/file")
             file_context = jsonData.Sp_file_context == 0 ? 1 : jsonData.Sp_file_context
+        } else if (jsonData.Sp_file_status > 1) {
+            loadMedia("/space/file", jsonData.Sp_file_status)
         }
         if (jsonData.Sp_ws_type == 'file_context' && jsonData.Sp_file_context != null) {
-            file_context = parseInt(jsonData.Sp_file_context)
-            user_isHost ? null : showPopup("호스트가 파일 변경 중...")
-            loadPDF("/space/file")
+            if (jsonData.Sp_file_status == 1) {
+                file_context = parseInt(jsonData.Sp_file_context)
+                user_isHost ? null : showPopup("호스트가 파일 변경 중...")
+                loadPDF("/space/file")
+            }
         }
         if (jsonData.Sp_ws_type == 'chat') {
             floatingMessage(jsonData.Sp_c_content)
@@ -116,33 +120,57 @@ let pageRendering = false,
     pageNumPending = null,
     scale = 1.5;
 
-function uploadPDF() {
+function uploadFile() {
     const file = document.getElementById('fileInput').files[0];
-    console.log(file.name.toLowerCase().endsWith('.pdf'))
-    //BETA PDF only
-    if(!file.name.toLowerCase().endsWith('.pdf')){//PDF이면
-        showPopup("지금은 PDF 파일만 올릴 수 있어요.")
-        return
+    if (!file) return;
+
+    const allowedExtensions = ['.pdf', '.png', '.jpg', '.jpeg', '.gif', '.webp', '.mp3', '.wav', '.ogg', '.mp4', '.webm'];
+    const fileName = file.name.toLowerCase();
+    const isAllowed = allowedExtensions.some(ext => fileName.endsWith(ext));
+
+    if (!isAllowed) {
+        showPopup("지원하지 않는 파일 형식입니다. (PDF, 이미지, 오디오, 비디오만 가능)");
+        return;
     }
 
-    if (file) {
-        const formData = new FormData();
-        formData.append('file', file);
-        fetch('/space/addfile', {
-            method: 'POST',
-            body: formData
-        }).then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    loadPDF('/space/file');
-                }
-            });
-    }
+    const formData = new FormData();
+    formData.append('file', file);
+    fetch('/space/addfile', {
+        method: 'POST',
+        body: formData
+    }).then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // The websocket message will trigger loadPDF or loadMedia
+            }
+        });
     uploadToggle_onclick()
+}
+
+function loadMedia(url, status) {
+    const pdf_viewerDOM = document.getElementById('pdf-viewer');
+    const media_viewerDOM = document.getElementById('media-viewer');
+    pdf_viewerDOM.style.display = 'none';
+    media_viewerDOM.style.display = 'block';
+
+    // 2: Audio, 3: Image, 4: Video (based on SP_FILESTATUS consts)
+    let content = '';
+    const cacheBuster = `?t=${new Date().getTime()}`;
+    if (status == 3) {
+        content = `<img src="${url}${cacheBuster}" style="max-width: 100%; height: auto;" />`;
+    } else if (status == 2) {
+        content = `<audio controls muted src="${url}${cacheBuster}" style="width: 100%;"></audio>`;
+    } else if (status == 4) {
+        content = `<video controls muted src="${url}${cacheBuster}" style="max-width: 100%; height: auto;"></video>`;
+    }
+
+    media_viewerDOM.innerHTML = content;
 }
 
 function loadPDF(url) {
     const pdf_viewerDOM = document.getElementById('pdf-viewer')
+    const media_viewerDOM = document.getElementById('media-viewer')
+    if (media_viewerDOM) media_viewerDOM.style.display = 'none'
     pdf_viewerDOM.style.display = 'block'
 
     // 최신 PDF.js 라이브러리 버전 사용
@@ -180,8 +208,7 @@ function renderPage(num) {
             removePageBorders: false,  
             renderer: "canvas",
             disableFontFace: false,
-            useSystemFonts: false,
-            rotatePages: false  // rotatePages 옵션 설정
+            useSystemFonts: false
         };
         page.render(renderContext);
 

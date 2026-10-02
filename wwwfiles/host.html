@@ -22,6 +22,7 @@
     </main>
 
     <form action="{{.Url_address}}/space/create" method="post">
+      {{.CsrfField}}
       <label for="spaceName">{{.Host_spacename}}</label>
       <input type="text" id="large_input" name="spaceName" placeholder="{{.Host_spacename_input}}">
 

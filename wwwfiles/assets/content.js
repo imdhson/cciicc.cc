@@ -91,6 +91,7 @@ function addComment_form(event) {
         const form = document.getElementById("comment_form")
         const data = new FormData(form);
         xhr.open("POST", url, true);
+        xhr.setRequestHeader('X-CSRF-Token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
         xhr.send(data);
 
         const form_text = document.getElementById("comment")
@@ -130,6 +131,9 @@ function uploadPDF() {
         formData.append('file', file);
         fetch('/space/addfile', {
             method: 'POST',
+            headers: {
+                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
             body: formData
         }).then(response => response.json())
             .then(data => {
@@ -200,6 +204,9 @@ function queueRenderPage(num) {
     formData.append('file_context', num)
     fetch('/space/filecontext', {
         method: 'POST',
+        headers: {
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
         body: formData,
     })
         .then(response => response.status)

@@ -7,6 +7,8 @@ import (
 	"cciicc/types"
 
 	"cciicc/service"
+
+	"github.com/gorilla/csrf"
 )
 
 func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string) {
@@ -69,6 +71,7 @@ func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string
 		Content_send       string
 
 		Footer_terms string
+		CsrfToken    string
 	}
 	data := DataSpaceContent{
 		Service_name:  types.SERVICE_NAME,
@@ -86,6 +89,7 @@ func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string
 		Content_send:       types.CONTENT_SEND,
 
 		Footer_terms: types.FOOTER_TERMS,
+		CsrfToken:    csrf.Token(r),
 	}
 	tmpl.Execute(w, data)
 }

@@ -49,17 +49,20 @@ func UnusedSpaceRemoveService() {
 
 func Remove_users_related_space_id(space_id string) {
 
-	isRemove := false
-	for !isRemove {
-		users := types.GetInstance_users()
-		for i, v := range *users {
-			if v.User_related_spaceid == space_id {
-				log.Println("사용되지 않는 space의 user 삭제중:", v.User_name)
-				users.Remove_user(i)
-				break
-			}
+	users := types.GetInstance_users()
+	n := 0
+	for _, v := range *users {
+		if v.User_related_spaceid != space_id {
+			(*users)[n] = v
+			n++
+		} else {
+			log.Println("사용되지 않는 space의 user 삭제중:", v.User_name)
 		}
-		isRemove = true
 	}
+
+	for i := n; i < len(*users); i++ {
+		(*users)[i] = types.User{} // Prevent memory leak
+	}
+	*users = (*users)[:n]
 
 }

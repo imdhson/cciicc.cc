@@ -30,39 +30,43 @@ func URLHandler(w http.ResponseWriter, r *http.Request) {
 	case "assets":
 		AssetsHanlder(w, r, r.URL.Path)
 	case "space":
-		switch now_url_sliced[1] {
-		case "":
-			SpaceHandler(w, r, now_url_sliced[1])
-		case "create":
-			log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
-			PostHandler_create_space(w, r)
-		case "join":
-			log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
-			PostHandler_join_space(w, r)
-		case "json": //space/json
-			SpaceJSONHandler(w, r)
-		case "file": //space/file
-			SpaceFileHandler(w, r)
-			log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
-		case "filecontext":
-			PostHandler_file_context(w, r)
-			log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
-		case "addcomment":
-			log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
-			PostHandler_chat(w, r)
-		case "addfile":
-			log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
-			PostHandler_file(w, r)
-		default:
-			// space/[space_id] , space_id는 변조 위험이 있음으로 실제 핸들링시 확인 필요. UI로서의 space_id임.
-			log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
-			SpaceContentHandler(w, r, now_url_sliced[1])
-		}
+		handleSpaceRoutes(w, r, now_url_sliced)
 	case "ws":
 		ws_hub := types.GetInstance_ws_hub()
 		WebSocketHandler(ws_hub, w, r)
 	default:
 		log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
 		GuestHandler(w, r, now_url_sliced[0]) // url/guest/id 와 같으나 간소화된 url도 지원함
+	}
+}
+
+func handleSpaceRoutes(w http.ResponseWriter, r *http.Request, now_url_sliced []string) {
+	switch now_url_sliced[1] {
+	case "":
+		SpaceHandler(w, r, now_url_sliced[1])
+	case "create":
+		log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
+		PostHandler_create_space(w, r)
+	case "join":
+		log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
+		PostHandler_join_space(w, r)
+	case "json": //space/json
+		SpaceJSONHandler(w, r)
+	case "file": //space/file
+		SpaceFileHandler(w, r)
+		log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
+	case "filecontext":
+		PostHandler_file_context(w, r)
+		log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
+	case "addcomment":
+		log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
+		PostHandler_chat(w, r)
+	case "addfile":
+		log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
+		PostHandler_file(w, r)
+	default:
+		// space/[space_id] , space_id는 변조 위험이 있음으로 실제 핸들링시 확인 필요. UI로서의 space_id임.
+		log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
+		SpaceContentHandler(w, r, now_url_sliced[1])
 	}
 }

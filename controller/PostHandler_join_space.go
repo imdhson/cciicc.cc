@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"html"
 	"net/http"
 	"strings"
 	"time"
@@ -12,8 +13,8 @@ import (
 func PostHandler_join_space(w http.ResponseWriter, r *http.Request) {
 	//guest로 부터 post 요청을 받아서 user을 생성 한 이후, /space로 리다이렉트
 
-	form_space_id := strings.ToLower(r.FormValue("spaceId"))
-	form_user_name := r.FormValue("userName")
+	form_space_id := strings.ToLower(html.EscapeString(r.FormValue("spaceId")))
+	form_user_name := html.EscapeString(r.FormValue("userName"))
 	if form_user_name == "" { //이름 미 지정시
 		form_user_name = types.WHEN_USERNAME_EMPTY + service.Random_space_id_generator()
 	}

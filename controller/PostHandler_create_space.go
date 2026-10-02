@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"html"
 	"net/http"
 	"time"
 
@@ -9,8 +10,8 @@ import (
 )
 
 func PostHandler_create_space(w http.ResponseWriter, r *http.Request) {
-	form_space_name := r.FormValue("spaceName")
-	form_user_name := r.FormValue("userName")
+	form_space_name := html.EscapeString(r.FormValue("spaceName"))
+	form_user_name := html.EscapeString(r.FormValue("userName"))
 	if form_space_name == "" { //이름 미 지정시
 		form_space_name = types.WHEN_SPACENAME_EMPTY
 	}

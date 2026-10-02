@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 
 	"cciicc/controller"
 	"cciicc/service"
@@ -13,10 +12,14 @@ import (
 	"github.com/gorilla/securecookie"
 )
 
-const PORT = 80
-const SSLPORT = 443
-
 // you need to change the URL_ADDESS which is located in types.CONST.go
+
+func getEnv(key, fallback string) string {
+	if value, exists := os.LookupEnv(key); exists {
+		return value
+	}
+	return fallback
+}
 
 func main() {
 
@@ -27,6 +30,12 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", controller.URLHandler)
 
+	port := getEnv("PORT", "80")
+	sslPort := getEnv("SSL_PORT", "443")
+	enableTLS := getEnv("ENABLE_TLS", "false")
+	tlsCert := getEnv("TLS_CERT", "certkey")
+	tlsKey := getEnv("TLS_KEY", "key")
+
 	var csrfAuthKey []byte
 	if key := os.Getenv("CSRF_AUTH_KEY"); len(key) == 32 {
 		csrfAuthKey = []byte(key)
@@ -34,14 +43,26 @@ func main() {
 		csrfAuthKey = securecookie.GenerateRandomKey(32)
 	}
 
-	CSRF := csrf.Protect(csrfAuthKey, csrf.Secure(false)) // NOTE: In production, consider csrf.Secure(true) for HTTPS
+	isSecure := false
+	if enableTLS == "true" {
+		isSecure = true
+	}
+
+	CSRF := csrf.Protect(csrfAuthKey, csrf.Secure(isSecure))
 	handler := CSRF(mux)
 
-	go http.ListenAndServeTLS(":"+strconv.Itoa(SSLPORT), "certkey", "key", handler)
-	log.Println(""+strconv.Itoa(SSLPORT), "포트에서 요청을 기다리는 중...")
+	if enableTLS == "true" {
+		go func() {
+			log.Println("TLS 서버 시작: 포트 " + sslPort + "에서 요청을 기다리는 중...")
+			err := http.ListenAndServeTLS(":"+sslPort, tlsCert, tlsKey, handler)
+			if err != nil {
+				log.Printf("TLS 서버 에러: %v\n", err)
+			}
+		}()
+	}
 
-	err := http.ListenAndServe(":"+strconv.Itoa(PORT), handler) //암호화없음
-	log.Println(""+strconv.Itoa(PORT), "포트에서 요청을 기다리는 중...")
+	log.Println("HTTP 서버 시작: 포트 " + port + "에서 요청을 기다리는 중...")
+	err := http.ListenAndServe(":"+port, handler) //암호화없음
 	service.CriticalErr(err, "http.ListenAndServe")
 
 	//next up:

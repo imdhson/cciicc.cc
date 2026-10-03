@@ -1,0 +1,5 @@
+<<<<<<< SEARCH
+		http.Redirect(w, r, "/space", http.StatusFound)
+=======
+		http.Redirect(w, r, "http://localhost:8080/space", http.StatusFound)
+>>>>>>> REPLACE

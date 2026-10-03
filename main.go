@@ -8,61 +8,10 @@ import (
 
 	"cciicc/controller"
 	"cciicc/service"
-	"cciicc/types"
 
 	"github.com/gorilla/csrf"
 	"github.com/gorilla/securecookie"
-	"github.com/joho/godotenv"
 )
-
-func init() {
-	// Load .env file
-	err := godotenv.Load()
-	if err != nil {
-		log.Println("Error loading .env file, using default values")
-	} else {
-		if url := os.Getenv("URL_ADDESS"); url != "" {
-			types.URL_ADDESS = url
-		}
-	}
-
-	// Load messages.json
-	messagesFile, err := os.Open("messages.json")
-	if err == nil {
-		defer messagesFile.Close()
-		var msgs map[string]string
-		if err := json.NewDecoder(messagesFile).Decode(&msgs); err == nil {
-			if v, ok := msgs["SERVICE_NAME"]; ok { types.SERVICE_NAME = v }
-			if v, ok := msgs["SERVICE_DETAIL"]; ok { types.SERVICE_DETAIL = v }
-			if v, ok := msgs["FOOTER_TERMS"]; ok { types.FOOTER_TERMS = v }
-			if v, ok := msgs["MAIN_NEXT_UP"]; ok { types.MAIN_NEXT_UP = v }
-			if v, ok := msgs["MAIN_HOST"]; ok { types.MAIN_HOST = v }
-			if v, ok := msgs["MAIN_GUEST"]; ok { types.MAIN_GUEST = v }
-			if v, ok := msgs["HOST_DETAIL"]; ok { types.HOST_DETAIL = v }
-			if v, ok := msgs["HOST_SPACENAME"]; ok { types.HOST_SPACENAME = v }
-			if v, ok := msgs["HOST_SPACENAME_INPUT"]; ok { types.HOST_SPACENAME_INPUT = v }
-			if v, ok := msgs["HOST_USERNAME"]; ok { types.HOST_USERNAME = v }
-			if v, ok := msgs["HOST_USERNAME_INPUT"]; ok { types.HOST_USERNAME_INPUT = v }
-			if v, ok := msgs["HOST_FORM_BUTTON"]; ok { types.HOST_FORM_BUTTON = v }
-			if v, ok := msgs["GUEST_DETAIL"]; ok { types.GUEST_DETAIL = v }
-			if v, ok := msgs["GUEST_SPACEID"]; ok { types.GUEST_SPACEID = v }
-			if v, ok := msgs["GUEST_SPACEID_INPUT"]; ok { types.GUEST_SPACEID_INPUT = v }
-			if v, ok := msgs["GUEST_USERNAME"]; ok { types.GUEST_USERNAME = v }
-			if v, ok := msgs["GUEST_USERNAME_INPUT"]; ok { types.GUEST_USERNAME_INPUT = v }
-			if v, ok := msgs["GUEST_FORM_BUTTON"]; ok { types.GUEST_FORM_BUTTON = v }
-			if v, ok := msgs["CONTENT_VIEW_COUNT"]; ok { types.CONTENT_VIEW_COUNT = v }
-			if v, ok := msgs["CONTENT_ORDER"]; ok { types.CONTENT_ORDER = v }
-			if v, ok := msgs["CONTENT_SEND"]; ok { types.CONTENT_SEND = v }
-			if v, ok := msgs["ERROR_TITLE"]; ok { types.ERROR_TITLE = v }
-			if v, ok := msgs["ERROR_CONTENT"]; ok { types.ERROR_CONTENT = v }
-			if v, ok := msgs["ERROR_MAIN"]; ok { types.ERROR_MAIN = v }
-		} else {
-			log.Println("Error parsing messages.json")
-		}
-	} else {
-		log.Println("messages.json not found, using default values")
-	}
-}
 
 // you need to change the URL_ADDESS which is located in types.CONST.go
 

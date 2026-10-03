@@ -125,9 +125,21 @@ function uploadFile() {
     const fileName = file.name.toLowerCase();
     const isAllowed = allowedExtensions.some(ext => fileName.endsWith(ext));
 
-    if (!isAllowed) {
-        showPopup("지원하지 않는 파일 형식입니다. (PDF, 이미지, 오디오, 비디오만 가능)");
-        return;
+    if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        fetch('/space/addfile', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: formData
+        }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    loadPDF('/space/file');
+                }
+            });
     }
 
     const formData = new FormData();

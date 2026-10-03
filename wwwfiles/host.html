@@ -23,11 +23,11 @@
 
     <form action="{{.Url_address}}/space/create" method="post">
       {{.CsrfField}}
-      <label for="spaceName">{{.Host_spacename}}</label>
+      <label for="large_input">{{.Host_spacename}}</label>
       <input type="text" id="large_input" name="spaceName" placeholder="{{.Host_spacename_input}}">
 
       <label for="userName">{{.Host_username}}</label>
-      <input type="text" name="userName" placeholder="{{.Host_username_input}}">
+      <input type="text" id="userName" name="userName" placeholder="{{.Host_username_input}}">
       <button type="submit">{{.Host_form_button}}</button>
     </form>
 

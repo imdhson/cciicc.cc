@@ -38,7 +38,12 @@ func main() {
 	if key := os.Getenv("CSRF_AUTH_KEY"); len(key) == 32 {
 		csrfAuthKey = []byte(key)
 	} else {
-		csrfAuthKey = securecookie.GenerateRandomKey(32)
+		if keyData, err := os.ReadFile(".csrf_key"); err == nil && len(keyData) == 32 {
+			csrfAuthKey = keyData
+		} else {
+			csrfAuthKey = securecookie.GenerateRandomKey(32)
+			os.WriteFile(".csrf_key", csrfAuthKey, 0600)
+		}
 	}
 
 	isSecure := false

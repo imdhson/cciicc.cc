@@ -77,35 +77,6 @@ func (h *Ws_Hub) Ws_RemoveSpace(space_id string) {
 	log.Printf("웹소켓 spaceid: %s가 삭제되었습니다.", space_id)
 }
 
-// // 클라이언트로부터 메시지를 읽는 펌프 함수입니다.
-// func (h *Ws_Hub) ReadPump(ws_client *Ws_Client, ws_space *Ws_Space) {
-// 	defer func() {
-// 		ws_space.mu.Lock()
-// 		delete(ws_space.ws_clients, ws_client)
-// 		ws_space.mu.Unlock()
-// 		ws_client.conn.Close()
-// 	}()
-
-// 	for {
-// 		// 클라이언트로부터 메시지를 읽습니다.
-// 		_, message, err := ws_client.conn.ReadMessage()
-
-// 		if err != nil {
-// 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
-// 				log.Printf("error: %v", err)
-// 			}
-// 			break
-// 		}
-
-// 		// //[]byte를 json 변환
-// 		var jsonData types.Sp_ws_type_file_context
-// 		err = json.Unmarshal(message, &jsonData)
-// 		service.ErrHandler(err, "ws handler json unmarshal")
-// 		// 받은 메시지를 같은 게시글의 모든 클라이언트에게 브로드캐스트합니다.
-// 		// h.broadcast(message, ws_space)
-// 	}
-// }
-
 // 클라이언트로 메시지를 보내는 펌프 함수입니다.
 func (h *Ws_Hub) WritePump(ws_client *Ws_Client, ws_space *Ws_Space) {
 	defer func() {

@@ -26,7 +26,6 @@ type Sp_chat struct {
 	// Sp_c_rate      int //좋아요 싫어요 기능
 	Sp_c_content   string
 	Sp_c_guestname string
-	// Sp_c_color     Sp_c_color
 }
 
 func GetInstance_spaces() *Spaces {
@@ -37,29 +36,11 @@ func GetInstance_spaces() *Spaces {
 }
 
 func (spaces *Spaces) Remove_space(idx int) {
-	//지워야될 곳(*spaces)[i]
-	old := *spaces
-	*spaces = Spaces{}
-	for i := 0; i < len(old); i++ {
-		if i == idx { //삭제할 것을 찾았을 때
-			fmt.Println("삭제중 space", i)
-		} else {
-			*spaces = append(*spaces, old[i])
-		}
+	if idx >= 0 && idx < len(*spaces) {
+		fmt.Println("삭제중 space", idx)
+		*spaces = append((*spaces)[:idx], (*spaces)[idx+1:]...)
 	}
 }
-
-// type Sp_c_color int
-
-// const (
-// 	WHILE  Sp_c_color = -1
-// 	ORANGE Sp_c_color = iota
-// 	SKYBLUE
-// 	GREEN
-// 	PINK
-// 	RED
-// 	BLUE
-// )
 
 type Sp_file_status int
 

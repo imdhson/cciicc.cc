@@ -6,6 +6,8 @@ import (
 
 	"cciicc/service"
 	"cciicc/types"
+
+	"github.com/gorilla/csrf"
 )
 
 func GuestHandler(w http.ResponseWriter, r *http.Request, space_id string) {
@@ -27,6 +29,7 @@ func GuestHandler(w http.ResponseWriter, r *http.Request, space_id string) {
 		Guest_username_input string
 		Guest_form_button    string
 		Footer_terms         string
+		CsrfField            template.HTML
 	}
 
 	// 템플릿에 변수 설정
@@ -44,6 +47,7 @@ func GuestHandler(w http.ResponseWriter, r *http.Request, space_id string) {
 		Guest_form_button:    types.GUEST_FORM_BUTTON,
 
 		Footer_terms: types.FOOTER_TERMS,
+		CsrfField:    csrf.TemplateField(r),
 	}
 	tmpl.Execute(w, data)
 }

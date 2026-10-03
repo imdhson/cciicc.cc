@@ -32,7 +32,8 @@ func AssetsHanlder(w http.ResponseWriter, r *http.Request, url string) {
 	case ".webm":
 		w.Header().Set("Content-Type", "video/webm; charset=utf-8")
 	}
-	wwwfile, err := os.ReadFile("wwwfiles/" + url) // www/assets/main.css 와 같이 작동하게 됨
+	cleanPath := filepath.Clean("/" + url)
+	wwwfile, err := os.ReadFile(filepath.Join("wwwfiles", cleanPath)) // www/assets/main.css 와 같이 작동하게 됨
 	if err != nil {
 		ErrorPageHandler(w, r)
 		return

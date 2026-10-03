@@ -2,17 +2,27 @@ package service
 
 import (
 	"crypto/md5"
+	"crypto/rand"
 	"fmt"
-	"math/rand"
+	"math/big"
 	"strconv"
 
 	"cciicc/types"
 )
 
+var cryptoRandIntn = func(max int64) int {
+	n, err := rand.Int(rand.Reader, big.NewInt(max))
+	if err != nil {
+		// Fallback or panic; in standard environments, rand.Reader should not fail.
+		panic(fmt.Sprintf("crypto/rand failed: %v", err))
+	}
+	return int(n.Int64())
+}
+
 func Random_space_id_generator() string {
 	spaces := types.GetInstance_spaces()
-	rand_int := rand.Intn(999)
-	rand_char := string(rune(rand.Intn(26) + 97))
+	rand_int := cryptoRandIntn(999)
+	rand_char := string(rune(cryptoRandIntn(26) + 97))
 	space_id := rand_char + strconv.Itoa(rand_int)
 
 	valid := false
@@ -29,17 +39,17 @@ func Random_space_id_generator() string {
 
 func Random_sessionkey_generator(space_id string) string {
 	users := types.GetInstance_users()
-	rand_sessionkey := space_id + strconv.Itoa(rand.Intn(2^16))
+	rand_sessionkey := space_id + strconv.Itoa(cryptoRandIntn(1<<16))
 	valid := false
 	for !valid { //혹시나 같은 것을 찾으면 다시 랜덤 돌리기위함
-		valid = false
+		valid = true
 		for _, v := range *users {
 			if rand_sessionkey == v.User_sessionkey {
-				rand_sessionkey = space_id + strconv.Itoa(rand.Intn(2^16))
+				rand_sessionkey = space_id + strconv.Itoa(cryptoRandIntn(1<<16))
+				valid = false
 				break
 			}
 		}
-		valid = true
 	}
 	//해쉬함수
 	hash := md5.New()

@@ -44,18 +44,14 @@ function space_content_onload(urladdress_i) {
     socket.onmessage = function (event) {
         console.log("서버로부터 메시지 수신:", event.data);
         let jsonData = JSON.parse(event.data)
-        if (jsonData.Sp_file_status == 1) {
+        if (jsonData.Sp_file_status == 1 && jsonData.Sp_file_ext == '.pdf') {
             loadPDF("/space/file")
             file_context = jsonData.Sp_file_context == 0 ? 1 : jsonData.Sp_file_context
-        } else if (jsonData.Sp_file_status > 1) {
-            loadMedia("/space/file", jsonData.Sp_file_status)
         }
         if (jsonData.Sp_ws_type == 'file_context' && jsonData.Sp_file_context != null) {
-            if (jsonData.Sp_file_status == 1) {
-                file_context = parseInt(jsonData.Sp_file_context)
-                user_isHost ? null : showPopup("호스트가 파일 변경 중...")
-                loadPDF("/space/file")
-            }
+            file_context = parseInt(jsonData.Sp_file_context)
+            user_isHost ? null : showPopup("호스트가 파일 변경 중...")
+            loadPDF("/space/file")
         }
         if (jsonData.Sp_ws_type == 'chat') {
             floatingMessage(jsonData.Sp_c_content)
@@ -95,6 +91,7 @@ function addComment_form(event) {
         const form = document.getElementById("comment_form")
         const data = new FormData(form);
         xhr.open("POST", url, true);
+        xhr.setRequestHeader('X-CSRF-Token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
         xhr.send(data);
 
         const form_text = document.getElementById("comment")
@@ -137,6 +134,9 @@ function uploadFile() {
     formData.append('file', file);
     fetch('/space/addfile', {
         method: 'POST',
+        headers: {
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
         body: formData
     }).then(response => response.json())
         .then(data => {
@@ -169,8 +169,6 @@ function loadMedia(url, status) {
 
 function loadPDF(url) {
     const pdf_viewerDOM = document.getElementById('pdf-viewer')
-    const media_viewerDOM = document.getElementById('media-viewer')
-    if (media_viewerDOM) media_viewerDOM.style.display = 'none'
     pdf_viewerDOM.style.display = 'block'
 
     // 최신 PDF.js 라이브러리 버전 사용
@@ -208,7 +206,8 @@ function renderPage(num) {
             removePageBorders: false,  
             renderer: "canvas",
             disableFontFace: false,
-            useSystemFonts: false
+            useSystemFonts: false,
+            rotatePages: false  // rotatePages 옵션 설정
         };
         page.render(renderContext);
 
@@ -227,6 +226,9 @@ function queueRenderPage(num) {
     formData.append('file_context', num)
     fetch('/space/filecontext', {
         method: 'POST',
+        headers: {
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
         body: formData,
     })
         .then(response => response.status)

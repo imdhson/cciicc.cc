@@ -2,6 +2,7 @@ package controller
 
 import (
 	"encoding/json"
+	"html"
 	"net/http"
 
 	"cciicc/service"
@@ -9,7 +10,7 @@ import (
 )
 
 func PostHandler_chat(w http.ResponseWriter, r *http.Request) {
-	form_chat := r.FormValue("chat")
+	form_chat := html.EscapeString(r.FormValue("chat"))
 
 	session, getcookie_err := r.Cookie("ub_session")
 
@@ -31,7 +32,10 @@ func PostHandler_chat(w http.ResponseWriter, r *http.Request) {
 		Sp_c_content:   form_chat,
 		Sp_c_guestname: user.User_name,
 	}
-	service.AddChatFrom_space_id(user.User_related_spaceid, sp_chat)
+	if !service.AddChatFrom_space_id(user.User_related_spaceid, sp_chat) {
+		http.Redirect(w, r, "/error", http.StatusFound)
+		return
+	}
 
 	//추가하고 같은 ws_space에 websocket broadcast 시도
 	ws_hub := types.GetInstance_ws_hub()

@@ -22,6 +22,7 @@
     </a><b onclick="linkCopyToClipboard('{{.Sp_id}}')">{{.Sp_id}}</b></h3>
     <p id="content_view_count">{{.Sp_view}}</p>
     <p>{{.Content_view_count}}</p>
+    <button id="exportButton" onclick="exportData()" style="margin-left: 20px; padding: 5px 10px; background-color: #26b198; color: white; border: none; border-radius: 5px; cursor: pointer;">기록 다운로드</button>
     <img id="QRsmall" src="{{.Sp_png_path}}" onclick="qrsmallClick()" />
   </header>
 
@@ -47,6 +48,14 @@
       </div>
     </main>
 
+
+    <div id="emoji-container" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 10px;">
+      <button type="button" onclick="sendEmoji('👍')" class="emoji-btn">👍</button>
+      <button type="button" onclick="sendEmoji('❤️')" class="emoji-btn">❤️</button>
+      <button type="button" onclick="sendEmoji('👏')" class="emoji-btn">👏</button>
+      <button type="button" onclick="sendEmoji('❓')" class="emoji-btn">❓</button>
+      <button type="button" onclick="sendEmoji('😂')" class="emoji-btn">😂</button>
+    </div>
     <form id="comment_form" onsubmit="return false;">
       <input type="text" id="comment" name="chat" placeholder="{{.User_name}}:" autofocus
         onkeypress="addComment_form(event)" required>

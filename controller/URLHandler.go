@@ -64,6 +64,13 @@ func handleSpaceRoutes(w http.ResponseWriter, r *http.Request, now_url_sliced []
 	case "addfile":
 		log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
 		PostHandler_file(w, r)
+
+	case "addemoji":
+		log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
+		PostHandler_emoji(w, r)
+	case "export":
+		log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
+		ExportHandler(w, r)
 	default:
 		// space/[space_id] , space_id는 변조 위험이 있음으로 실제 핸들링시 확인 필요. UI로서의 space_id임.
 		log.Printf("%v/%v", service.GetIP(r), now_url_sliced)

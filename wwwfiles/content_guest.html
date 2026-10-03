@@ -40,6 +40,14 @@
       </div>
     </main>
 
+
+    <div id="emoji-container" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 10px;">
+      <button type="button" onclick="sendEmoji('👍')" class="emoji-btn">👍</button>
+      <button type="button" onclick="sendEmoji('❤️')" class="emoji-btn">❤️</button>
+      <button type="button" onclick="sendEmoji('👏')" class="emoji-btn">👏</button>
+      <button type="button" onclick="sendEmoji('❓')" class="emoji-btn">❓</button>
+      <button type="button" onclick="sendEmoji('😂')" class="emoji-btn">😂</button>
+    </div>
     <form id="comment_form" onsubmit="return false;">
       <input type="text" id="comment" name="chat" placeholder="{{.User_name}}:" autofocus
         onkeypress="addComment_form(event)" required>

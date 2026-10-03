@@ -56,6 +56,10 @@ function space_content_onload(urladdress_i) {
         if (jsonData.Sp_ws_type == 'chat') {
             floatingMessage(jsonData.Sp_c_content)
         }
+        if (jsonData.Sp_ws_type == 'emoji') {
+            floatEmoji(jsonData.Emoji)
+        }
+
     };
 
     socket.onclose = function (event) {
@@ -276,6 +280,73 @@ function onNextPage() {
 
 function ImHost(){
     user_isHost = true
+}
+
+
+function exportData() {
+    fetch('/space/export', {
+        method: 'GET',
+        headers: {
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Export failed');
+        }
+        return response.blob();
+    })
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'space_record.json';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+        showPopup("기록 다운로드가 완료되었습니다.");
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showPopup("기록 다운로드에 실패했습니다.");
+    });
+}
+
+function sendEmoji(emojiChar) {
+    let formData = new FormData();
+    formData.append('emoji', emojiChar);
+    fetch('/space/addemoji', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: formData
+    })
+    .catch(error => {
+        console.error('Error sending emoji:', error);
+    });
+}
+
+function floatEmoji(emojiChar) {
+    const emojiEl = document.createElement('div');
+    emojiEl.textContent = emojiChar;
+    emojiEl.className = 'floating-emoji';
+
+    // 화면 우측 하단에서 랜덤한 위치 지정
+    const rightOffset = Math.random() * 20 + 5; // 5% ~ 25% from right
+    emojiEl.style.right = `${rightOffset}%`;
+
+    // 흔들림 효과를 위한 변수 설정
+    const xOffset = (Math.random() - 0.5) * 50; // -25px ~ 25px
+    emojiEl.style.setProperty('--x-offset', `${xOffset}px`);
+
+    document.body.appendChild(emojiEl);
+
+    setTimeout(() => {
+        emojiEl.remove();
+    }, 3000); // CSS 애니메이션 시간과 동일하게 설정
 }
 
 function showPopup(message) {

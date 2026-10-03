@@ -17,6 +17,18 @@ type Sp_ws_type_file_context struct {
 	Sp_file_type    Sp_file_status
 }
 
+type Sp_ws_type_emoji struct {
+	Sp_ws_type string
+	Emoji      string
+}
+
+func New_Sp_ws_type_emoji(emoji string) Sp_ws_type_emoji {
+	return Sp_ws_type_emoji{
+		Sp_ws_type: "emoji",
+		Emoji:      emoji,
+	}
+}
+
 func New_Sp_ws_type_chat(sp_c_guestname string, sp_c_content string) Sp_ws_type_chat {
 	return Sp_ws_type_chat{
 		Sp_ws_type:     "chat",

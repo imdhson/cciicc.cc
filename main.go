@@ -12,8 +12,6 @@ import (
 	"github.com/gorilla/securecookie"
 )
 
-// you need to change the URL_ADDESS which is located in types.CONST.go
-
 func getEnv(key, fallback string) string {
 	if value, exists := os.LookupEnv(key); exists {
 		return value

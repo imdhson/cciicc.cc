@@ -20,7 +20,6 @@ func GuestHandler(w http.ResponseWriter, r *http.Request, space_id string) {
 	}
 	type Data struct {
 		Sp_id                string
-		Url_address          string
 		Service_name         string
 		Guest_detail         string
 		Guest_spaceid        string
@@ -37,7 +36,6 @@ func GuestHandler(w http.ResponseWriter, r *http.Request, space_id string) {
 		Sp_id: space_id,
 
 		Service_name: types.SERVICE_NAME,
-		Url_address:  types.URL_ADDESS,
 
 		Guest_detail:         types.GUEST_DETAIL,
 		Guest_spaceid:        types.GUEST_SPACEID,

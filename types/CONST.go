@@ -8,7 +8,6 @@ const (
 )
 
 var (
-	URL_ADDESS string = "http://localhost" // Default value, will be updated by .env
 
 	// KR default values, will be updated by messages.json
 	SERVICE_NAME   string = "cciicc.cc"

@@ -6,14 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>{{.Host_detail}} - {{.Service_name}}</title>
   <style>
-    @import url('{{.Url_address}}/assets/main.css');
+    @import url('/assets/main.css');
   </style>
 </head>
 
 <body>
   <section class="bodysection">
     <header>
-      <a href="{{.Url_address}}">
+      <a href="/">
         <h1>{{.Service_name}}</h1>
       </a>
     </header>
@@ -21,7 +21,7 @@
       <h3>{{.Host_detail}}</h3>
     </main>
 
-    <form action="{{.Url_address}}/space/create" method="post">
+    <form action="/space/create" method="post">
       {{.CsrfField}}
       <label for="large_input">{{.Host_spacename}}</label>
       <input type="text" id="large_input" name="spaceName" placeholder="{{.Host_spacename_input}}">
@@ -32,7 +32,7 @@
     </form>
 
     <footer>
-      <a href="{{.Url_address}}/assets/terms.html">
+      <a href="/assets/terms.html">
         <p>{{.Footer_terms}}</p>
       </a>
     </footer>

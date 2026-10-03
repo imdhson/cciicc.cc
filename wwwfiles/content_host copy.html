@@ -6,20 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>{{.Sp_name}} - {{.Service_name}}</title>
   <style>
-    @import url('{{.Url_address}}/assets/content.css');
+    @import url('/assets/content.css');
   </style>
-  <script src="{{.Url_address}}/assets/content.js" />
+  <script src="/assets/content.js" />
   </script>
 </head>
 
-<body onload="space_content_onload({{.Url_address}})"> <!-- 템플릿엔진 에러 무시 -->
+<body onload="space_content_onload('/')"> <!-- 템플릿엔진 에러 무시 -->
 
   <section class="bodysection">
     <header>
-      <a href="{{.Url_address}}">
+      <a href="/">
       <h1>{{.Sp_name}}</h1></a>
-      <a href="{{.Url_address}}">
-        <h3>{{.Url_address}}/
+      <a href="/">
+        <h3>/
       </a><b onclick="linkCopyToClipboard('{{.Sp_id}}')">{{.Sp_id}}</b></h3>
       <p id="content_view_count">{{.Sp_view}}</p>
       <p>{{.Content_view_count}}</p>
@@ -44,7 +44,7 @@
       <button type="button" onclick="addComment_form(-1)">{{.Content_send}}</button>
     </form>
     <footer>
-      <a href="{{.Url_address}}/assets/terms.html">
+      <a href="/assets/terms.html">
         <p>{{.Footer_terms}}</p>
       </a>
     </footer>

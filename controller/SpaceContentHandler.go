@@ -13,7 +13,6 @@ import (
 
 type DataSpaceContent struct {
 	Service_name  string
-	Url_address   string
 	Sp_id         string
 	Sp_name       string
 	Sp_view       int
@@ -33,14 +32,13 @@ type DataSpaceContent struct {
 func buildSpaceContentData(space *types.Space, user types.User, r *http.Request, space_id string) DataSpaceContent {
 	return DataSpaceContent{
 		Service_name:  types.SERVICE_NAME,
-		Url_address:   types.URL_ADDESS,
 		User_name:     user.User_name,
 		Sp_id:         space.Sp_id,
 		Sp_name:       space.Sp_name,
 		Sp_view:       space.Sp_view,
 		Sp_lastupdate: space.Sp_lastupdate.String(),
 		Sp_chats:      space.Sp_chats,
-		Sp_png_path:   types.URL_ADDESS + "/assets/space_qr/" + space_id + ".png",
+		Sp_png_path:   "/assets/space_qr/" + space_id + ".png",
 
 		Content_view_count: types.CONTENT_VIEW_COUNT,
 		Content_order:      types.CONTENT_ORDER,

@@ -7,18 +7,18 @@
   <meta name="csrf-token" content="{{.CsrfToken}}">
   <title>{{.Sp_name}} - {{.Service_name}}</title>
   <style>
-    @import url('{{.Url_address}}/assets/content.css');
+    @import url('/assets/content.css');
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
 </head>
 
-<body onload="space_content_onload({{.Url_address}})">
+<body onload="space_content_onload('/')">
   <header>
-    <a href="{{.Url_address}}">
+    <a href="/">
       <h1>{{.Sp_name}}</h1>
     </a>
-    <a href="{{.Url_address}}">
-      <h3>{{.Url_address}}/
+    <a href="/">
+      <h3>/
     </a><b onclick="linkCopyToClipboard('{{.Sp_id}}')">{{.Sp_id}}</b></h3>
     <p id="content_view_count">{{.Sp_view}}</p>
     <p>{{.Content_view_count}}</p>
@@ -55,7 +55,7 @@
   </div>
 
   <footer>
-    <a href="{{.Url_address}}/assets/terms.html">
+    <a href="/assets/terms.html">
       <p>{{.Footer_terms}}</p>
     </a>
   </footer>
@@ -63,6 +63,6 @@
   <div id="popup"></div>
   <div id="message-container"></div>
 </body>
-<script src="{{.Url_address}}/assets/content.js"></script>
+<script src="/assets/content.js"></script>
 
 </html>

@@ -24,7 +24,6 @@ func HostHandler(w http.ResponseWriter, r *http.Request) {
 	// 템플릿에 변수 설정
 	type Data struct {
 		Service_name         string
-		Url_address          string
 		Host_detail          string
 		Host_spacename       string
 		Host_username        string
@@ -37,7 +36,6 @@ func HostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	data := Data{
 		Service_name:         types.SERVICE_NAME,
-		Url_address:          types.URL_ADDESS,
 		Host_detail:          types.HOST_DETAIL,
 		Host_spacename:       types.HOST_SPACENAME,
 		Host_username:        types.HOST_USERNAME,

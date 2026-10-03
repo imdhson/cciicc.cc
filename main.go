@@ -12,8 +12,6 @@ import (
 	"github.com/gorilla/securecookie"
 )
 
-// you need to change the URL_ADDESS which is located in types.CONST.go
-
 func getEnv(key, fallback string) string {
 	if value, exists := os.LookupEnv(key); exists {
 		return value
@@ -53,7 +51,15 @@ func main() {
 		isSecure = true
 	}
 
-	CSRF := csrf.Protect(csrfAuthKey, csrf.Secure(isSecure), csrf.TrustedOrigins([]string{"cciicc.cc"}))
+	csrfOpts := []csrf.Option{
+		csrf.Secure(isSecure),
+	}
+
+	if trustedOrigin := os.Getenv("CSRF_TRUSTED_ORIGIN"); trustedOrigin != "" {
+		csrfOpts = append(csrfOpts, csrf.TrustedOrigins([]string{trustedOrigin}))
+	}
+
+	CSRF := csrf.Protect(csrfAuthKey, csrfOpts...)
 	handler := CSRF(mux)
 
 	if enableTLS == "true" {

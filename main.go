@@ -46,7 +46,15 @@ func main() {
 		isSecure = true
 	}
 
-	CSRF := csrf.Protect(csrfAuthKey, csrf.Secure(isSecure))
+	csrfOpts := []csrf.Option{
+		csrf.Secure(isSecure),
+	}
+
+	if trustedOrigin := os.Getenv("CSRF_TRUSTED_ORIGIN"); trustedOrigin != "" {
+		csrfOpts = append(csrfOpts, csrf.TrustedOrigins([]string{trustedOrigin}))
+	}
+
+	CSRF := csrf.Protect(csrfAuthKey, csrfOpts...)
 	handler := CSRF(mux)
 
 	if enableTLS == "true" {

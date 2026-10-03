@@ -8,6 +8,7 @@ $env:SSL_PORT = "4433"
 $env:ENABLE_TLS = "false"
 $env:TLS_CERT = "certkey"
 $env:TLS_KEY = "key"
+$env:CSRF_TRUSTED_ORIGIN = "cciicc.cc"
 
 Write-Host "Building the Go application..."
 go build -o cciicc.exe main.go

@@ -10,6 +10,7 @@ export SSL_PORT=4433
 export ENABLE_TLS=false
 export TLS_CERT="certkey"
 export TLS_KEY="key"
+export CSRF_TRUSTED_ORIGIN="cciicc.cc"
 
 echo "Building the Go application..."
 go build -o cciicc main.go

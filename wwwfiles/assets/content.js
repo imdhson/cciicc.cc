@@ -137,25 +137,11 @@ function uploadFile() {
         }).then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    loadPDF('/space/file');
+                    // The websocket message will trigger loadPDF or loadMedia
                 }
             });
     }
 
-    const formData = new FormData();
-    formData.append('file', file);
-    fetch('/space/addfile', {
-        method: 'POST',
-        headers: {
-            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: formData
-    }).then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // The websocket message will trigger loadPDF or loadMedia
-            }
-        });
     uploadToggle_onclick()
 }
 

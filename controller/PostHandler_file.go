@@ -38,7 +38,13 @@ func saveUploadedFile(r *http.Request, spaceID string) (string, error) {
 	defer file.Close()
 
 	ext := strings.ToLower(filepath.Ext(filepath.Base(filehandlerFormFile.Filename)))
-	if ext != ".pdf" {
+
+	allowedExts := map[string]bool{
+		".pdf": true, ".png": true, ".jpg": true, ".jpeg": true, ".gif": true,
+		".webp": true, ".mp3": true, ".wav": true, ".ogg": true, ".mp4": true, ".webm": true,
+	}
+
+	if !allowedExts[ext] {
 		return "", fmt.Errorf("invalid file extension")
 	}
 
@@ -65,9 +71,18 @@ func updateSpaceAndBroadcast(spaceID string, ext string) error {
 	}
 
 	//space.Sp_filestatus 변경
-	if ext == ".pdf" { //파일 확장자가 pdf일 경우
+	space.Sp_file_ext = ext
+	switch ext {
+	case ".pdf":
 		space.Sp_file_status = types.SP_FILESTATUS_PDF
-		space.Sp_file_ext = ext
+	case ".png", ".jpg", ".jpeg", ".gif", ".webp":
+		space.Sp_file_status = types.SP_FILESTATUS_IMAGE
+	case ".mp3", ".wav", ".ogg":
+		space.Sp_file_status = types.SP_FILESTATUS_AUDIO
+	case ".mp4", ".webm":
+		space.Sp_file_status = types.SP_FILESTATUS_VIDEO
+	default:
+		space.Sp_file_status = types.SP_FILESTATUS_NONE
 	}
 
 	//같은 ws_space에 websocket broadcast 시도

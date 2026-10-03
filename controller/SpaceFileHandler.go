@@ -30,7 +30,7 @@ func SpaceFileHandler(w http.ResponseWriter, r *http.Request) {
 
 	var space_filepath string
 	space, _ := service.GetSpaceFrom_space_id(user.User_related_spaceid)
-	if space.Sp_file_status == types.SP_FILESTATUS_PDF {
+	if space.Sp_file_status != types.SP_FILESTATUS_NONE {
 		space_filepath = filepath.Clean("wwwfiles/host_file/" + user.User_related_spaceid + space.Sp_file_ext)
 	}
 

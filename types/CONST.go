@@ -1,14 +1,16 @@
 package types
 
 const (
-	URL_ADDESS                    string = "http://localhost"
 	SESSION_EXPIRE_DURATION_HOURS        = 1
 	AUTOREMOVE_UNUSED_SPACE_HOURS        = 1
 	WHEN_SPACENAME_EMPTY          string = "new space" // space name을 입력하지 않았을 때 기본값
 	WHEN_USERNAME_EMPTY           string = "user: "    //user name을 입력하지 않았을 때 기본값
 )
 
-const ( //KR
+var (
+	URL_ADDESS string = "http://localhost" // Default value, will be updated by .env
+
+	// KR default values, will be updated by messages.json
 	SERVICE_NAME   string = "cciicc.cc"
 	SERVICE_DETAIL string = "주제나 아이디어를 쉽게 공유할 수 있어요. 교육현장이나 회의 등의 환경에서 도움이 될거예요. 간편하게 익명으로 채팅을 할 수도 있어요."
 	FOOTER_TERMS   string = "cciicc 이용시 약관과 쿠키 사용에 동의하는 것임"

@@ -31,7 +31,7 @@
         <button id="uploadToggle" onclick="uploadToggle_onclick()">업로드 열기</button>
         <div id="uploadArea" class="form-floating">
           <input type="file" id="fileInput" placeholder=" ">
-          <button id="uploadButton" onclick="uploadPDF()">업로드</button>
+          <button id="uploadButton" onclick="uploadFile()">업로드</button>
         </div>
       </div>
       <div id="pdf-viewer">
@@ -41,6 +41,9 @@
           <button id="next-page" onclick="onNextPage()">다음</button>
         </div>
         <canvas id="pdf-render"></canvas>
+      </div>
+      <div id="media-viewer" style="display: none;">
+        <!-- Media content will be loaded here -->
       </div>
     </main>
 

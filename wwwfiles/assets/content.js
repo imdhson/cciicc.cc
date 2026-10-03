@@ -117,14 +117,13 @@ let pageRendering = false,
     pageNumPending = null,
     scale = 1.5;
 
-function uploadPDF() {
+function uploadFile() {
     const file = document.getElementById('fileInput').files[0];
-    console.log(file.name.toLowerCase().endsWith('.pdf'))
-    //BETA PDF only
-    if(!file.name.toLowerCase().endsWith('.pdf')){//PDF이면
-        showPopup("지금은 PDF 파일만 올릴 수 있어요.")
-        return
-    }
+    if (!file) return;
+
+    const allowedExtensions = ['.pdf', '.png', '.jpg', '.jpeg', '.gif', '.webp', '.mp3', '.wav', '.ogg', '.mp4', '.webm'];
+    const fileName = file.name.toLowerCase();
+    const isAllowed = allowedExtensions.some(ext => fileName.endsWith(ext));
 
     if (file) {
         const formData = new FormData();
@@ -142,7 +141,42 @@ function uploadPDF() {
                 }
             });
     }
+
+    const formData = new FormData();
+    formData.append('file', file);
+    fetch('/space/addfile', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: formData
+    }).then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // The websocket message will trigger loadPDF or loadMedia
+            }
+        });
     uploadToggle_onclick()
+}
+
+function loadMedia(url, status) {
+    const pdf_viewerDOM = document.getElementById('pdf-viewer');
+    const media_viewerDOM = document.getElementById('media-viewer');
+    pdf_viewerDOM.style.display = 'none';
+    media_viewerDOM.style.display = 'block';
+
+    // 2: Audio, 3: Image, 4: Video (based on SP_FILESTATUS consts)
+    let content = '';
+    const cacheBuster = `?t=${new Date().getTime()}`;
+    if (status == 3) {
+        content = `<img src="${url}${cacheBuster}" style="max-width: 100%; height: auto;" />`;
+    } else if (status == 2) {
+        content = `<audio controls muted src="${url}${cacheBuster}" style="width: 100%;"></audio>`;
+    } else if (status == 4) {
+        content = `<video controls muted src="${url}${cacheBuster}" style="max-width: 100%; height: auto;"></video>`;
+    }
+
+    media_viewerDOM.innerHTML = content;
 }
 
 function loadPDF(url) {

@@ -55,6 +55,9 @@ func handleSpaceRoutes(w http.ResponseWriter, r *http.Request, now_url_sliced []
 	case "file": //space/file
 		SpaceFileHandler(w, r)
 		log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
+	case "mediasync":
+		PostHandler_media_sync(w, r)
+		log.Printf("%v/%v", service.GetIP(r), now_url_sliced)
 	case "filecontext":
 		PostHandler_file_context(w, r)
 		log.Printf("%v/%v", service.GetIP(r), now_url_sliced)

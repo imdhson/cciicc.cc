@@ -56,6 +56,21 @@ function space_content_onload(urladdress_i) {
         if (jsonData.Sp_ws_type == 'chat') {
             floatingMessage(jsonData.Sp_c_content)
         }
+        if (jsonData.Sp_ws_type == 'media_sync') {
+            if (!user_isHost) {
+                const mediaElement = document.querySelector('#media-viewer video, #media-viewer audio');
+                if (mediaElement) {
+                    if (Math.abs(mediaElement.currentTime - jsonData.CurrentTime) > 0.5) {
+                        mediaElement.currentTime = jsonData.CurrentTime;
+                    }
+                    if (jsonData.IsPaused && !mediaElement.paused) {
+                        mediaElement.pause();
+                    } else if (!jsonData.IsPaused && mediaElement.paused) {
+                        mediaElement.play();
+                    }
+                }
+            }
+        }
         if (jsonData.Sp_ws_type == 'emoji') {
             floatEmoji(jsonData.Emoji)
         }
@@ -154,19 +169,103 @@ function loadMedia(url, status) {
     pdf_viewerDOM.style.display = 'none';
     media_viewerDOM.style.display = 'block';
 
-    // 2: Audio, 3: Image, 4: Video (based on SP_FILESTATUS consts)
     let content = '';
     const cacheBuster = `?t=${new Date().getTime()}`;
     if (status == 3) {
         content = `<img src="${url}${cacheBuster}" style="max-width: 100%; height: auto;" />`;
-    } else if (status == 2) {
-        content = `<audio controls muted src="${url}${cacheBuster}" style="width: 100%;"></audio>`;
-    } else if (status == 4) {
-        content = `<video controls muted src="${url}${cacheBuster}" style="max-width: 100%; height: auto;"></video>`;
+    } else if (status == 2 || status == 4) {
+        const tag = status == 2 ? 'audio' : 'video';
+        // Remove native controls, add our custom ones if host
+        content = `<${tag} ${user_isHost ? '' : 'autoplay'} src="${url}${cacheBuster}" style="max-width: 100%; width: 100%; height: auto;"></${tag}>`;
+
+        if (user_isHost) {
+            content += `
+            <div id="custom-media-controls" class="custom-media-controls">
+                <button id="play-pause-btn" class="media-btn">▶️</button>
+                <input type="range" id="progress-bar" class="progress-bar" value="0" step="0.1" min="0">
+                <span id="time-display">0:00 / 0:00</span>
+            </div>`;
+        }
     }
 
     media_viewerDOM.innerHTML = content;
+
+    if (user_isHost && (status == 2 || status == 4)) {
+        setupHostMediaControls();
+    }
 }
+
+function setupHostMediaControls() {
+    const mediaElement = document.querySelector('#media-viewer video, #media-viewer audio');
+    const playPauseBtn = document.getElementById('play-pause-btn');
+    const progressBar = document.getElementById('progress-bar');
+    const timeDisplay = document.getElementById('time-display');
+
+    if (!mediaElement) return;
+
+    // Sync to server function
+    let lastSyncTime = 0;
+    const syncMediaState = (force = false) => {
+        const now = Date.now();
+        if (!force && now - lastSyncTime < 500) return; // limit sync rate
+        lastSyncTime = now;
+
+        let formData = new FormData();
+        formData.append('currentTime', mediaElement.currentTime);
+        formData.append('isPaused', mediaElement.paused);
+        fetch('/space/mediasync', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: formData
+        }).catch(e => console.error("Media sync error", e));
+    };
+
+    const formatTime = (time) => {
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60);
+        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    };
+
+    mediaElement.addEventListener('loadedmetadata', () => {
+        progressBar.max = mediaElement.duration;
+        timeDisplay.textContent = `${formatTime(mediaElement.currentTime)} / ${formatTime(mediaElement.duration)}`;
+    });
+
+    mediaElement.addEventListener('timeupdate', () => {
+        progressBar.value = mediaElement.currentTime;
+        timeDisplay.textContent = `${formatTime(mediaElement.currentTime)} / ${formatTime(mediaElement.duration)}`;
+        if (!mediaElement.paused) syncMediaState();
+    });
+
+    playPauseBtn.addEventListener('click', () => {
+        if (mediaElement.paused) {
+            mediaElement.play();
+            playPauseBtn.textContent = '⏸️';
+        } else {
+            mediaElement.pause();
+            playPauseBtn.textContent = '▶️';
+        }
+        syncMediaState(true);
+    });
+
+    progressBar.addEventListener('input', () => {
+        mediaElement.currentTime = progressBar.value;
+        syncMediaState(true);
+    });
+
+    mediaElement.addEventListener('play', () => {
+        playPauseBtn.textContent = '⏸️';
+        syncMediaState(true);
+    });
+
+    mediaElement.addEventListener('pause', () => {
+        playPauseBtn.textContent = '▶️';
+        syncMediaState(true);
+    });
+}
+
 
 function loadPDF(url) {
     const pdf_viewerDOM = document.getElementById('pdf-viewer')

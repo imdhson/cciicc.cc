@@ -21,31 +21,36 @@ var cryptoRandIntn = func(max int64) int {
 
 func Random_space_id_generator() string {
 	spaces := types.GetInstance_spaces()
-	rand_int := cryptoRandIntn(999)
-	rand_char := string(rune(cryptoRandIntn(26) + 97))
-	space_id := rand_char + strconv.Itoa(rand_int)
-
+	spacesSlice := *spaces
 	valid := false
+	var space_id string
+
 	for !valid { //혹시나 같은 것을 찾으면 다시 랜덤 돌리기위함
-		for _, v := range *spaces { //순회하며 아이디같은지 찾고, 찾으면 랜덤
-			if space_id == v.Sp_id {
-				space_id = Random_space_id_generator()
+		rand_int := cryptoRandIntn(999)
+		rand_char := string(rune(cryptoRandIntn(26) + 97))
+		space_id = rand_char + strconv.Itoa(rand_int)
+		valid = true
+
+		for i := len(spacesSlice) - 1; i >= 0; i-- { //순회하며 아이디같은지 찾고, 찾으면 랜덤
+			if space_id == spacesSlice[i].Sp_id {
+				valid = false
+				break
 			}
 		}
-		valid = true
 	}
 	return space_id
 }
 
 func Random_sessionkey_generator(space_id string) string {
 	users := types.GetInstance_users()
-	rand_sessionkey := space_id + strconv.Itoa(cryptoRandIntn(1<<16))
+	usersSlice := *users
+	var rand_sessionkey string
 	valid := false
 	for !valid { //혹시나 같은 것을 찾으면 다시 랜덤 돌리기위함
+		rand_sessionkey = space_id + strconv.Itoa(cryptoRandIntn(1<<16))
 		valid = true
-		for _, v := range *users {
-			if rand_sessionkey == v.User_sessionkey {
-				rand_sessionkey = space_id + strconv.Itoa(cryptoRandIntn(1<<16))
+		for i := len(usersSlice) - 1; i >= 0; i-- {
+			if rand_sessionkey == usersSlice[i].User_sessionkey {
 				valid = false
 				break
 			}

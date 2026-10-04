@@ -22,7 +22,7 @@
     </a><b onclick="linkCopyToClipboard('{{.Sp_id}}')">{{.Sp_id}}</b></h3>
     <p id="content_view_count">{{.Sp_view}}</p>
     <p>{{.Content_view_count}}</p>
-    <img id="QRsmall" src="{{.Sp_png_path}}" onclick="qrsmallClick()" />
+    <img id="QRsmall" src="{{.Sp_png_path}}" onclick="qrsmallClick()" alt="공간 접속 QR 코드" />
   </header>
 
   <div class="content-wrapper">
@@ -41,14 +41,14 @@
     </main>
 
     <div id="emoji-container" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 10px;">
-      <button type="button" onclick="sendEmoji('👍')" class="emoji-btn">👍</button>
-      <button type="button" onclick="sendEmoji('❤️')" class="emoji-btn">❤️</button>
-      <button type="button" onclick="sendEmoji('👏')" class="emoji-btn">👏</button>
-      <button type="button" onclick="sendEmoji('❓')" class="emoji-btn">❓</button>
-      <button type="button" onclick="sendEmoji('😂')" class="emoji-btn">😂</button>
+      <button type="button" onclick="sendEmoji('👍')" class="emoji-btn" aria-label="좋아요">👍</button>
+      <button type="button" onclick="sendEmoji('❤️')" class="emoji-btn" aria-label="하트">❤️</button>
+      <button type="button" onclick="sendEmoji('👏')" class="emoji-btn" aria-label="박수">👏</button>
+      <button type="button" onclick="sendEmoji('❓')" class="emoji-btn" aria-label="질문">❓</button>
+      <button type="button" onclick="sendEmoji('😂')" class="emoji-btn" aria-label="웃음">😂</button>
     </div>
     <form id="comment_form" onsubmit="return false;">
-      <input type="text" id="comment" name="chat" placeholder="{{.User_name}}:" autofocus
+      <input type="text" id="comment" name="chat" placeholder="{{.User_name}}:" aria-label="채팅 메시지 입력" autofocus
         onkeypress="addComment_form(event)" required>
       <button type="button" onclick="addComment_form(-1)">{{.Content_send}}</button>
     </form>

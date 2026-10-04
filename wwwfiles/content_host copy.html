@@ -23,14 +23,14 @@
       </a><b onclick="linkCopyToClipboard('{{.Sp_id}}')">{{.Sp_id}}</b></h3>
       <p id="content_view_count">{{.Sp_view}}</p>
       <p>{{.Content_view_count}}</p>
-      <img id="QRsmall" src="{{.Sp_png_path}}" onclick="qrsmallClick()" />
+      <img id="QRsmall" src="{{.Sp_png_path}}" onclick="qrsmallClick()" alt="공간 접속 QR 코드" />
     </header>
     <main>
       <section id="comments">
       </section>
     </main>
     <form id="comment_form" onsubmit="return false;">
-      <input type="text" id="comment" name="chat" placeholder="{{.User_name}}:" autofocus
+      <input type="text" id="comment" name="chat" placeholder="{{.User_name}}:" aria-label="채팅 메시지 입력" autofocus
         onkeypress="addComment_form(event)" required>
       <select name="color">
         <option value="-1">⬜️ white</option>

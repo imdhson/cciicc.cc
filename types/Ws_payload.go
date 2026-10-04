@@ -51,3 +51,17 @@ func New_Sp_ws_type_file_context(sp_file_type Sp_file_status, sp_file_context st
 		Sp_file_type:    sp_file_type,
 	}
 }
+
+type Sp_ws_type_media_sync struct {
+	Sp_ws_type  string  `json:"Sp_ws_type"`
+	CurrentTime float64 `json:"CurrentTime"`
+	IsPaused    bool    `json:"IsPaused"`
+}
+
+func New_Sp_ws_type_media_sync(currentTime float64, isPaused bool) Sp_ws_type_media_sync {
+	return Sp_ws_type_media_sync{
+		Sp_ws_type:  "media_sync",
+		CurrentTime: currentTime,
+		IsPaused:    isPaused,
+	}
+}

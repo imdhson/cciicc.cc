@@ -28,3 +28,4 @@ go.work
 *.pdf
 # Compiled binary
 cciicc
+.csrf_key

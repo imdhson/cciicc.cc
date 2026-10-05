@@ -49,6 +49,7 @@ func saveUploadedFile(r *http.Request, spaceID string) (string, error) {
 	}
 
 	// 서버에 파일 생성 wwwfiles/host_file/ space_id.확장자
+	os.MkdirAll("wwwfiles/host_file", 0755)
 	dst, err := os.Create("wwwfiles/host_file/" + spaceID + ext)
 	if err != nil {
 		service.ErrHandler(err, "post hanlder os create")

@@ -545,3 +545,9 @@ footer p {
     min-width: 90px;
     text-align: right;
 }
+
+/* Accessibility focus styles */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, [role="button"]:focus-visible {
+    outline: 2px solid #26b198;
+    outline-offset: 2px;
+}

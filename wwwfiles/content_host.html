@@ -18,12 +18,11 @@
       <h1>{{.Sp_name}}</h1>
     </a>
     <a href="/">
-      <h3>/
-    </a><b onclick="linkCopyToClipboard('{{.Sp_id}}')">{{.Sp_id}}</b></h3>
+      <h3>/</a><b onclick="linkCopyToClipboard('{{.Sp_id}}')" onkeydown="if(event.key==='Enter'||event.key===' ')linkCopyToClipboard('{{.Sp_id}}')" tabindex="0" role="button" aria-label="Space ID 복사">{{.Sp_id}}</b></h3>
     <p id="content_view_count">{{.Sp_view}}</p>
     <p>{{.Content_view_count}}</p>
     <button id="exportButton" onclick="exportData()" style="margin-left: 20px; padding: 5px 10px; background-color: #26b198; color: white; border: none; border-radius: 5px; cursor: pointer;">기록 다운로드</button>
-    <img id="QRsmall" src="{{.Sp_png_path}}" onclick="qrsmallClick()" alt="공간 접속 QR 코드" />
+    <img id="QRsmall" src="{{.Sp_png_path}}" onclick="qrsmallClick()" onkeydown="if(event.key==='Enter'||event.key===' ')qrsmallClick()" tabindex="0" role="button" aria-label="공간 접속 QR 코드 크게 보기" alt="공간 접속 QR 코드" />
   </header>
 
   <div class="content-wrapper">

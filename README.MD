@@ -22,7 +22,7 @@ cd cciicc.cc ;
 
 ### 3. 환경 변수 수정하기
 
-[CONST.go](types/CONST.go)에서 URL_ADDRESS를 실제 서버에 맞게 수정하세요.
+서버 실행 전 환경 변수에 BASE_URL을 설정해야 합니다.
 
 그리고 https(SSL) 통신을 활성화 하려면 [main.go](main.go)에서
 ```

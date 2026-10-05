@@ -20,6 +20,9 @@ func getEnv(key, fallback string) string {
 }
 
 func main() {
+	if os.Getenv("BASE_URL") == "" {
+		log.Fatal("BASE_URL environment variable is not set. Please set it to the base URL of the server (e.g., http://localhost:8000).")
+	}
 
 	service.StartService()
 	go service.DetectStopService() //Ctrl+C (인터럽트)시 종료 서비스 호출

@@ -3,6 +3,7 @@ package controller
 import (
 	"html/template"
 	"net/http"
+	"os"
 
 	"cciicc/types"
 
@@ -27,6 +28,7 @@ type DataSpaceContent struct {
 
 	Footer_terms string
 	CsrfToken    string
+	BaseUrl      string
 }
 
 func buildSpaceContentData(space *types.Space, user types.User, r *http.Request, space_id string) DataSpaceContent {
@@ -46,6 +48,7 @@ func buildSpaceContentData(space *types.Space, user types.User, r *http.Request,
 
 		Footer_terms: types.FOOTER_TERMS,
 		CsrfToken:    csrf.Token(r),
+		BaseUrl:      os.Getenv("BASE_URL"),
 	}
 }
 

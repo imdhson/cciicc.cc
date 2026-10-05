@@ -1,14 +1,23 @@
 package service
 
 import (
-	"crypto/md5"
 	"crypto/rand"
+	"encoding/hex"
 	"fmt"
 	"math/big"
 	"strconv"
 
 	"cciicc/types"
 )
+
+var generateRandomBytes = func(n int) ([]byte, error) {
+	b := make([]byte, n)
+	_, err := rand.Read(b)
+	if err != nil {
+		return nil, err
+	}
+	return b, nil
+}
 
 var cryptoRandIntn = func(max int64) int {
 	n, err := rand.Int(rand.Reader, big.NewInt(max))
@@ -47,7 +56,12 @@ func Random_sessionkey_generator(space_id string) string {
 	var rand_sessionkey string
 	valid := false
 	for !valid { //혹시나 같은 것을 찾으면 다시 랜덤 돌리기위함
-		rand_sessionkey = space_id + strconv.Itoa(cryptoRandIntn(1<<16))
+		b, err := generateRandomBytes(16) // 16 bytes = 128 bits
+		if err != nil {
+			panic(fmt.Sprintf("crypto/rand failed to generate session key: %v", err))
+		}
+
+		rand_sessionkey = hex.EncodeToString(b)
 		valid = true
 		for i := len(usersSlice) - 1; i >= 0; i-- {
 			if rand_sessionkey == usersSlice[i].User_sessionkey {
@@ -56,10 +70,6 @@ func Random_sessionkey_generator(space_id string) string {
 			}
 		}
 	}
-	//해쉬함수
-	hash := md5.New()
-	hash.Write([]byte(rand_sessionkey))
-	hashSum := hash.Sum(nil)
-	sessionkeyStr := fmt.Sprintf("%x", hashSum)
-	return sessionkeyStr
+
+	return rand_sessionkey
 }

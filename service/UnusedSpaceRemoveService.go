@@ -46,19 +46,20 @@ func UnusedSpaceRemoveService() {
 func Remove_users_related_space_id(space_id string) {
 
 	users := types.GetInstance_users()
+	usersSlice := *users // Optimize by dereferencing pointer once
 	n := 0
-	for _, v := range *users {
-		if v.User_related_spaceid != space_id {
-			(*users)[n] = v
+	for i := range usersSlice { // Optimize by avoiding struct copy
+		if usersSlice[i].User_related_spaceid != space_id {
+			usersSlice[n] = usersSlice[i]
 			n++
 		} else {
-			log.Println("사용되지 않는 space의 user 삭제중:", v.User_name)
+			log.Println("사용되지 않는 space의 user 삭제중:", usersSlice[i].User_name)
 		}
 	}
 
-	for i := n; i < len(*users); i++ {
-		(*users)[i] = types.User{} // Prevent memory leak
+	for i := n; i < len(usersSlice); i++ {
+		usersSlice[i] = types.User{} // Prevent memory leak
 	}
-	*users = (*users)[:n]
+	*users = usersSlice[:n]
 
 }

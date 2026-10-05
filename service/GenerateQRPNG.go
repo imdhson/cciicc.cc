@@ -8,12 +8,9 @@ import (
 
 func GenerateQRPNG(space_id string) {
 	baseURL := os.Getenv("BASE_URL")
-	if baseURL == "" {
-		baseURL = "http://localhost"
-	}
 
 	var url string
-	if baseURL[len(baseURL)-1] != '/' { //상수 URL_ADDRESS가 '/'로 끝나지 아니할 때
+	if baseURL[len(baseURL)-1] != '/' { //상수 BASE_URL가 '/'로 끝나지 아니할 때
 		url = baseURL + "/"
 	} else { // '/'로 끝날 떄
 		url = baseURL

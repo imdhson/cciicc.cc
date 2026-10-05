@@ -5,6 +5,7 @@
 # ==========================================
 
 # Variables
+export BASE_URL="http://localhost:8000"
 export PORT=8000
 export SSL_PORT=4433
 export ENABLE_TLS=false

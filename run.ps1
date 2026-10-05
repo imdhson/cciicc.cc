@@ -3,6 +3,7 @@
 # ==========================================
 
 # Variables
+$env:BASE_URL = "http://localhost:8000"
 $env:PORT = "8000"
 $env:SSL_PORT = "4433"
 $env:ENABLE_TLS = "false"

@@ -3,6 +3,7 @@ package controller
 import (
 	"html/template"
 	"net/http"
+	"net/url"
 	"os"
 
 	"cciicc/types"
@@ -29,9 +30,19 @@ type DataSpaceContent struct {
 	Footer_terms string
 	CsrfToken    string
 	BaseUrl      string
+	BaseHost     string
 }
 
 func buildSpaceContentData(space *types.Space, user types.User, r *http.Request, space_id string) DataSpaceContent {
+	baseURLStr := os.Getenv("BASE_URL")
+	baseHost := ""
+	if u, err := url.Parse(baseURLStr); err == nil && u.Host != "" {
+		baseHost = u.Host
+	} else {
+		// Fallback if BASE_URL doesn't have a scheme
+		baseHost = baseURLStr
+	}
+
 	return DataSpaceContent{
 		Service_name:  types.SERVICE_NAME,
 		User_name:     user.User_name,
@@ -48,7 +59,8 @@ func buildSpaceContentData(space *types.Space, user types.User, r *http.Request,
 
 		Footer_terms: types.FOOTER_TERMS,
 		CsrfToken:    csrf.Token(r),
-		BaseUrl:      os.Getenv("BASE_URL"),
+		BaseUrl:      baseURLStr,
+		BaseHost:     baseHost,
 	}
 }
 

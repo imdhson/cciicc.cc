@@ -7,3 +7,6 @@
 ## 2023-10-24 - Efficient Slice Iteration for Filter in Go
 **Learning:** In Go, filtering slices in place without copying elements into loop variables is significantly faster. Dereferencing pointer to slice over and over again in the loop wastes cycles.
 **Action:** Replace `for _, v := range *users` with `usersSlice := *users` then `for i := range usersSlice` and accessing `usersSlice[i]`.
+## 2023-10-25 - String iteration for ASCII chars
+**Learning:** The `DotFileType` function was converting strings to rune slices `[]rune(in)` and allocating new strings inside a loop to search for a period character `"."`. This caused unnecessary memory allocation and CPU overhead (approx 88ns/op). Since we are only looking for an ASCII character, we can iterate over the string's bytes directly.
+**Action:** Iterate directly over the string indices `in[i]` and compare with byte `'.'` instead of casting to `[]rune` and `string()`.

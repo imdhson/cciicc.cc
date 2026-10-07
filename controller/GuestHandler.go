@@ -13,11 +13,8 @@ import (
 func GuestHandler(w http.ResponseWriter, r *http.Request, space_id string) {
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	// 템플릿 파일 로드
-	tmpl, err := template.ParseFiles("wwwfiles/guest.html")
-	if err != nil {
-		service.CriticalErr(err, "template html 로드")
-	}
+	// 템플릿 로드 (캐시 사용)
+	tmpl := GetTmplGuest()
 	type Data struct {
 		Sp_id                string
 		Service_name         string

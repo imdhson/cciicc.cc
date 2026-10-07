@@ -1,20 +1,15 @@
 package controller
 
 import (
-	"html/template"
 	"net/http"
 
-	"cciicc/service"
 	"cciicc/types"
 )
 
 func ErrorPageHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	// 템플릿 파일 로드
-	tmpl, err := template.ParseFiles("wwwfiles/assets/error/index.html")
-	if err != nil {
-		service.CriticalErr(err, "template html 로드")
-	}
+	// 템플릿 로드 (캐시 사용)
+	tmpl := GetTmplError()
 	type Data struct {
 		Service_name  string
 		Error_title   string

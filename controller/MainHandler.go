@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"html/template"
 	"net/http"
 
 	"cciicc/service"
@@ -10,11 +9,8 @@ import (
 
 func MainHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	// 템플릿 파일 로드
-	tmpl, err := template.ParseFiles("wwwfiles/main.html")
-	if err != nil {
-		service.CriticalErr(err, "template html 로드")
-	}
+	// 템플릿 로드 (캐시 사용)
+	tmpl := GetTmplMain()
 
 	// 템플릿에 변수 설정
 	type Data struct {

@@ -86,22 +86,11 @@ func getUserForSpace(w http.ResponseWriter, r *http.Request, space_id string) (t
 }
 
 func getSpaceTemplate(user types.User) *template.Template {
-	var tmpl *template.Template
 	if user.User_isHost { // user가 host이면 spacecontent host 템플릿 반환
-		// 템플릿 파일 로드
-		tmpl_i, err := template.ParseFiles("wwwfiles/content_host.html")
-		tmpl = tmpl_i
-		if err != nil {
-			service.CriticalErr(err, "template html 로드 host")
-		}
+		return GetTmplContentHost()
 	} else { // user가 guest이면 space content guest 템플릿 반환
-		tmpl_i, err := template.ParseFiles("wwwfiles/content_guest.html")
-		tmpl = tmpl_i
-		if err != nil {
-			service.CriticalErr(err, "template html 로드 guest")
-		}
+		return GetTmplContentGuest()
 	}
-	return tmpl
 }
 
 func SpaceContentHandler(w http.ResponseWriter, r *http.Request, space_id string) {

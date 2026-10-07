@@ -411,68 +411,66 @@ footer p {
     }
 }
 @media (max-width: 850px) {
+    /* Hide non-essential header elements on mobile */
+    header h3, #content_view_count, header p:nth-of-type(2), #exportButton {
+        display: none !important;
+    }
+
     header {
         height: 60px;
+        justify-content: space-between;
     }
 
     header h1 {
         font-size: 18px;
-        max-width: 150px;
+        max-width: none;
     }
 
-    header h3 {
-        font-size: 12px;
+    #QRsmall {
+        position: static;
+        margin-left: auto;
+        margin-right: 15px;
+        height: 40px;
     }
 
     .content-wrapper {
-        padding-top: 80px;
+        padding-top: 60px;
+        align-items: center;
     }
 
-    .upload-container {
-        top: 70px;
-        left: 10px;
-        right: 10px;
-        width: calc(100% - 20px);
-        max-width: 300px;
+    /* Make fixed elements static and natural flowing */
+    .upload-container, form {
+        position: static;
+        width: 100%;
+        max-width: calc(100% - 20px);
+        margin: 10px auto;
+        box-sizing: border-box;
+    }
+
+    main {
+        width: 100%;
     }
 
     #uploadToggle {
         padding: 12px;
         font-size: 14px;
     }
-
-    form {
-        bottom: 10px;
-        left: 10px;
-        right: 10px;
-        width: calc(100% - 20px);
-        max-width: none;
-        border-radius: 10px;
-        padding: 15px;
-    }
-
-    #QRsmall {
-        height: 40px;
-    }
 }
 
 @media (max-width: 500px) {
     header h1 {
         font-size: 14px;
-        max-width: 100px;
+        max-width: none;
     }
 
     #pdf-viewer, #media-viewer {
         padding: 15px;
+        box-sizing: border-box;
     }
 
     #prev-page, #next-page {
         padding: 10px 20px;
         font-size: 14px;
-    }
-
-    .upload-container {
-        top: 60px;
     }
 
     #uploadToggle {

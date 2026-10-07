@@ -295,6 +295,7 @@ function loadPDF(url) {
     pdf_viewerDOM.style.display = 'block'
 
     // 최신 PDF.js 라이브러리 버전 사용
+    pdfjsLib.GlobalWorkerOptions.workerSrc = '/assets/lib/pdf.worker.min.js';
     pdfjsLib.getDocument(url).promise.then(function (pdf) {
         pdfDoc = pdf;
         document.getElementById('page-num').textContent = file_context + ' / ' + pdf.numPages;

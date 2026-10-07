@@ -24,7 +24,9 @@ function qrsmallClick() {
 
 function uploadToggle_onclick(){
     uploadArea.classList.toggle('show')
-    if(uploadArea.classList.contains('show')){
+    const isExpanded = uploadArea.classList.contains('show');
+    uploadToggle.setAttribute('aria-expanded', isExpanded);
+    if(isExpanded){
         uploadToggle.textContent = '업로드 창 닫기'
     } else{
         uploadToggle.textContent = '업로드 창 보기'
@@ -143,24 +145,45 @@ function uploadFile() {
     const fileName = file.name.toLowerCase();
     const isAllowed = allowedExtensions.some(ext => fileName.endsWith(ext));
 
-    if (file) {
-        const formData = new FormData();
-        formData.append('file', file);
-        fetch('/space/addfile', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: formData
-        }).then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // The websocket message will trigger loadPDF or loadMedia
-                }
-            });
+    if (!isAllowed) {
+        showPopup('지원하지 않는 파일 형식입니다.');
+        return;
     }
 
-    uploadToggle_onclick()
+    const uploadBtn = document.getElementById('uploadButton');
+    const originalText = uploadBtn.textContent;
+    uploadBtn.disabled = true;
+    uploadBtn.textContent = '업로드 중...';
+    uploadBtn.setAttribute('aria-busy', 'true');
+
+    const formData = new FormData();
+    formData.append('file', file);
+    fetch('/space/addfile', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: formData
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    }).then(data => {
+        if (data.success) {
+            // The websocket message will trigger loadPDF or loadMedia
+            uploadToggle_onclick(); // Close panel only on success
+        } else {
+            showPopup('업로드에 실패했습니다.');
+        }
+    }).catch(error => {
+        showPopup('업로드 중 오류가 발생했습니다.');
+        console.error('Error:', error);
+    }).finally(() => {
+        uploadBtn.disabled = false;
+        uploadBtn.textContent = originalText;
+        uploadBtn.removeAttribute('aria-busy');
+    });
 }
 
 function loadMedia(url, status) {

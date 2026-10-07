@@ -28,8 +28,9 @@
   <div class="content-wrapper">
     <main>
       <div class="upload-container">
-        <button id="uploadToggle" onclick="uploadToggle_onclick()">업로드 열기</button>
+        <button id="uploadToggle" aria-expanded="false" aria-controls="uploadArea" onclick="uploadToggle_onclick()">업로드 열기</button>
         <div id="uploadArea" class="form-floating">
+          <label for="fileInput" class="visually-hidden">파일 선택</label>
           <input type="file" id="fileInput" placeholder=" ">
           <button id="uploadButton" onclick="uploadFile()">업로드</button>
         </div>

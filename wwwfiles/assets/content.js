@@ -204,8 +204,8 @@ function loadMedia(url, status) {
         if (user_isHost) {
             content += `
             <div id="custom-media-controls" class="custom-media-controls">
-                <button id="play-pause-btn" class="media-btn">▶️</button>
-                <input type="range" id="progress-bar" class="progress-bar" value="0" step="0.1" min="0">
+                <button id="play-pause-btn" class="media-btn" aria-label="재생">▶️</button>
+                <input type="range" id="progress-bar" class="progress-bar" value="0" step="0.1" min="0" aria-label="재생 진행률">
                 <span id="time-display">0:00 / 0:00</span>
             </div>`;
         }
@@ -266,9 +266,11 @@ function setupHostMediaControls() {
         if (mediaElement.paused) {
             mediaElement.play();
             playPauseBtn.textContent = '⏸️';
+            playPauseBtn.setAttribute('aria-label', '일시정지');
         } else {
             mediaElement.pause();
             playPauseBtn.textContent = '▶️';
+            playPauseBtn.setAttribute('aria-label', '재생');
         }
         syncMediaState(true);
     });
@@ -280,11 +282,13 @@ function setupHostMediaControls() {
 
     mediaElement.addEventListener('play', () => {
         playPauseBtn.textContent = '⏸️';
+        playPauseBtn.setAttribute('aria-label', '일시정지');
         syncMediaState(true);
     });
 
     mediaElement.addEventListener('pause', () => {
         playPauseBtn.textContent = '▶️';
+        playPauseBtn.setAttribute('aria-label', '재생');
         syncMediaState(true);
     });
 }

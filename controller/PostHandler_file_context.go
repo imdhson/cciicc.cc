@@ -45,7 +45,7 @@ func PostHandler_file_context(w http.ResponseWriter, r *http.Request) {
 	ws_hub := types.GetInstance_ws_hub()
 	ws_space := ws_hub.Ws_GetOrCreateSpace(user.User_related_spaceid)
 	ws_file_context := types.New_Sp_ws_type_file_context(space.Sp_file_status, pageNum)
-	ws_file_context_encoded, err := json.MarshalIndent(ws_file_context, " ", "	")
+	ws_file_context_encoded, err := json.Marshal(ws_file_context)
 	service.ErrHandler(err, "posthandler file context json")
 	ws_hub.Broadcast([]byte(ws_file_context_encoded), ws_space)
 

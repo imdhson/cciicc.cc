@@ -13,3 +13,6 @@
 ## 2024-05-28 - Template Parsing Overhead on HTTP Requests
 **Learning:** `template.ParseFiles` parses the template directly from disk and executes the parsing logic. Calling this within an HTTP request handler repeatedly causes unneeded Disk I/O and CPU overhead on every single request.
 **Action:** Parse all HTML templates at server startup (`init()`) and cache them in package-level global variables (`*template.Template`). Handlers should only call `.Execute` on these cached template pointers.
+## 2024-11-20 - JSON Serialization Optimization
+**Learning:** Using json.MarshalIndent instead of json.Marshal for WebSocket broadcasting and API responses in Go adds unnecessary memory allocations and CPU overhead, especially since clients parsing the JSON programmatically don't benefit from indentation.
+**Action:** Replace json.MarshalIndent with json.Marshal for all network payloads that do not require human readability.

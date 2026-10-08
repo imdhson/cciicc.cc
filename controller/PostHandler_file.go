@@ -90,7 +90,7 @@ func updateSpaceAndBroadcast(spaceID string, ext string) error {
 	ws_hub := types.GetInstance_ws_hub()
 	ws_space := ws_hub.Ws_GetOrCreateSpace(spaceID)
 	ws_file_context := types.New_Sp_ws_type_file_context(space.Sp_file_status, "1")
-	ws_file_context_encoded, err := json.MarshalIndent(ws_file_context, " ", "\t")
+	ws_file_context_encoded, err := json.Marshal(ws_file_context)
 	if err != nil {
 		service.ErrHandler(err, "posthandler file context json")
 		return err

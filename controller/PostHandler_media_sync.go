@@ -44,7 +44,7 @@ func PostHandler_media_sync(w http.ResponseWriter, r *http.Request) {
 	ws_space := ws_hub.Ws_GetOrCreateSpace(user.User_related_spaceid)
 
 	ws_media_sync := types.New_Sp_ws_type_media_sync(currentTime, isPaused)
-	ws_media_sync_encoded, err := json.MarshalIndent(ws_media_sync, " ", "\t")
+	ws_media_sync_encoded, err := json.Marshal(ws_media_sync)
 	if err != nil {
 		service.ErrHandler(err, "posthandler media sync json")
 		http.Error(w, "internal server error", http.StatusInternalServerError)

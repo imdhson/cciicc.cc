@@ -27,7 +27,7 @@ func SpaceJSONHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	space, _ := service.GetSpaceFrom_space_id(user.User_related_spaceid)
-	space_encoded, err := json.MarshalIndent(space, " ", "	")
+	space_encoded, err := json.Marshal(space)
 	service.ErrHandler(err, "space_encoded")
 	w.Write(space_encoded)
 }

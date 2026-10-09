@@ -9,3 +9,7 @@
 ## 2024-11-20 - Async Action States and Upload UX
 **Learning:** When performing asynchronous operations like file uploads, users get confused if the UI immediately dismisses the panel or provides no loading feedback, while screen readers need `aria-busy` to understand the processing state.
 **Action:** Always disable submit buttons, provide clear "loading" text, add `aria-busy="true"`, and only dismiss input panels upon confirmed success.
+
+## 2024-12-08 - Async Download Feedback
+**Learning:** Users lack confidence when initiating asynchronous downloads if the button remains interactive and provides no immediate feedback.
+**Action:** Always add disabled state and `aria-busy` to export/download buttons while fetching data.

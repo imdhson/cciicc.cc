@@ -396,6 +396,14 @@ function ImHost(){
 
 
 function exportData() {
+    const exportBtn = document.getElementById('exportButton');
+    const originalText = exportBtn ? exportBtn.textContent : '';
+    if (exportBtn) {
+        exportBtn.disabled = true;
+        exportBtn.textContent = '다운로드 중...';
+        exportBtn.setAttribute('aria-busy', 'true');
+    }
+
     fetch('/space/export', {
         method: 'GET',
         headers: {
@@ -423,6 +431,13 @@ function exportData() {
     .catch(error => {
         console.error('Error:', error);
         showPopup("기록 다운로드에 실패했습니다.");
+    })
+    .finally(() => {
+        if (exportBtn) {
+            exportBtn.disabled = false;
+            exportBtn.textContent = originalText;
+            exportBtn.removeAttribute('aria-busy');
+        }
     });
 }
 

@@ -1,10 +1,10 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 
 	"cciicc/types"
 
@@ -53,11 +53,11 @@ func SpaceFileHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// Content-Disposition 헤더 설정 (선택사항)
-	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s", fileInfo.Name()))
+	w.Header().Set("Content-Disposition", "attachment; filename="+fileInfo.Name())
 	// Content-Type 설정 (필요에 따라 적절히 변경)
 	w.Header().Set("Content-Type", "application/octet-stream")
 	// Content-Length 설정
-	w.Header().Set("Content-Length", fmt.Sprintf("%d", fileInfo.Size()))
+	w.Header().Set("Content-Length", strconv.FormatInt(fileInfo.Size(), 10))
 	// 파일 내용 전송
 	http.ServeContent(w, r, fileInfo.Name(), fileInfo.ModTime(), file)
 }

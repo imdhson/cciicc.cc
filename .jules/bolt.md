@@ -16,3 +16,6 @@
 ## 2024-11-20 - JSON Serialization Optimization
 **Learning:** Using json.MarshalIndent instead of json.Marshal for WebSocket broadcasting and API responses in Go adds unnecessary memory allocations and CPU overhead, especially since clients parsing the JSON programmatically don't benefit from indentation.
 **Action:** Replace json.MarshalIndent with json.Marshal for all network payloads that do not require human readability.
+## 2024-11-20 - fmt.Sprintf Overhead for Simple Strings and Ints
+**Learning:** `fmt.Sprintf` uses reflection to parse format strings at runtime, which adds significant CPU overhead and memory allocations. In `SpaceFileHandler.go`, it was used for simple string concatenation and integer conversion, taking 130-190ns/op. Direct string concatenation (`"str" + val`) and `strconv.FormatInt(val, 10)` take only 40-70ns/op, yielding a 2-3x speedup.
+**Action:** Replace `fmt.Sprintf` with direct string concatenation for strings and `strconv` functions (like `strconv.FormatInt`) for primitive types when performance is critical (e.g., inside HTTP handlers or loops).

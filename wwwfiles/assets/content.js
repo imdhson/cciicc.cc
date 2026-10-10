@@ -105,16 +105,29 @@ function space_content_onload(urladdress_i) {
 
 function addComment_form(event) {
     if (event == -1 || event.key == "Enter") {
+        const form = document.getElementById("comment_form")
+        const form_text = document.getElementById("comment")
+        const submit_btn = form.querySelector("button")
+
+        if (!form_text.value.trim()) return;
+
+        submit_btn.disabled = true;
+        submit_btn.setAttribute('aria-busy', 'true');
+
         const xhr = new XMLHttpRequest();
         const url = urladdress + "/space/addcomment";
 
-        const form = document.getElementById("comment_form")
         const data = new FormData(form);
         xhr.open("POST", url, true);
         xhr.setRequestHeader('X-CSRF-Token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                submit_btn.disabled = false;
+                submit_btn.removeAttribute('aria-busy');
+            }
+        };
         xhr.send(data);
 
-        const form_text = document.getElementById("comment")
         form_text.value = ""
     }
 }

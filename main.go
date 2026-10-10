@@ -65,10 +65,18 @@ func main() {
 	CSRF := csrf.Protect(csrfAuthKey, csrfOpts...)
 	handler := CSRF(mux)
 
+	// Security Headers Middleware
+	secureHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("X-Content-Type-Options", "nosniff")
+		w.Header().Set("X-Frame-Options", "DENY")
+		w.Header().Set("X-XSS-Protection", "1; mode=block")
+		handler.ServeHTTP(w, r)
+	})
+
 	if enableTLS == "true" {
 		go func() {
 			log.Println("TLS 서버 시작: 포트 " + sslPort + "에서 요청을 기다리는 중...")
-			err := http.ListenAndServeTLS(":"+sslPort, tlsCert, tlsKey, handler)
+			err := http.ListenAndServeTLS(":"+sslPort, tlsCert, tlsKey, secureHandler)
 			if err != nil {
 				log.Printf("TLS 서버 에러: %v\n", err)
 			}
@@ -76,7 +84,7 @@ func main() {
 	}
 
 	log.Println("HTTP 서버 시작: 포트 " + port + "에서 요청을 기다리는 중...")
-	err := http.ListenAndServe(":"+port, handler) //암호화없음
+	err := http.ListenAndServe(":"+port, secureHandler) //암호화없음
 	service.CriticalErr(err, "http.ListenAndServe")
 
 	//next up:

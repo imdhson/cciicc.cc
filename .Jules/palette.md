@@ -13,3 +13,6 @@
 ## 2024-12-08 - Async Download Feedback
 **Learning:** Users lack confidence when initiating asynchronous downloads if the button remains interactive and provides no immediate feedback.
 **Action:** Always add disabled state and `aria-busy` to export/download buttons while fetching data.
+## 2024-05-15 - Missing Form Submission Feedback
+**Learning:** Found several pages and forms that lack loading states during async tasks (like form submissions in chat), which creates a confusing UX as the user doesn't know if their action is processing.
+**Action:** Added a disabled state and 'aria-busy' visual feedback during chat comment submission in `wwwfiles/assets/content.js`, matching the pattern already used for file uploads.

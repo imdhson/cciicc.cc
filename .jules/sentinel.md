@@ -7,3 +7,7 @@
 **Vulnerability:** The session key generation used a weak random source (16-bit integer) and an insecure hashing algorithm (MD5).
 **Learning:** The entropy of the generated session keys was extremely low, making them predictable and susceptible to brute-force attacks, leading to potential session hijacking.
 **Prevention:** Always use cryptographically secure random number generators (e.g., crypto/rand) for sensitive data like session keys, generating at least 16 random bytes and avoiding insecure hashing algorithms like MD5.
+## 2023-10-10 - Security Headers Missing
+**Vulnerability:** The application was missing basic security headers (e.g., X-Content-Type-Options, X-Frame-Options, X-XSS-Protection) in HTTP and HTTPS responses.
+**Learning:** These headers provide defense-in-depth against attacks like MIME-type sniffing, Clickjacking, and Cross-Site Scripting. Since Go's `http.ServeMux` doesn't include these out of the box, they need to be added manually.
+**Prevention:** Always implement a security header middleware to wrap the main router/handler before passing it to the server.

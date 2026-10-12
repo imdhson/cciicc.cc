@@ -98,16 +98,18 @@ main {
 #uploadArea {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out;
+    transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, visibility 0.5s ease-out;
     background-color: white;
     padding: 0 15px;
     opacity: 0;
+    visibility: hidden;
 }
 
 #uploadArea.show {
     max-height: 200px;
     padding: 20px 15px;
     opacity: 1;
+    visibility: visible;
 }
 
 #fileInput {

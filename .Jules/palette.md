@@ -16,3 +16,7 @@
 ## 2024-05-15 - Missing Form Submission Feedback
 **Learning:** Found several pages and forms that lack loading states during async tasks (like form submissions in chat), which creates a confusing UX as the user doesn't know if their action is processing.
 **Action:** Added a disabled state and 'aria-busy' visual feedback during chat comment submission in `wwwfiles/assets/content.js`, matching the pattern already used for file uploads.
+
+## 2024-12-10 - Visually Hidden Interactive Elements Focusability
+**Learning:** Using `max-height: 0` and `opacity: 0` on an interactive element panel (like an upload area) visually hides it but leaves its children focusable by keyboards and screen readers, leading to confusing navigation in the app.
+**Action:** Always add `visibility: hidden` (and `visibility: visible` when shown) or `display: none` to panels that are visually hidden, so their contents are correctly removed from the accessibility and focus tree.

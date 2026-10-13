@@ -18,7 +18,7 @@ func SaveDatas() {
 	ErrHandler(f_users_err, "f_users_err createFile")
 	defer file_users.Close()
 
-	user_encoded, err := json.MarshalIndent(users, " ", "	")
+	user_encoded, err := json.Marshal(users)
 	ErrHandler(err, "user_encoded")
 	file_users.Write(user_encoded)
 
@@ -27,7 +27,7 @@ func SaveDatas() {
 	ErrHandler(f_spaces_err, "f_spaces_err CreateFile")
 	defer file_spaces.Close()
 
-	spaces_encoded, err := json.MarshalIndent(spaces, " ", "	")
+	spaces_encoded, err := json.Marshal(spaces)
 	ErrHandler(err, "spaces_encoded")
 	file_spaces.Write(spaces_encoded)
 	fmt.Println("데이터 저장 완료")

@@ -36,7 +36,7 @@ func WebSocketHandler(h *types.Ws_Hub, w http.ResponseWriter, r *http.Request) {
 	if !space_content_success {
 		return
 	}
-	// space_content_encoded, err := json.MarshalIndent(space_content, " ", "	")
+	// space_content_encoded, err := json.Marshal(space_content)
 	// service.ErrHandler(err, "wssockethandler jsonmarshal")
 	conn.WriteJSON(space_content)
 

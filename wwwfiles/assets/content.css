@@ -569,3 +569,20 @@ form button:disabled {
     cursor: not-allowed;
     transform: none;
 }
+
+.empty-state {
+    text-align: center;
+    color: #888;
+    padding: 40px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.empty-state-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}

@@ -202,6 +202,8 @@ function uploadFile() {
 function loadMedia(url, status) {
     const pdf_viewerDOM = document.getElementById('pdf-viewer');
     const media_viewerDOM = document.getElementById('media-viewer');
+    const empty_stateDOM = document.getElementById('empty-state');
+    if (empty_stateDOM) empty_stateDOM.style.display = 'none';
     pdf_viewerDOM.style.display = 'none';
     media_viewerDOM.style.display = 'block';
 
@@ -309,6 +311,8 @@ function setupHostMediaControls() {
 
 function loadPDF(url) {
     const pdf_viewerDOM = document.getElementById('pdf-viewer')
+    const empty_stateDOM = document.getElementById('empty-state')
+    if (empty_stateDOM) empty_stateDOM.style.display = 'none'
     pdf_viewerDOM.style.display = 'block'
 
     // 최신 PDF.js 라이브러리 버전 사용

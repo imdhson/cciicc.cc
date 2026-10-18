@@ -20,3 +20,6 @@
 ## 2024-12-10 - Visually Hidden Interactive Elements Focusability
 **Learning:** Using `max-height: 0` and `opacity: 0` on an interactive element panel (like an upload area) visually hides it but leaves its children focusable by keyboards and screen readers, leading to confusing navigation in the app.
 **Action:** Always add `visibility: hidden` (and `visibility: visible` when shown) or `display: none` to panels that are visually hidden, so their contents are correctly removed from the accessibility and focus tree.
+## 2024-05-20 - Dynamic ARIA Attributes on Togglable Images
+**Learning:** Togglable interactive elements (like expanding images) need their `aria-expanded` and `aria-label` attributes dynamically updated to accurately reflect the element's current state and available action. Otherwise, screen readers will announce an incorrect action (e.g. "view larger" when already large).
+**Action:** Always update `aria-expanded` state and swap the `aria-label` text (e.g. from "view larger" to "view smaller") in the toggle function for interactive elements.

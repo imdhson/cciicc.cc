@@ -15,8 +15,12 @@ function qrsmallClick() {
     
     if (!qrsmallclick_toggle) {
         qrsmall.classList.add('expanded');
+        qrsmall.setAttribute('aria-expanded', 'true');
+        qrsmall.setAttribute('aria-label', '공간 접속 QR 코드 작게 보기');
     } else {
         qrsmall.classList.remove('expanded');
+        qrsmall.setAttribute('aria-expanded', 'false');
+        qrsmall.setAttribute('aria-label', '공간 접속 QR 코드 크게 보기');
     }
     
     qrsmallclick_toggle = !qrsmallclick_toggle;

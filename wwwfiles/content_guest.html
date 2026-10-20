@@ -29,7 +29,7 @@
       <div id="pdf-viewer">
         <div id="pdf-controls">
           <button id="prev-page" onclick="onPrevPage()">이전</button>
-          <span id="page-num"></span>
+          <span id="page-num" aria-live="polite" aria-atomic="true"></span>
           <button id="next-page" onclick="onNextPage()">다음</button>
         </div>
         <canvas id="pdf-render"></canvas>

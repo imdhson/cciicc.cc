@@ -367,7 +367,9 @@ function renderPage(num) {
         }
     });
 
-    document.getElementById('page-num').textContent = num + ' / ' + pdfDoc.numPages;
+    document.getElementById("page-num").textContent = num + " / " + pdfDoc.numPages;
+    document.getElementById("prev-page").disabled = num <= 1;
+    document.getElementById("next-page").disabled = num >= pdfDoc.numPages;
 }
 
 function queueRenderPage(num) {

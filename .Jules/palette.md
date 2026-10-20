@@ -24,3 +24,7 @@
 ## 2024-12-15 - ARIA attributes on interactive toggles
 **Learning:** Toggling visual state (like expanding an image) without updating ARIA attributes leaves screen reader users unaware of the new state and the available action.
 **Action:** Always dynamically update `aria-expanded` and `aria-label` (e.g., changing 'view larger' to 'view smaller') via JavaScript when implementing togglable interactive elements.
+
+## 2025-01-21 - Pagination Boundaries UX
+**Learning:** Users lack visual cues when they reach the beginning or end of a PDF document because the navigation buttons remain fully active, and screen readers are not notified of page changes because the page number text lacks an `aria-live` region.
+**Action:** Always disable pagination buttons (`prev`/`next`) at the boundaries of the content, style them appropriately to reflect the disabled state, and add `aria-live="polite"` to dynamically changing text like page numbers.

@@ -197,6 +197,17 @@ main {
     background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
     transition: all 0.5s;
 }
+#prev-page:disabled, #next-page:disabled {
+    background-color: #a0a0a0;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+#prev-page:disabled::before, #next-page:disabled::before {
+    display: none;
+}
+
 
 #prev-page:hover::before, #next-page:hover::before {
     left: 100%;

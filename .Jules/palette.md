@@ -28,3 +28,7 @@
 ## 2025-01-21 - Pagination Boundaries UX
 **Learning:** Users lack visual cues when they reach the beginning or end of a PDF document because the navigation buttons remain fully active, and screen readers are not notified of page changes because the page number text lacks an `aria-live` region.
 **Action:** Always disable pagination buttons (`prev`/`next`) at the boundaries of the content, style them appropriately to reflect the disabled state, and add `aria-live="polite"` to dynamically changing text like page numbers.
+
+## 2024-05-13 - A11y updates for dynamic text
+**Learning:** Screen readers won't automatically announce new toasts or dynamically added DOM elements (like chat bubbles) unless they're properly wrapped in an ARIA live region (`aria-live="polite"` or `aria-live="assertive"`).
+**Action:** When creating container elements meant for dynamic user-facing updates (like `<div id="popup">` or `<div id="message-container">`), always add `aria-live="polite"` and `aria-atomic="true"`.
